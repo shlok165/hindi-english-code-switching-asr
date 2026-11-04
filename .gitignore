@@ -1,0 +1,19 @@
+# Working files / provenance (regenerable, 10 MB+)
+_work/
+
+# Publisher PDFs - see README before enabling.
+# ISCA/ACL papers are free to READ, but redistributing the PDFs in a public
+# repo is a separate permission. Excluded by default; every paper is cited
+# with a DOI in literature/papers.md and literature/comparison_table.csv.
+literature/pdfs/
+
+# Editor / local tooling config
+.claude/
+
+# Data (never commit - MUCS is ~9 GB, CC BY-SA 4.0, fetch from OpenSLR)
+data/
+*.tar.gz
+*.zip
+*.wav
+*.pt
+*.bin

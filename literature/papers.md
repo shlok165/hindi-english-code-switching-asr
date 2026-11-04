@@ -1,0 +1,614 @@
+# Hindi–English Code-Switching Speech: Annotated Literature Review
+
+**Compiled:** 4 November 2026 · **Scope:** Hindi–English only (other pairs included only where the method transfers, and always flagged).
+
+## Summary
+
+- **29 papers were retrieved, read and fact-checked.** 13 are *primary* (Hindi–English, the core review), 7 are *supporting* (Hindi–English, read in full but secondary), and 9 are *other-pair* (included with an explicit justification each).
+- **The benchmark is MUCS 2021 Subtask-2**: ~89.86 h of Hindi–English code-switched spoken-tutorial speech, openly downloadable under CC BY-SA 4.0, with a public Kaldi/ESPnet baseline and an official blind-test leaderboard. Everything else in this literature either predates it or uses proprietary data.
+- **Three honest findings worth stating up front:**
+  1. There is **no real Hindi–English language-diarization or frame-level LID benchmark**. The Microsoft code-switched corpus (MSCS/WSTCSMC 2020) that the whole Indian language-diarization literature is built on contains **Gujarati-, Tamil- and Telugu-English only — no Hindi–English pair**. Every Hindi–English diarization/switch-point number in print is on *synthetic, single-speaker* speech.
+  2. **Script inconsistency is the dominant measurement problem,** not a side issue. English words appear in both Devanagari and Latin in the same corpus; >50% of all MUCS Hindi–English errors fall on English tokens that are only ~34% of the reference words. This is why the field reports Transliterated WER (T-WER) alongside WER.
+  3. **At ~90 h, hybrid HMM-DNN systems still beat from-scratch end-to-end models** on this pair. The published ordering only reverses once a large self-supervised or multilingual encoder is used.
+- **Best published Hindi–English numbers** (MUCS blind test, official leaderboard): **16.43 % WER** (JHU-CLSP/GoVivace) and **15.51 % T-WER** (same team); challenge baseline 25.53 / 23.80.
+- **Comparability is poor.** See [§4 Comparability warnings](#4-comparability-warnings) before putting any two numbers in the same sentence.
+
+**Citation policy for this file:** every title, author list, venue, DOI and number below was read from the fetched PDF or from the official challenge site. Where a paper is paywalled, that is stated and the numbers come from the open preprint, which is labelled as such. Nothing here is reconstructed from memory. Items I could not verify are marked explicitly.
+
+---
+
+## 1. How to read the entries
+
+Each entry gives: task · dataset · model · metrics · key results · code · **gaps for replication** (what the paper does *not* tell you) · a short summary in my own words.
+
+`T-WER` = Transliterated WER · `CM-WER`/`CS-WER` = WER restricted to words adjacent to switch points · `MER` = Mixed Error Rate · `DER`/`JER` = diarization / Jaccard error rate · `IDA` = identification accuracy · `EER` = equal error rate.
+
+---
+
+## 2. Primary papers (Hindi–English)
+
+### 1. MUCS 2021: Multilingual and code-switching ASR challenges for low resource Indian languages
+
+- **Authors:** Anuj Diwan, Rakesh Vaideeswaran, Sanket Shah, Ankita Singh, Srinivasa Raghavan, Shreya Khare, Vinit Unni, Saurabh Vyas, Akash Rajpuria, Chiranjeevi Yarra, Ashish Mittal, Prasanta Kumar Ghosh, Preethi Jyothi, Kalika Bali, Vivek Seshadri, Sunayana Sitaram, Samarth Bharadwaj, Jai Nanavati, Raoul Nanavati, Karthik Sankaranarayanan, Tejaswi Seeram, Basil Abraham
+- **Venue / year:** Interspeech, 2021 
+- **Link:** https://doi.org/10.21437/Interspeech.2021-1339
+- **Also:** https://www.isca-archive.org/interspeech_2021/diwan21_interspeech.html ; arXiv:2104.00235
+- **PDF saved:** `literature/pdfs/diwan_2021_mucs2021_challenge.pdf`
+- **Task:** CS-ASR benchmark — Hindi-English + Bengali-English (Subtask2); 6 Indian languages (Subtask1)
+- **Dataset:** MUCS 2021 Subtask2 Hin-Eng: train 89.86 h / test 5.18 h / blind 6.24 h; 44249/2890/3831 unique sentences; 520/30/35 "speakers" (assumed = distinct tutorials); vocab 17830/3212/3527 words; 16 kHz, 16-bit. Spoken-tutorial domain.
+- **Model:** Kaldi GMM-HMM (tri4b, SAT/MFCC); TDNN-HMM with LF-MMI (8 blocks, dim 768); ESPnet hybrid CTC-attention Transformer (12-enc/6-dec, 2048 units, 8x64-dim heads, Noam LR 10, 25k warmup, <=40 epochs, patience 3, SpecAugment, beam 10, CTC weight 0.3 train / 0.4 decode). Trigram LM (IRSTLM/SRILM, Kneser-Ney).
+- **Metrics:** WER; Transliterated WER (T-WER) which counts an English reference word correct if produced in transliterated native script; relative sub/del error rate on English words (Err/T-Err)
+- **Key results:** Hin-Eng, realigned (ReA): GMM-HMM test 31.56 / blind 24.66 (T-WER 22.72); TDNN test 28.40 / blind 29.03 (T-WER 26.20); Transformer test 25.9 / blind 31.19 (T-WER 29.80). Unaligned (UnA): GMM-HMM 44.30 / 25.53; TDNN 36.94 / 28.90; Transformer 27.7 / 33.65. Official leaderboard baseline on Hin-Eng blind = 25.53 WER / 23.80 T-WER. Blind Hin-Eng references are 34.2% English words; >50% of all errors fall on English words for every architecture.
+- **Code:** https://github.com/navana-tech/baseline_recipe_is21s_indic_asr_challenge
+- **Gaps for replication:** TDNN epochs/batch size, GMM Gaussian counts and alignment iterations, LM training text split, G2P rule details, and the train/val split inside the 89.86 h are not given. "Speakers" are inferred from tutorial identity, not real speaker labels - so no speaker-disjoint split is possible.
+
+The reference benchmark for Hindi-English code-switched ASR. Releases ~90 h of Hindi-English code-switched spoken-tutorial speech with a public Kaldi/ESPnet baseline recipe, and defines Transliterated WER to stop penalising systems for the Devanagari-vs-Latin script choice on English words. Its error analysis shows that over half of all errors sit on English tokens even though English is only ~34% of the reference words, which is the single most actionable finding for anyone improving Hindi-English CS ASR. The GMM-HMM baseline beating the end-to-end Transformer on the blind set is a strong signal that 90 h is below the data threshold for from-scratch E2E models on this pair.
+
+### 2. Training Hybrid Models on Noisy Transliterated Transcripts for Code-Switched Speech Recognition
+
+- **Authors:** Matthew Wiesner, Mousmita Sarma, Ashish Arora, Desh Raj, Dongji Gao, Ruizhe Huang, Supreet Preet, Moris Johnson, Zikra Iqbal, Nagendra Goel, Jan Trmal, Paola Garcia, Sanjeev Khudanpur
+- **Venue / year:** Interspeech, 2021 
+- **Link:** https://doi.org/10.21437/Interspeech.2021-2127
+- **Also:** https://www.isca-archive.org/interspeech_2021/wiesner21_interspeech.html
+- **PDF saved:** `literature/pdfs/wiesner_2021_noisy_transliterated_transcripts.pdf`
+- **Task:** CS-ASR (MUCS winner) — Hindi-English + Bengali-English
+- **Dataset:** MUCS 2021 Subtask2 (~90 h Hindi, ~46 h Bengali technical lectures). Own splits: NoDup (lectures absent from train), Dup (lectures also in train), Whole. External LM text 790K-34M words; vocab expanded to 282K (Hindi) / 410K (Bengali). Librispeech 960 h for pre-training.
+- **Model:** Hybrid HMM-DNN, LF-MMI with CE regularisation via PyChain/PyTorch. Two encoders: simplified Wide ResNet (depth 28, widen 10, no batch-norm/dropout) and 6-layer BLSTM (1024) + 512 affine. 64-dim log-Mel, no i-vectors, 3500 tree leaves. Phonetisaurus G2P, learned lexicon, English->Indic transliteration map. 4-gram MaxEnt LM (SRILM) + Kaldi RNNLM (emb + 2x256 LSTM) rescoring, MBR decoding.
+- **Metrics:** Transliterated WER - computed by mapping every English word written in Indic script to its Latin form in BOTH reference and hypothesis
+- **Key results:** Best transliterated WER 19.5% (Hindi-English) and 23.2% (Bengali-English) on the non-duplicated development sets. Lexicon ablation (Hindi-English, Table 2, NoDup): HMM-GMM baseline 27.5 -> phonetic 26.6 -> +transliteration map 26.4 -> +learned lexicon 25.5; WRN with learned lexicon 21.4/21.1. Transcript cleanup (Table 3): WRN 23.7 -> +toss-cleanup 21.5. Acoustic model (Table 5, NoDup): best WRN 20.9; BLSTM pretrained on Librispeech 20.3; +external LM 20.4; +multilingual training 20.8. Official MUCS blind leaderboard (team JHU-CLSP/GoVivace): Hindi-English 16.43 WER, 15.51 T-WER - rank 1 of 16 on WER.
+- **Code:** none stated
+- **Gaps for replication:** Per-partition hours, exact learning rate (only warmup 15k iters, decay 1e-5), batch size, epochs to convergence, LM interpolation weights/count thresholds, Smith-Waterman alignment parameters, MBR combination weights and seeds are all unspecified. The NoDup/Dup/Whole split definition is theirs, not released with the corpus, so it cannot be reproduced exactly.
+
+The strongest published Hindi-English result on the MUCS blind set, and the clearest demonstration that the bottleneck is transcript and lexicon noise rather than architecture. Three interventions each buy more than the encoder choice: tossing badly-aligned segments, learning the pronunciation lexicon rather than relying on rule-based G2P, and mapping English-in-Devanagari to Latin consistently on both sides of the scoring. Their own dev-set number (19.5%) and their leaderboard number (16.43%) are not the same quantity - the splits differ - which is a trap when citing "the best MUCS Hindi-English result".
+
+### 3. The CSTR System for Multilingual and Code-Switching ASR Challenges for Low Resource Indian Languages
+
+- **Authors:** Ondrej Klejch, Electra Wallington, Peter Bell
+- **Venue / year:** Interspeech, 2021 
+- **Link:** https://doi.org/10.21437/Interspeech.2021-1035
+- **Also:** https://www.isca-archive.org/interspeech_2021/klejch21_interspeech.html
+- **PDF saved:** `literature/pdfs/klejch_2021_cstr_mucs.pdf`
+- **Task:** CS-ASR (MUCS, T-WER winner) — Hindi-English + Bengali-English (Track 2); 6 Indian languages (Track 1)
+- **Dataset:** MUCS 2021 data plus ~1000 h raw crawled YouTube per language filtered to 200 h for multilingual pre-training; CommonCrawl text; SpokenTutorial.org English subtitles; Wikipedia bilingual pages for transliteration training.
+- **Model:** CNN-TDNN (6 conv + 12 factored TDNN) with language-dependent output layers, LF-MMI in Kaldi; 40-dim MFCC + i-vectors on 8 kHz audio; SpecAugment and dropout; pruned Kneser-Ney trigram LMs (SRILM) with Kaldi RNNLM lattice rescoring; Sequitur G2P; a Baum-Welch/OpenFST + OpenGRM pair-LM tool that maps English phonemes onto Hindi/Bengali phoneme counterparts.
+- **Metrics:** WER; LID misclassification rate (Track 1)
+- **Key results:** Track 2 (code-switching): phoneme-based model WER reduced from 27.2% to 18.1% for Hindi and from 28.5% to 23.3% for Bengali on their own splits; final model 18% and 34% relative better than the multilingual baseline. Track 1: average WER 18.1% with calibrated-confidence LID, 41% relative over the 30.7% multilingual baseline; oracle LID 17.7%. Official MUCS blind leaderboard: Hindi-English 20.41 WER (rank 2) and 15.64 T-WER (rank 1 by average T-WER).
+- **Code:** none stated
+- **Gaps for replication:** Hours of Track 2 training data, learning rate, batch size, epochs, layer dimensions, CommonCrawl volume per language, WebRTC VAD settings, RNNLM size, and the confidence-calibration procedure are all unstated. The YouTube crawl is not redistributable, so the external-data component cannot be reproduced.
+
+Shows that careful pronunciation modelling for English-in-Devanagari - generating Hindi phoneme pronunciations for English terms via a learned phoneme-mapping transducer - is worth several WER points on Hindi-English technical-lecture speech. It is the top system by transliterated WER on the MUCS blind set, which matters because T-WER is the metric that abstracts away the script-inconsistency noise in this corpus. The heavy reliance on 200 h of crawled YouTube audio per language makes the full pipeline hard to reproduce, but the transliteration/lexicon component is independent and transferable.
+
+### 4. Dual Script E2E Framework for Multilingual and Code-Switching ASR
+
+- **Authors:** Mari Ganesh Kumar, Jom Kuriakose, Anand Thyagachandran, Arun Kumar A, Ashish Seth, Lodagala V S V Durga Prasad, Saish Jaiswal, Anusha Prakash, Hema A Murthy
+- **Venue / year:** Interspeech, 2021 
+- **Link:** https://doi.org/10.21437/Interspeech.2021-978
+- **Also:** https://www.isca-archive.org/interspeech_2021/kumar21e_interspeech.html
+- **PDF saved:** `literature/pdfs/kumar_2021_dual_script_e2e.pdf`
+- **Task:** CS-ASR (MUCS, dual script) — Hindi-English + Bengali-English (sub-task 2); 6 Indian languages (sub-task 1)
+- **Dataset:** MUCS 2021. Sub-task 2: hi-en train 89.86 h / 44244 sentences / 12.0 words per sentence; dev 5.18 h / 2893 sentences. bn-en train 46.11 h / 22386 sentences; dev 7.01 h.
+- **Model:** ESPnet hybrid CTC-attention Transformer. Attention dim 256, 12 encoder / 6 decoder layers, 4 heads, FFN 2048, output 5000 BPE units (+1800 for the second script head). Three variants: native-script baseline; Common Label Set (CLS) phoneme model with separate naive-Bayes LID and an OpenNMT LSTM transliteration backend; and the Dual Script model with two CTC layers/decoders predicting CLS and native script jointly with equal loss weight. 20 epochs sub-task 1, 20 fine-tuning epochs sub-task 2. Rule-based unified parser for native-to-CLS; g2pE for English.
+- **Metrics:** WER averaged over language pairs; CER for the transliteration sub-model; LID accuracy
+- **Key results:** Sub-task 2 (Table 7): hi-en dev - baseline E2E 27.7, Dual Script BPE 28.9; hi-en blind - baseline 25.5, Dual Script BPE 22.0. Averages: dev 32.4 -> 27.1, blind 29.1 -> 24.9 (about 5% absolute). Transliteration sub-model 1.78% WER / 0.44% CER; LID sub-model 99.7% accuracy on sub-task 1 dev. Official MUCS blind leaderboard (team IITM-SMT-Lab): Hindi-English 22.06 WER, 20.97 T-WER.
+- **Code:** none stated
+- **Gaps for replication:** Optimiser, learning rate, batch size, GPU count, seeds, BPE construction details, OpenNMT layer sizes, loss weights beyond "equal", and the sub-task 2 baseline configuration are unstated. Note their hi-en dev baselines (44.3 / 36.9 / 27.7) match the organisers' UNALIGNED (UnA) row, not the realigned one.
+
+Trains one model over both code-switched pairs by mapping every script into a Common Label Set phoneme inventory while simultaneously decoding native script, letting Hindi-English and Bengali-English share acoustic data. On the Hindi-English blind set the dual-script byte-pair model reaches 22.0 WER against a 25.5 baseline, and the model predicts the language pair itself at decode time. Interestingly the same model is slightly worse than baseline on the hi-en dev set and only wins on blind, which suggests the gain comes from robustness to the dev/blind distribution shift rather than from better in-domain fit.
+
+### 5. Code Switched and Code Mixed Speech Recognition for Indic languages
+
+- **Authors:** Harveen Singh Chadha, Priyanshi Shah, Ankur Dhuriya, Neeraj Chhimwal, Anirudh Gupta, Vivek Raghavan
+- **Venue / year:** arXiv preprint (stated as submitted to Interspeech 2022; no published venue verified), 2022 
+- **Link:** https://arxiv.org/abs/2203.16578
+- **Also:** Team "Ekstep" on the MUCS 2021 leaderboard
+- **PDF saved:** `literature/pdfs/chadha_2022_arxiv_cs_codemixed_asr_indic.pdf`
+- **Task:** CS-ASR (self-supervised) — Hindi-English + Bengali-English (CS); 6 Indian languages (multilingual)
+- **Dataset:** MUCS 2021. Code-switching: Hindi-English train 89.85 h / dev 5.18 h / blind 6.24 h; Bengali-English 46.11 / 7.02 / 5.53 h.
+- **Model:** wav2vec 2.0 fine-tuned with CTC via fairseq and the Vakyansh toolkit. Two pretrained encoders compared: Hindi-4200 (4200 h unlabelled Hindi, base, 95M params) and XLSR-53 (56k h, 53 languages, large, 310M params). KenLM 5-gram on IndicCorp, beam width 3000, 500k-word vocabulary.
+- **Metrics:** WER; T-WER
+- **Key results:** Code-switching Approach C2 with the Hindi-4200 encoder on the blind set: Hindi-English WER 21.77 / T-WER 20.75 versus baseline 25.53 / 23.80; Bengali-English 28.27 / 26.96 versus 32.81 / 31.70; average 25.02 / 23.85 versus 29.17 / 27.75. Multilingual task average WER 26.56. Official MUCS blind leaderboard (Ekstep): Hindi-English 21.77 WER, 20.75 T-WER.
+- **Code:** https://github.com/Open-Speech-EkStep/vakyansh-wav2vec2-experimentation ; pretrained models at https://github.com/Open-Speech-EkStep/vakyansh-models
+- **Gaps for replication:** Batch size, learning rate, epochs/steps, optimiser settings, hardware, seeds and decoding hyperparameters beyond beam 3000 are all absent. Only 4 pages - this is the least documented of the MUCS systems despite having the most reusable code.
+
+The most compute-friendly strong MUCS Hindi-English system: a single wav2vec 2.0 base encoder fine-tuned with CTC plus an n-gram LM, reaching 21.77 WER on the blind set with public code and public checkpoints. Notably the monolingual Hindi-4200 encoder beats multilingual XLSR-53, which argues that in-language unlabelled data matters more than cross-lingual breadth for this pair. The paper itself is thin on training detail, so the repo rather than the text is the real artefact.
+
+### 6. Exploiting Monolingual Speech Corpora for Code-mixed Speech Recognition
+
+- **Authors:** Karan Taneja, Satarupa Guha, Preethi Jyothi, Basil Abraham
+- **Venue / year:** Interspeech, 2019 
+- **Link:** https://doi.org/10.21437/Interspeech.2019-1959
+- **Also:** https://www.isca-archive.org/interspeech_2019/taneja19_interspeech.html
+- **PDF saved:** `literature/pdfs/taneja_2019_exploiting_monolingual_corpora.pdf`
+- **Task:** CS-ASR (synthetic data) — Hindi-English
+- **Dataset:** Proprietary (Microsoft). Hindi speech 353 h / 42.4k utterances; English speech 133 h / 24.7k utterances; CMtext 12.6k utterances (183k tokens, text only); real code-mixed dev 2.2 h / 2k utterances and test 2.3 h / 2k utterances. Extra 220 h English for the forced-alignment model.
+- **Model:** Kaldi: tied-state triphones (wsj/s5) then TDNN (nnet3), MFCC, 55-phone common set with proprietary lexicons. Trigram Kneser-Ney LMs (SRILM). Synthetic CS speech built by splicing forced-aligned monolingual fragments using span-length (SynSL) and phone-transition (SynPT) distributions estimated from a small amount of real CS text.
+- **Metrics:** WER; CM-WER (errors on the words immediately on both sides of a switch point, normalised by the number of such words); mapsswe significance test
+- **Key results:** Acoustic model: HI(50) dev 63.01 / test 65.14; +SynConcat(100) 60.89 / 62.44; +SynSL(100) 60.22 / 62.28; +SynPT(100) 59.05 / 60.81. HI(350) 58.99 / 60.47; +SynPT(350) 56.28 / 58.29. Language model (WER with CM-WER in brackets): HI 58.65 (63.81) / 60.83 (65.50); HI+EN+ECT 57.72 (60.57) / 60.12 (62.92); HI+EN+SynPT 57.49 (60.00) / 60.12 (62.86); real CMtext 55.10 (52.79) / 57.38 (55.33); CMtext+S-All 54.59 (52.92) / 56.97 (55.05). Transliteration post-processing improved WER by 2.97% on average.
+- **Code:** none stated
+- **Gaps for replication:** Corpus and lexicon are proprietary and unavailable - the results cannot be reproduced at all, only the method. TDNN layer configuration, epochs, learning rate, and the corpus-size/reuse-bound parameters are unstated.
+
+Establishes the dominant low-resource recipe for this pair: synthesise code-mixed speech by stitching together forced-aligned monolingual Hindi and English fragments, with the splice points drawn from switch-span and phone-transition statistics measured on real code-mixed text. Phone-transition-aware splicing beats naive concatenation consistently, and 100 h of synthetic CS speech recovers much of the gain from 300 extra hours of real Hindi. It also introduces CM-WER, the first switch-point-local error metric for this pair, which is the right thing to report when the overall WER is dominated by non-switch regions.
+
+### 7. Improving Low Resource Code-switched ASR using Augmented Code-switched TTS
+
+- **Authors:** Yash Sharma, Basil Abraham, Karan Taneja, Preethi Jyothi
+- **Venue / year:** Interspeech, 2020 
+- **Link:** https://doi.org/10.21437/Interspeech.2020-2402
+- **Also:** https://www.isca-archive.org/interspeech_2020/sharma20c_interspeech.html ; arXiv:2010.05549
+- **PDF saved:** `literature/pdfs/sharma_2020_augmented_cs_tts.pdf`
+- **Task:** CS-ASR (TTS augmentation) — Hindi-English
+- **Dataset:** Proprietary (Microsoft): 50 h Hindi, 50 h Indian-accented English, ~12 h / 12k utterances real Hindi-English CS speech. Dev 2000 sentences (25,679 words), test 2000 sentences (29,408 words). ~100 h of TTS speech generated from the CS-Real text.
+- **Model:** ESPnet hybrid CTC-attention: 4-layer BLSTM encoder (512 units, 512 projections, subsampling), location-aware attention, 1-layer decoder, grapheme output over Latin + Devanagari. TTS: multi-speaker multilingual Tacotron-2 (6 Indian languages + 70 Hindi speakers), 250k iterations, batch 32, speaker-adapted on 100-200 samples for 10k more iterations; parallel WaveNet vocoder. Word RNNLM (1-layer, 1000 units, top-2000 CS vocabulary), decode weight 0.1. Two contributions: mixup between TTS and real samples, and a CS-bias loss that up-weights code-switched predictions.
+- **Metrics:** WER; CER; CS-WER = 1 - N/M over words on both sides of switch points
+- **Key results:** Trained from scratch with no real CS speech: baseline dev 70.7 (CER 54.3) / test 72.1 (54.5); best add-mixup-100 + CS-bias 67.7 (47.4) / 69.0 (47.3). Fine-tuned on the 12 h CS-Real: baseline B1 dev 58.6 WER / 59.8 CS-WER, test 59.9 / 60.2; A-100 + CS-bias dev 53.6 / 53.3, test 55.2 / 54.4. Headline: absolute WER reductions of up to 5%.
+- **Code:** none stated
+- **Gaps for replication:** Corpus, lexicon and TTS voices are all proprietary. The train/dev/test split of the 12 h CS-Real is only given in sentence and word counts, never hours; mixup batch sampling detail, LR schedule beyond Adadelta base 1.0, seeds, hardware and the number of adapted TTS speakers are unstated.
+
+Takes the synthetic-data idea from acoustic splicing to full TTS: generate code-switched audio with a multilingual Tacotron-2 and then mix it with real speech, with a loss term that explicitly rewards predicting code-switched output. The mixup step matters - naively adding TTS audio to the training pool helps far less than interpolating TTS and real samples, which is a direct statement about the domain gap between synthetic and real CS speech. CS-WER is reported alongside WER throughout, making this one of the few Hindi-English papers where you can see whether a method actually fixes switch points or just the easy monolingual stretches.
+
+### 8. An Improved Transformer Transducer Architecture for Hindi-English Code Switched Speech Recognition
+
+- **Authors:** Ansen Antony, Sumanth Reddy Kota, Akhilesh Lade, Spoorthy V, Shashidhar G. Koolagudi
+- **Venue / year:** Interspeech, 2022 
+- **Link:** https://doi.org/10.21437/Interspeech.2022-10763
+- **Also:** https://www.isca-archive.org/interspeech_2022/antony22_interspeech.html
+- **PDF saved:** `literature/pdfs/antony_2022_transformer_transducer_hieng.pdf`
+- **Task:** CS-ASR (transducer) — Hindi-English
+- **Dataset:** MUCS 2021 Hindi-English (quoted as ~90 h train / ~5 h test / ~6.50 h blind). Pre-training on Mozilla Common Voice: English 2,224 validated hours (81,085 voices) and Hindi 21 validated hours (299 voices); Section 3.5 instead states 2,185 h English and 16 h Hindi.
+- **Model:** ESPnet 0.9.7 Transformer-Transducer (RNN-T loss). Config 1: 12-layer encoder x 2048, 6-layer decoder x 2048, dropout 0.1, 12 heads of 64 dims -> 512, 40 epochs, Noam LR 10, 8000 warmup, beam 5. Config 2: 18/9 layers, dropout 0.3. Config 3: + VGG2L input layer with causal convolution, masked training and LID tags. Multi-encoder: dual VGG2L transformer encoders, 12 layers x 768, attention dropout 0.4, decoder 6 layers x 768; the pre-trained variant initialises each encoder from monolingual Common Voice.
+- **Metrics:** WER; T-WER
+- **Key results:** Table 2 (Hindi-English): reference "DNN-HMM" 32.45 WER / 29.80 T-WER; TT Config 1 38.36 / 36.71; Config 2 31.18 / 30.54; Config 3 31.05 / 29.88; TT multi-encoder 30.26 / 29.37; TT pre-trained multi-encoder 29.63 / 27.42.
+- **Code:** none stated
+- **Gaps for replication:** Batch size, mel-filterbank/frame settings, the LID-tag insertion algorithm, the target-masking ratio, optimiser settings for Configs 2-3, and seeds are unstated. The Common Voice hour counts are internally inconsistent (2,224 vs 2,185 English; 21 vs 16 Hindi). COMPARABILITY WARNING: their 32.45 / 29.80 reference pair does not exist as a single Hindi-English system in Diwan et al. - 32.45 is the end-to-end Transformer average over BOTH pairs on the unaligned test set, and 29.80 is the Hindi-English Transformer T-WER on the realigned blind set. Which split their own 29.63 is measured on is never stated.
+
+The only published Transformer-Transducer study on this pair, and the one that most directly tests whether monolingual pre-training of language-specific encoders helps Hindi-English code-switching. Pre-training two separate encoders on Common Voice Hindi and English gives the best number in the paper, but the Hindi side has only ~20 h of Common Voice available, so the pre-training is heavily asymmetric. The reported gain over "baseline" rests on a reference number that cannot be traced to a single system in the challenge paper, so treat the 29.63 as a within-paper comparison only.
+
+### 9. Adapting Whisper for low-resource Hindi-English Code-Mix speech with on-the-fly Augmentation & LLM-Synthesised Data
+
+- **Authors:** Astik Biswas, Oleg Shevelev, Amine Abdaoui, Vivek Tyagi, Abdelmoumene Boumadane
+- **Venue / year:** Interspeech, 2025 
+- **Link:** https://doi.org/10.21437/Interspeech.2025-447
+- **Also:** Interspeech 2025 proceedings (ISCA Archive)
+- **PDF saved:** `literature/pdfs/biswas_2025_whisper_hieng_codemix.pdf`
+- **Task:** CS-ASR (Whisper adaptation) — Hindi-English
+- **Dataset:** MUCS Hindi-English code-mix: Train 89.8 h (606,456 words; 176,563 switch points), Train_sub 15 h, Test 5.2 h (37,842 words; 9,365 switch points); 4 h of train held out as dev. Plus 15 h each of Hindi and English Common Voice (out-of-domain monolingual) and synthetic TTS sets TrainT1 (8 h) and TrainT2 (22 h).
+- **Model:** Whisper large-v2 (1.54B params) fine-tuned with language tokens <|hi|> / <|en|>; peak LR 2e-5, max 5k update steps; WhisperX decoding with language detection disabled. Track 1 concatenates monolingual Hindi and English audio on the fly to simulate code-mixing, with language-specific prompting. Track 2 generates code-mixed text with Llama-3.3-70B-Instruct and renders it with Indic Parler-TTS (one male, one female Indian voice).
+- **Metrics:** Mixed Error Rate (MER); Code-Switch Bigram Accuracy (CBA) - share of correctly recognised bigrams at switch points, reported separately for Hindi->English and English->Hindi
+- **Key results:** Pretrained Whisper large-v2: MER 52.0, CBA HE 42.9 / EH 36.8. Fine-tuned on full real train with <|en|> prompt (LB1) 44.7; with <|hi|> prompt (LB2) 37.4 (CBA 64.1 / 66.4). Best system M5 (full train + monolingual + language-specific prompts + on-the-fly CS): MER 28.8, CBA HE 76.1 / EH 75.3 - 23% relative better than LB2. Without any real in-domain data, M9 (synthetic + monolingual + prompting + on-the-fly CS) reaches MER 35.9, a 31% relative improvement over pretrained Whisper.
+- **Code:** none stated
+- **Gaps for replication:** Epoch count (only 5k max steps), LR schedule shape, LLM sampling temperature and shot count, Parler-TTS generation settings, the per-source hour composition of each model, the language-sampling distribution inside the on-the-fly concatenation, and seeds are unstated. MER is cited to a reference rather than defined, so its exact tokenisation for mixed script is not pinned down.
+
+The current reference point for foundation-model adaptation on this pair, and the only Hindi-English CS paper that reports a switch-point-specific accuracy at scale. Two results stand out: simply prompting Whisper with the Hindi language token instead of English is worth 7 MER points for free, and 31% of the gain is reachable with no real code-mixed audio at all using LLM-generated code-mixed text plus TTS. Because it reports MER rather than WER/T-WER it is not directly comparable to any MUCS leaderboard entry, which is a real obstacle to using it as a replication target.
+
+### 10. Homophone Identification and Merging for Code-switched Speech Recognition
+
+- **Authors:** Brij Mohan Lal Srivastava, Sunayana Sitaram
+- **Venue / year:** Interspeech, 2018 
+- **Link:** https://doi.org/10.21437/Interspeech.2018-1171
+- **Also:** https://www.isca-archive.org/interspeech_2018/srivastava18_interspeech.html
+- **PDF saved:** `literature/pdfs/srivastava_2018_homophone_merging.pdf`
+- **Task:** Script / borrowed words — Hindi-English
+- **Dataset:** Proprietary conversational Hindi-English CS corpus: train 41,276 utts / 429 speakers / 46 h / 560,893 words; test 5,193 utts / 53 speakers / 5.6 h; dev 4,689 utts / 53 speakers / 5.7 h. English is 16.6% of tokens but 40.23% of the unique vocabulary. ~19k vocabulary words, 7k in Latin script and 12k in Devanagari.
+- **Model:** Kaldi GMM-HMM (fMLLR), DBN-pretrained feed-forward NNET, chain TDNN, and discriminatively trained TDNN. Two phone sets compared: WX (45 phonemes) and a combined English+Hindi set (89 phones). English pronunciations from a CNTK LSTM-with-attention grapheme-to-phoneme model trained on CMUdict then mapped to WX; Hindi pronunciations from the Festvox Indic front end. Word trigram LM on CS training transcripts.
+- **Metrics:** WER; poWER (pronunciation-optimised WER) = Levenshtein distance between the grapheme-to-phoneme renderings of hypothesis and reference, normalised by reference length; LM perplexity
+- **Key results:** Table 3, columns Baseline comb. / WER WX / poWER WX / WER comb. / poWER comb.: GMM 52.63 / 40.21 / 37.73 / 52.42 / 48.72; NNET 45.42 / 33.78 / 31.80 / 44.88 / 41.22; TDNN 42.15 / 31.78 / 29.97 / 41.77 / 38.73; TDNN discriminative 40.26 / 29.80 / 28.03 / 39.86 / 36.92. Homophone merging gives about 1.2% relative WER improvement and 0.5% relative LM perplexity improvement. Of 442 merged candidates, 288 are within-language spelling variants and 154 are cross-script English<->Hindi pairs (borrowings and cross-transcriptions).
+- **Code:** none stated
+- **Gaps for replication:** Corpus is proprietary. The CNTK g2p configuration, RNNLM/SRILM settings, TDNN architecture, GMM training detail, the disambiguation thresholds in Algorithm 1, and the CMI-bin WER numbers behind Figure 1 are unstated. Table 3 column headers are mangled by PDF text extraction and were read from the rendered page.
+
+The paper that names the script-inconsistency problem precisely for Hindi-English: because annotators freely write English words in Devanagari and Hindi words in Latin, a large block of the vocabulary consists of homophone pairs that WER punishes as errors. It quantifies the split - roughly two thirds of mergeable pairs are within-language spelling variants and one third are genuine cross-script borrowings - and proposes poWER, which scores in the phoneme domain so that "room" and the Devanagari rendering of the same borrowed word cost nothing. The ASR gain from merging is small (~1.2% relative), but the diagnostic and the metric are the lasting contributions.
+
+### 11. A Study of Lexical and Prosodic Cues to Segmentation in a Hindi-English Code-switched Discourse
+
+- **Authors:** Preeti Rao, Mugdha Pandya, Kamini Sabu, Kanhaiya Kumar, Nandini Bondale
+- **Venue / year:** Interspeech, 2018 
+- **Link:** https://doi.org/10.21437/Interspeech.2018-1600
+- **Also:** https://www.isca-archive.org/interspeech_2018/rao18_interspeech.html
+- **PDF saved:** `literature/pdfs/rao_2018_lexical_prosodic_cues_segmentation.pdf`
+- **Task:** Switch-point / segmentation cues — Hindi-English
+- **Dataset:** 5 Hindi public-discourse YouTube videos by a single speaker, 1 h total, drawn from ~700 available. 97 Hindi segments (2854.64 s total, 29.43 s mean, 1.73-137.31 s range) and 100 English segments (744.82 s total, 7.45 s mean, 0.91-35.2 s range), refragmented into 240 Hindi / 456 Hindi-with-embedded-English / 218 English fragments of 0.5-10 s.
+- **Model:** No trained classifier. Google Speech API (en-IN and Hindi) for transcription, Pyenchant for English word validation, a Kaldi hybrid DNN-HMM (trained on 5 h of bilingual children's reading speech, 47 models) for forced alignment, and Praat autocorrelation for pitch (30 ms Hanning, 100-500 Hz).
+- **Metrics:** Speech-API WER; fraction of valid English words per fragment; silence-to-speech ratio; pause duration at switch boundaries; syllable-duration, pitch (semitones), intensity, spectral-tilt and four-band spectral-balance statistics; Welch t-test at p<0.01
+- **Key results:** Google Speech API (en-IN) WER about 15% averaged over Hindi and English segments; 910 of 914 fragments decoded. Median silence-to-speech ratio 0.16 for English segments versus 0.32 for Hindi segments. Mean syllable duration higher for English than Hindi; the max/min syllable-duration ratio is near-equal for pure English and pure Hindi but higher for Hindi-with-embedded-English. Spectral balance in the 1-2 kHz band, together with syllable-duration, pitch, intensity and spectral-tilt features, separates Hindi from English fragments at p<0.01.
+- **Code:** none stated
+- **Gaps for replication:** Single speaker, single genre, one hour - no held-out speaker and no classifier, so there is no accuracy or F1 to replicate, only feature-level significance. Per-feature p-values are not itemised, the acoustic-model configuration is deferred to a citation, and the video selection is not characterised.
+
+The only Hindi-English switch-point study at a flagship speech venue, and it is deliberately diagnostic rather than predictive. It shows that fragments containing embedded English are prosodically distinguishable from both pure Hindi and pure English - the max/min syllable-duration ratio is highest for the mixed class - and that Hindi stretches carry roughly twice the silence-to-speech ratio of English stretches in this speaker. The practical implication for a code-switch detector is that duration and spectral-balance features carry real signal beyond the acoustic-phonetic identity of the segment, but the single-speaker design means none of the effect sizes should be assumed to generalise.
+
+### 12. Joint Language Identification of Code-Switching Speech using Attention based E2E Network
+
+- **Authors:** Sreeram Ganji, Kunal Dhawan, Kumar Priyadarshi, Rohit Sinha
+- **Venue / year:** International Conference on Signal Processing and Communications (SPCOM), 2020 **⚠ PAYWALLED**
+- **Link:** https://doi.org/10.1109/SPCOM50965.2020.9179636
+- **Also:** Preprint: https://arxiv.org/abs/1907.06342
+- **PDF saved:** `literature/pdfs/ganji_2019_arxiv_joint_lid_attention_e2e_PREPRINT.pdf (preprint, not the published version)`
+- **Task:** Spoken LID on CS speech — Hindi-English
+- **Dataset:** IITG-HingCoS: 9251 Hindi-English CS utterances (~25 h), 101 speakers (64 male / 37 female), 8 kHz, utterances 2-30 s. Partition stated as train/test/dev = 7015 / 100 / 2136 sentences.
+- **Model:** Nabu toolkit. (1) CTC E2E: 3-layer BiLSTM encoder, 128 units per layer, CTC decoder. (2) Attention E2E: Listen-Attend-Spell, 2-layer BiLSTM listener (128 units), attender, LSTM speller, beam width 8. Features: 26-dim log filter-bank energies, 25 ms Hamming window, 10 ms shift, pre-emphasis 0.97. LID tags are predicted directly from speech rather than via an ASR pass; word-level tags come from majority voting over character-level tags.
+- **Metrics:** LID error rate = (substitutions + insertions + deletions) / total reference labels x 100, at character and word level. Note this is an edit-distance error rate, NOT frame accuracy and NOT EER.
+- **Key results:** Reference totals N = 198,855 characters / 41,025 words. CTC character: 73,502 del / 3,384 ins / 20,957 sub -> 49.20%. CTC word: 3,576 / 3,655 / 5,136 -> 30.14%. Attention character: 20,299 / 13,587 / 12,789 -> 23.47%. Attention word: 2,713 / 1,616 / 2,484 -> 16.60%.
+- **Code:** none stated
+- **Gaps for replication:** The published IEEE version could not be accessed from this environment; all numbers above are from the open-access preprint and may differ from the camera-ready. The stated test-set size of 100 sentences conflicts with Dhawan et al. on the same corpus and same train/dev sizes (7015 / 1152 / 2136) and is very likely a typo for 1152. Learning rate, optimiser, initialisation, hardware, seeds, speaker-disjointness of the split, and augmentation are unstated.
+
+The clearest Hindi-English spoken-LID result on real code-switched audio, and it makes the case that attention beats CTC decisively for this task - 16.60% versus 30.14% word-level LID error. The error breakdown is the most useful part: the CTC system deletes 73,502 of 198,855 character labels, meaning it mostly fails to emit anything rather than emitting the wrong language, while the attention model trades deletions for insertions. Because the metric is an edit-distance error rate over predicted label sequences rather than frame accuracy or EER, these numbers cannot be lined up against the frame-level LID literature on other Indian pairs.
+
+### 13. Implicit Self-supervised Language Representation for Spoken Language Diarization
+
+- **Authors:** Jagabandhu Mishra, S. R. Mahadeva Prasanna
+- **Venue / year:** IEEE/ACM Transactions on Audio, Speech, and Language Processing (TASLP), 2024 **⚠ PAYWALLED**
+- **Link:** https://doi.org/10.1109/TASLP.2024.3426978
+- **Also:** Preprint: https://arxiv.org/abs/2308.10470
+- **PDF saved:** `literature/pdfs/mishra_2023_arxiv_implicit_ssl_language_rep_sld_TASLP_PREPRINT.pdf (preprint, not the published version)`
+- **Task:** Language diarization — Hindi-English (TTSF-LD, synthetic); Gujarati/Tamil/Telugu-English (MSCS, real)
+- **Dataset:** TTSF-LD: synthetic Hindi-English code-switched utterances built from the IITM-TTS corpus (one Hindi female speaker plus her English utterances); first 5 h per language for training, 10,000 train / 4,000 test CS utterances; mean monolingual segment 6.5 s Hindi, 5.2 s English. MSCS (Microsoft): ~16 h train and ~2 h test per pair, language tags every 200 ms, primary:secondary duration ratio 4:1, mean segment ~1.5 s / ~0.5 s. NOTE: MSCS contains NO Hindi-English pair.
+- **Model:** Three frameworks - fixed-window segmentation, change-point segmentation, and end-to-end - over two representations: an x-vector TDNN (SpeechBrain, 5 hidden layers, statistical pooling) and a self-supervised wav2vec 2.0 encoder initialised from CLSRIL-23 (pretrained on 23 Indian languages) and fine-tuned per pair with CTC. E2E head: TDNN + statistical/attention pooling + 4-layer self-attention encoder (4 heads, 256-dim) with joint segmentation and classification loss L = w*Ls + (1-w)*Le.
+- **Metrics:** DER and JER with zero collar; IDR/MR/FAR and mean deviation for change-point detection; IDA and EER for sub-utterance LID; EER of within- versus between-language trials to probe representation quality
+- **Key results:** TTSF-LD (synthetic Hindi-English), x-vector: fixed segmentation N=200 DER 17.58 / JER 29.39; change-point N=200 DER 11.16 / JER 20.61; E2E DER 5.81 / JER 6.38. Explicit grapheme-posterior baseline N=100: 12.37 / 20.74, 9.3 / 17.23, and 11.37 / 10.7 respectively. MSCS (real, non-Hindi), x-vector E2E: DER 22.26, JER 60.4, IDA 81.3, EER 6.4. MSCS with the self-supervised wav2vec representation, E2E: DER 11.2, JER 21.8, IDA 90.1, EER 3.3 - a 63.9% relative JER improvement over x-vector.
+- **Code:** none stated in this paper (a companion Interspeech 2023 paper releases https://github.com/jagabandhumishra/W2V-E2E-Language-Diarization)
+- **Gaps for replication:** The published TASLP version could not be accessed here; numbers are from the preprint. Optimiser hyperparameters, batch sizes, model sizes, seeds, hardware, the joint-loss weight w, and per-pair epoch selection are unstated. Crucially the Hindi-English evaluation is entirely synthetic and single-speaker, and the real-data evaluation has no Hindi-English pair at all.
+
+The most complete treatment of spoken language diarization for Indian code-switching, and the paper that exposes how large the synthetic-to-real gap is: the same x-vector end-to-end system scores JER 6.38 on synthetic Hindi-English and 60.4 on real Microsoft code-switched data, where secondary-language segments average half a second. Replacing x-vectors with a fine-tuned wav2vec 2.0 representation recovers most of that loss (JER 21.8), which is the strongest available evidence that self-supervised features, not architecture, are what short-segment language diarization needs. The Hindi-English part is synthetic only - there is no real Hindi-English language-diarization benchmark in this literature.
+
+---
+
+## 3. Supporting and other-pair papers
+
+### 3a. Supporting — Hindi–English, read in full, secondary to the core 13
+
+### 14. IITG-HingCoS corpus: A Hinglish code-switching database for automatic speech recognition
+
+- **Authors:** Sreeram Ganji, Kunal Dhawan, Rohit Sinha
+- **Venue / year:** Speech Communication, 2019 **⚠ PAYWALLED**
+- **Link:** https://doi.org/10.1016/j.specom.2019.04.007
+- **Also:** Earlier preprint (smaller corpus snapshot): https://arxiv.org/abs/1810.00662
+- **PDF saved:** `literature/pdfs/ganji_2018_arxiv_hindi_english_cs_corpus_PREPRINT.pdf (preprint only)`
+- **Task:** CS-ASR corpus — Hindi-English
+- **Dataset:** Preprint snapshot: 13,071 Hinglish sentences (179,798 Hindi + 71,143 English words), 7,005 utterances from 71 speakers at 8 kHz, split 5,500 train / 1,505 test. Later papers on the same corpus report the grown version: 9,251 utterances, ~25 h, 101 speakers.
+- **Model:** Kaldi GMM (mono/tri1/tri2+LDA/tri3+LDA+SAT) and DNN (5 x 1024, tanh, 20 epochs, minibatch 128, 2500 senones, 8 Gaussians/senone); 3-gram LM (IRSTLM).
+- **Metrics:** WER
+- **Key results:** Preprint, 1,505-utterance test set: mono 53.51, tri1 33.52, tri2 32.73, tri3 27.20, DNN 25.40.
+- **Code:** none stated
+- **Gaps for replication:** The journal version is paywalled and was not read; corpus size differs between the preprint (7,005 utts / 71 speakers) and the figures quoted by the authors' later papers (9,251 utts / 101 speakers / ~25 h). No dev set in the preprint, no stated speaker-disjointness, and no public download link was found from this environment.
+
+The source publication for IITG-HingCoS, the only purpose-built read-speech Hindi-English code-switching corpus with a journal description. Sentences were crawled from Hindi web blogs, so the code-switching is naturally occurring in text but read aloud rather than spontaneous. Its main value now is as a second evaluation domain distinct from MUCS spoken tutorials; its main problem is that access is not documented publicly.
+
+### 15. Development of IIITH Hindi-English Code Mixed Speech Database
+
+- **Authors:** Banothu Rambabu, Suryakanth V Gangashetty
+- **Venue / year:** SLTU (6th Workshop on Spoken Language Technologies for Under-Resourced Languages), 2018 
+- **Link:** https://doi.org/10.21437/SLTU.2018-23
+- **Also:** https://www.isca-archive.org/sltu_2018/rambabu18_sltu.html
+- **PDF saved:** `literature/pdfs/rambabu_2018_iiith_hindi_english_db.pdf`
+- **Task:** CS-ASR corpus — Hindi-English
+- **Dataset:** IIITH-HE-CM: 8,804 phonetically balanced sentences (12,850 unique Hindi words, 4,390 unique English words) across lifestyle/sports/gadgets/health; 142 bilingual speakers (71 M / 71 F); 11 h total - train 110 speakers / 6,820 utterances / ~8 h, test 32 speakers / 1,984 utterances / ~3 h.
+- **Model:** Kaldi GMM-HMM (18k Gaussians, 39-dim MFCC+deltas) for alignments; monolingual and bilingual DNNs, 3 hidden layers x 2048 sigmoid units on 40-dim log-mel+deltas, SGD LR 0.002, minibatch 256, 11-frame context; SGMM2 also evaluated.
+- **Metrics:** WER
+- **Key results:** EXP1: mono 14.13, tri1 8.14, tri2 8.54, tri3 8.23, tri3.SI 9.08, tri4_nnet 8.02, SGMM2_4 7.08. EXP2: mono 38.79, tri1 22.38, tri2 21.08, tri3 18.30, tri3.SI 21.27, tri4_nnet 16.99, SGMM2_4 15.32.
+- **Code:** none stated
+- **Gaps for replication:** The paper never states what distinguishes EXP1 from EXP2, which makes the two result sets uninterpretable in isolation. G2P training, bilingual lexicon size, DNN epochs and SGMM2 configuration are unstated, and no public download link was found.
+
+A read-speech, phonetically balanced Hindi-English code-mixed corpus of 11 h with a speaker-disjoint train/test split and a balanced gender design - unusually clean for this literature. The WERs are far lower than any MUCS number because the material is read and phonetically controlled, so it is not a substitute benchmark. Its practical obstacle is that the corpus does not appear to be publicly downloadable.
+
+### 16. End-to-End ASR for Code-switched Hindi-English Speech
+
+- **Authors:** Brij Mohan Lal Srivastava, Basil Abraham, Sunayana Sitaram, Rupesh Mehta, Preethi Jyothi
+- **Venue / year:** arXiv preprint (no published venue verified), 2019 
+- **Link:** https://arxiv.org/abs/1906.09426
+- **Also:** -
+- **PDF saved:** `literature/pdfs/srivastava_2019_arxiv_e2e_asr_cs_hindi_english_PREPRINT.pdf`
+- **Task:** CS-ASR (E2E) — Hindi-English
+- **Dataset:** Same proprietary Microsoft Hindi-English CS corpus as P10: train 46.65 h, dev 5.83 h, test 5.70 h; 101 graphemes, 89 phonemes. 41k sentences oversampled to 1.2M.
+- **Model:** Kaldi GMM-HMM/DNN/TDNN baselines; ESPnet CTC, LAS and multi-task (CTC+attention) E2E models - 4-layer pyramidal BLSTM encoder (320 units), 2-layer LSTM decoder (300 units), Adadelta, beam 50, 15 epochs.
+- **Metrics:** WER and CER
+- **Key results:** GMM-HMM 40.21, DNN 33.78, TDNN 31.78, CTC 57.2 (CER 34.9), LAS 62.9 (47.9), MTL 52.3 (34.1). Grapheme oversampling improves test WER by 5% absolute to 47.2%.
+- **Code:** none stated
+- **Gaps for replication:** Preprint only - no peer-reviewed venue could be verified. Corpus proprietary. Its Kaldi baselines (40.21 / 33.78 / 31.78) are exactly the WX-phoneset column of Srivastava & Sitaram (2018) Table 3, so the two papers share systems, not just data.
+
+A direct answer to "should I use an end-to-end model on 47 h of Hindi-English code-switched speech?" - and the answer is no. Every E2E variant is 15-30 WER points worse than the hybrid TDNN on the same data, with multi-task CTC+attention the best of a bad set. Useful mainly as documented evidence of the data threshold below which hybrid systems still win on this pair.
+
+### 17. Investigating Target Set Reduction for End-to-End Speech Recognition of Hindi-English Code-Switching Data
+
+- **Authors:** Kunal Dhawan, Ganji Sreeram, Kumar Priyadarshi, Rohit Sinha
+- **Venue / year:** National Conference on Communications (NCC), 2020 **⚠ PAYWALLED**
+- **Link:** https://doi.org/10.1109/NCC48643.2020.9056083
+- **Also:** Preprint: https://arxiv.org/abs/1907.08293
+- **PDF saved:** `literature/pdfs/dhawan_2019_arxiv_target_set_reduction_PREPRINT.pdf (preprint only)`
+- **Task:** CS-ASR (target set reduction) — Hindi-English
+- **Dataset:** IITG-HingCoS: 9,251 utterances, ~25 h, 101 speakers, 8 kHz; train/dev/test 7,015 / 1,152 / 2,136; test split by utterance length into Test1 (3-15 words, 957), Test2 (16-25, 719), Test3 (26-60, 460).
+- **Model:** Nabu/TensorFlow. CTC E2E: 4-layer DBLSTM (256), dropout 0.5, Gaussian noise sigma 0.6, 250 epochs, batch 32. Attention E2E (LAS): 3-layer pyramidal DBLSTM listener (512), 2-layer LSTM decoder (512), beam 16, 400 epochs. Kaldi DNN-HMM: 5 x 1024 tanh, 13-dim MFCC spliced +/-3 then LDA to 40. Features 26-dim log filter-bank.
+- **Metrics:** PER (reduced target set) and CER (unified target set). Unified character set = 95 targets (26 English + 68 Hindi + word separator); reduced = 63 targets (62 common phones + separator), a 34% reduction.
+- **Key results:** Attention E2E averages PER 21.92 / CER 35.96 (Test1 21.01/33.69, Test2 21.06/34.80, Test3 23.70/39.38); CTC E2E PER 30.04 / CER 34.18; DNN-HMM PER 47.98 / CER 48.51.
+- **Code:** not stated
+- **Gaps for replication:** Published IEEE version not accessed. Learning rate, optimiser, initialisation, hardware, model-selection criterion and whether the split is speaker-disjoint are unstated; PER and CER are not comparable to each other, which makes the headline comparison awkward.
+
+Tests whether collapsing the 95-symbol Hindi+English character set onto 63 shared phones helps end-to-end models on a pair that shares much of its phonetic inventory. It does, and the gain grows with utterance length, but the paper compares PER on the reduced set against CER on the full set, so "34% fewer targets is better" is not a like-for-like claim. Relevant to the script-inconsistency theme because a shared phone inventory sidesteps the Devanagari-versus-Latin decision entirely.
+
+### 18. A Novel Approach for Effective Recognition of the Code-Switched Data on Monolingual Language Model
+
+- **Authors:** Ganji Sreeram, Rohit Sinha
+- **Venue / year:** Interspeech, 2018 
+- **Link:** https://doi.org/10.21437/Interspeech.2018-1259
+- **Also:** https://www.isca-archive.org/interspeech_2018/ganji18_interspeech.html
+- **PDF saved:** `literature/pdfs/ganji_2018_monolingual_lm_cs.pdf`
+- **Task:** CS language modelling — Hindi-English
+- **Dataset:** Text crawled from Hindi blogs about internet usage: train 1,050 sentences, test 105, dev 435, with Hindi and Hinglish variants of each test/dev sentence. Development dictionary of 5,651 words (2,385 unique) reduced to 1,640 (1,285 unique) after mapping.
+- **Model:** Factored RNN LM (RNNLM toolkit, 1 hidden layer of 300 sigmoid units, 50 classes, BPTT 5) using a new "code-switching factor" feature plus a CS-tagger that maps each potential Hindi word to an equivalent class of English words. Contrast models: 5-gram SRILM with Kneser-Ney, and a class-based RNN LM.
+- **Metrics:** Perplexity, 3-fold cross-validation
+- **Key results:** 5-gram word LM: Hinglish PPL 334.20, Hindi 80.11. RNNLM word: 318.23 / 78.23. F-RNNLM word + CS factor: 48.15 / 48.80.
+- **Code:** none stated
+- **Gaps for replication:** Tiny corpus (1,050 training sentences). The CS-tagger's generalisation beyond its 1,640-word map is not described, nor are RNNLM learning rate/epochs, the crawl procedure, or the cross-validation split construction. Text-only - no ASR evaluation.
+
+Shows that a Hindi-only language model can be made to predict Hinglish almost as well as pure Hindi (PPL 48.15 versus 48.80) by adding an explicit code-switching factor, instead of training on scarce code-switched text. The perplexity drop from 318 to 48 is dramatic but comes on 1,050 training sentences with a hand-built equivalence map, so it reads as a proof of concept rather than a deployable component. Directly relevant to the borrowed-word question because the equivalence classes it builds are essentially lists of English words that can occupy a Hindi slot.
+
+### 19. ASR for Low Resource and Multilingual Noisy Code-Mixed Speech
+
+- **Authors:** Tushar Verma, Atul Shree, Ashutosh Modi
+- **Venue / year:** Interspeech, 2023 
+- **Link:** https://doi.org/10.21437/Interspeech.2023-757
+- **Also:** https://www.isca-archive.org/interspeech_2023/verma23_interspeech.html
+- **PDF saved:** `literature/pdfs/verma_2023_asr_lowresource_noisy_codemixed.pdf`
+- **Task:** CS-ASR (common script) — Hindi-English (C-HE call-centre set) plus 5 monolingual Indic languages and a 4-language mix
+- **Dataset:** MUCS monolingual sets; GramVaani Hindi (100 h / 5 h / 3 h); proprietary call-centre C-HE Hinglish 136.04 h train / 4.29 h dev / 2.86 h test and C-HTKE 55.67 / 1.76 / 1.17 h.
+- **Model:** Indic-Wav2Vec-Large (AI4Bharat, pretrained on 17k h across 40 languages) fine-tuned with fairseq, plus a 5-gram KenLM. Text is transliterated into a reduced "Common Indic Representation" (Devanagari-based, similar-sounding characters grouped), then a disambiguation pipeline maps output back to native script at inference.
+- **Metrics:** WER
+- **Key results:** C-HE (Hinglish call centre): baseline 61.95, validation 21.7, test 23.9. MUCS average test WER 16.95 versus 30.69 baseline. GramVaani Hindi: baseline 27.47, test 24.35.
+- **Code:** none stated
+- **Gaps for replication:** The Hindi-English evaluation uses a proprietary call-centre corpus, so that number is unreproducible; all fine-tuning hyperparameters are deferred to an appendix absent from the proceedings PDF; the reported "baseline" for C-HE (61.95) is not identified.
+
+Pushes the script-normalisation idea to its logical end: transliterate everything into one reduced Devanagari-based alphabet with confusable characters merged, fine-tune a single Indic wav2vec 2.0 on that, and disambiguate back afterwards. On the authors' Hinglish call-centre data this takes WER from 61.95 to 23.9. The approach is the most directly relevant published answer to the script-inconsistency problem, but the Hindi-English evidence rests entirely on private data.
+
+### 20. Unified Model for Code-Switching Speech Recognition and Language Identification Based on Concatenated Tokenizer
+
+- **Authors:** Kunal Dhawan, Dima Rekesh, Boris Ginsburg
+- **Venue / year:** 6th Workshop on Computational Approaches to Linguistic Code-Switching (CALCS), co-located with EMNLP, 2023 
+- **Link:** https://doi.org/10.18653/v1/2023.calcs-1.7
+- **Also:** https://aclanthology.org/2023.calcs-1.7/
+- **PDF saved:** `literature/pdfs/dhawan_2023_calcs_concatenated_tokenizer.pdf`
+- **Task:** Joint CS-ASR + LID — English-Hindi and English-Spanish
+- **Dataset:** LibriSpeech 960 h; Hindi ULCA ~2,250 h; ~1,300 h Spanish; 10k h of synthetic code-switched training audio per pair built from monolingual corpora; synthetic 10 h CS test sets; real CS test sets = MUCS 2021 Hindi CS (5 h, 3,136 samples after cleaning) and Miami Bangor (Spanish); FLEURS for LID (Hindi 418 samples).
+- **Model:** Conformer-RNNT Large (~120M params, no external LM), NVIDIA NeMo, 200 epochs, AdamW + Noam, 20k warmup, peak LR 0.0015. The Concatenated Tokenizer maps each monolingual SPE unigram tokenizer (1024 units) into a disjoint ID range so that every output token carries its language identity for free.
+- **Metrics:** WER on monolingual and CS sets; utterance-level LID accuracy on FLEURS by taking the majority predicted language over tokens
+- **Key results:** English-Hindi: synthetic CS test 6.55 (aggregate tokenizer) / 6.57 (concatenated); real MUCS Hindi CS 30.3 (aggregate) / 28.78 (concatenated), versus 62.18 / 100 for multilingual models. Monolingual retention: LibriSpeech test-other 5.42 / 5.29, ULCA 11.35 / 11.64. FLEURS LID: English 98% (632/647), Spanish 100%, Hindi 99% (414/418).
+- **Code:** https://github.com/NVIDIA/NeMo (code and weights) and the code_switching scripts therein
+- **Gaps for replication:** The MUCS evaluation is on a cleaned 5 h / 3,136-sample subset of the Hindi-English test set, not the official test or blind set, so 28.78 cannot be compared to any leaderboard number. Language sampling ratios, batch size, GPU count, cleaning rules and seeds are unstated, and 10k h of synthetic data per pair puts full replication far outside single-GPU reach.
+
+Gets token-level language ID for free by concatenating monolingual tokenizers into disjoint ID ranges, so a single Conformer-RNNT emits transcription and language tags in one pass. Trained on 10k h of synthetic code-switched audio it reaches 28.78 WER on a cleaned MUCS Hindi-English subset and 99% Hindi LID accuracy on FLEURS, while barely degrading monolingual performance. The tokenizer trick itself is cheap and portable to a small fine-tune; the 10k-hour synthetic pipeline is not.
+
+### 3b. Other language pairs — included with justification
+
+Per the project scope, papers on other language pairs are excluded unless the method clearly transfers. Each entry below opens with **why it is here**.
+
+### 21. Dual Language Models for Code Switched Speech Recognition
+
+- **Authors:** Saurabh Garg, Tanmay Parekh, Preethi Jyothi
+- **Venue / year:** Interspeech, 2018 
+- **Link:** https://doi.org/10.21437/Interspeech.2018-1343
+- **Also:** https://www.isca-archive.org/interspeech_2018/garg18_interspeech.html
+- **PDF saved:** `literature/pdfs/garg_2018_dual_language_models.pdf`
+- **Task:** CS language modelling — Mandarin-English (SEAME)
+- **Dataset:** SEAME, 60-20-20 split: train 90 speakers / 56.6 h / 54,020 utts; dev 37 spk / 18.5 h; test 30 spk / 18.7 h. OOV 3.3% dev, 3.7% test.
+- **Model:** Two monolingual bigram LMs spliced by a probabilistic switching model, implemented as a finite-state machine; Kaldi SAT and TDNN+SAT acoustic models, RNNLM rescoring.
+- **Metrics:** Perplexity; Token Error Rate (English words and Mandarin characters as separate tokens)
+- **Key results:** Kneser-Ney perplexity, full data: dev mixed LM 329.67 vs DLM 324.9268; test 376.0968 vs 369.9355. With one third of the training data: dev 368.62 vs 356.01. TER with RNNLM rescoring: dev 34.21 / 34.11 / 33.85 (mixed / DLM / combined), test 36.64 / 36.52 / 36.37. 87.5% of code-switched bigrams occur 10 or fewer times; 55% of those occur once.
+- **Code:** none stated
+- **Gaps for replication:** Not Hindi-English. Vocabulary sizes, SRILM smoothing settings, Kaldi recipe detail, RNNLM training settings and lattice-combination weights are unstated.
+
+INCLUDED DESPITE BEING MANDARIN-ENGLISH because its core measurement transfers directly: 87.5% of code-switched bigrams in a real CS corpus are seen ten times or fewer and 55% exactly once, which is precisely why a bilingual LM trained on code-switched text generalises badly. The dual-LM construction - two monolingual LMs joined by a learned switch probability and compiled to an FST - is language-agnostic and was later echoed by the Hindi-English CS-factor work of Sreeram and Sinha. The gains are small, so cite it for the diagnosis rather than the method.
+
+### 22. End-to-End Language Diarization for Bilingual Code-Switching Speech
+
+- **Authors:** Hexin Liu, Leibny Paola Garcia Perera, Xinyi Zhang, Justin Dauwels, Andy W. H. Khong, Sanjeev Khudanpur, Suzy J. Styles
+- **Venue / year:** Interspeech, 2021 
+- **Link:** https://doi.org/10.21437/Interspeech.2021-82
+- **Also:** https://www.isca-archive.org/interspeech_2021/liu21d_interspeech.html
+- **PDF saved:** `literature/pdfs/liu_2021_e2e_language_diarization.pdf`
+- **Task:** Language diarization — Gujarati/Tamil/Telugu-English (WSTCSMC 2020) and Mandarin-English (SEAME-simulated)
+- **Dataset:** WSTCSMC 2020 task B: per pair about 10.6-10.9 h primary language, 1.8-2.1 h English and ~3 h silence for training; ~2 h development. Plus simulated SEAME data.
+- **Model:** BLSTM-E2E (5 x 256 BLSTM, cross-entropy + deep clustering loss, alpha 0.5, Adam 1e-3, 60 epochs) and XSA-E2E (x-vector front end + 4-block self-attention encoder, 4 heads, 256-dim, Adam 1e-4, 30 epochs). 200 ms segments.
+- **Metrics:** Segment-level accuracy and EER
+- **Key results:** WSTCSMC 2020 dev average: DeepSpeech2 baseline EER 6.6 / accuracy 76.9; Vocapia-LIMSI accuracy 81.2; BLSTM-E2E 5.9 / 82.3; XSA-E2E 5.8 / 82.6. On SEAME-simulated data without silence XSA-E2E reaches EER 5.08 / accuracy 89.84 against a BLSTM baseline of 7.20 / 85.60.
+- **Code:** https://github.com/Lhx94As/E2E-langauge-diarization
+- **Gaps for replication:** Not Hindi-English - the Microsoft code-switched corpus used here contains no Hindi-English pair. Utterance counts, segment-window details, the XSA loss weight beta, dropout, seeds and hardware are unstated; EER and accuracy are computed per an external workshop definition.
+
+INCLUDED DESPITE BEING ANOTHER PAIR because it is the reference architecture for segment-level language diarization on Indian code-switched speech and the code is public. An x-vector front end feeding a self-attention encoder beats both a BLSTM-with-deep-clustering model and the organisers' DeepSpeech2 baseline on every pair. The important caveat for Hindi-English work is that the only real Indian CS diarization data here is Gujarati/Tamil/Telugu-English, so this architecture has never been evaluated on real Hindi-English audio.
+
+### 23. End to End Spoken Language Diarization with Wav2vec Embeddings
+
+- **Authors:** Jagabandhu Mishra, Jayadev N Patil, Amartya Chowdhury, S. R. Mahadeva Prasanna
+- **Venue / year:** Interspeech, 2023 
+- **Link:** https://doi.org/10.21437/Interspeech.2023-1109
+- **Also:** https://www.isca-archive.org/interspeech_2023/mishra23_interspeech.html
+- **PDF saved:** `literature/pdfs/mishra_2023_e2e_sld_wav2vec.pdf`
+- **Task:** Language diarization — Gujarati/Tamil/Telugu-English (MSCS)
+- **Dataset:** Microsoft code-switch (MSCS) corpus, ~16 h train and ~2 h test per pair, language tags every 200 ms.
+- **Model:** x-vector E2E architecture with the x-vector extractor replaced by wav2vec 2.0 initialised from CLSRIL-23 (23 Indian languages, ~1000 h); 768-dim features every 20 ms pooled to 200 ms; 4-layer self-attention block; statistical versus attention pooling compared.
+- **Metrics:** IDA, EER, DER, JER
+- **Key results:** Best X-F-W2V-EA: IDA 90.1, EER 3.3, DER 11.2, JER 21.8 - a 63.9% relative JER improvement over the X-E2E baseline (IDA 81.3, EER 6.4, DER 22.2, JER 60.4). Fine-tuning the wav2vec encoder is essential: pretrained-only variants reach only JER 41.4-41.8.
+- **Code:** https://github.com/jagabandhumishra/W2V-E2E-Language-Diarization
+- **Gaps for replication:** Not Hindi-English. Optimiser, loss weight alpha, full layer dimensions, seeds and hardware are unstated.
+
+INCLUDED DESPITE BEING ANOTHER PAIR because it is the public-code companion to the TASLP paper in the core set and the cleanest demonstration that fine-tuned self-supervised features, not pooling or architecture, drive short-segment language diarization. Swapping x-vectors for a fine-tuned CLSRIL-23 wav2vec encoder cuts JER from 60.4 to 21.8 on half-second secondary-language segments. Since CLSRIL-23 includes Hindi, this is the most plausible off-the-shelf starting point for a Hindi-English language diarizer.
+
+### 24. Exploiting Spectral Augmentation for Code-Switched Spoken Language Identification
+
+- **Authors:** Pradeep Rangan, Sundeep Teki, Hemant Misra
+- **Venue / year:** arXiv preprint; stated as accepted at the First Workshop on Speech Technologies for Code-switching in Multilingual Communities (WSTCSMC 2020) - no ISCA Archive entry found, 2020 
+- **Link:** https://arxiv.org/abs/2010.07130
+- **Also:** -
+- **PDF saved:** `literature/pdfs/rangan_2020_arxiv_spectral_augmentation_cs_lid.pdf`
+- **Task:** CS spoken LID — Gujarati/Tamil/Telugu-English
+- **Dataset:** WSTCSMC 2020 challenge data. Part A (utterance level) ~32 h train, ~4 h dev, ~4 h test per pair; Part B (frame level) ~16 h train, ~2 h dev, ~2 h test per pair.
+- **Model:** CNN-BiLSTM trained with CTC (DeepSpeech-2 style): two 2-D convolutions then five BiLSTM layers of 1024 units (~10.2M params) and a 5-way softmax (blank, primary language, English, silence). SpecAugment plus a novel language-mask augmentation.
+- **Metrics:** Accuracy; EER defined as (FRR + FAR)/2
+- **Key results:** Task A accuracy: Gu-En 71.9 -> 73.01, Ta-En 71.2 -> 79.02, Te-En 74.0 -> 78.65. Task B with beam-search decoding, accuracy [EER]: Gujarati 72.53 [8.54] -> 76.64 [7.36], Tamil 73.89 [8.06] -> 76.06 [7.44], Telugu 75.20 [7.68] -> 75.84 [7.47]. Headline: 3-5% relative LID accuracy improvement over the Microsoft baseline.
+- **Code:** none stated
+- **Gaps for replication:** Not Hindi-English, and no peer-reviewed venue could be verified from the ISCA Archive. The actual SpecAugment parameters (time warp W, frequency mask F, time mask T) are never given, nor are learning rate, optimiser, batch size, hardware or seeds - which makes the central claim of the paper unreproducible.
+
+INCLUDED DESPITE BEING ANOTHER PAIR as the clearest evidence that plain spectral augmentation is worth several points of code-switched LID accuracy on Indian languages, and that a language-aware masking variant adds a little more. It is also the paper that documents the WSTCSMC 2020 shared task, which is the standard benchmark for Indian code-switched LID - and whose absence of a Hindi-English pair is the single biggest gap in this literature. Cite the result, not the recipe: the augmentation parameters are omitted.
+
+### 25. SVM-Based Language Diarization for Code-Switched Bilingual Indian Speech Using Bottleneck Features
+
+- **Authors:** Spoorthy V, Veena Thenkanidiyoor, Dileep A. D
+- **Venue / year:** SLTU, 2018 
+- **Link:** https://doi.org/10.21437/SLTU.2018-28
+- **Also:** https://www.isca-archive.org/sltu_2018/v18_sltu.html
+- **PDF saved:** `literature/pdfs/spoorthyv_2018_svm_language_diarization.pdf`
+- **Task:** Language diarization — Kannada-English
+- **Dataset:** NIT Goa bilingual code-switch corpus: 7 speakers x 10 sentences = 70 CS utterances, 10-fold stratified sampling. Plus 70 artificially stitched CS utterances from 15 h English and 18.04 h Kannada studio recordings.
+- **Model:** Binary SVM (linear and Gaussian kernels) over MFCC, GMM language-posterior features, and Phonexia bottleneck features (5 hidden layers, 80-unit bottleneck, trained on Fisher English with 120 phone-state targets).
+- **Metrics:** Frame classification accuracy over 10 folds
+- **Key results:** Artificial corpus: MFCC 70.72 / 73.03 (linear / Gaussian), language posteriors 58.24 / 61.05, MFCC+posteriors 71.08 / 69.18, bottleneck 83.96 / 86.16. NIT Goa corpus: MFCC 81.26 / 78.37, posteriors 69.88 / 65.08, MFCC+posteriors 59.79 / 61.59, bottleneck 82.86 / 83.16.
+- **Code:** none stated
+- **Gaps for replication:** Not Hindi-English. Seventy utterances total is far too small to support the conclusions; SVM C and kernel width, GMM component count, the SVM library and the manual switch-point marking procedure are all unstated.
+
+INCLUDED DESPITE BEING ANOTHER PAIR only because it is the earliest Indian-language code-switch-point detection study and it establishes the one finding that recurs throughout this literature: phonetically-trained bottleneck features beat raw MFCCs and beat GMM language posteriors for locating switch points. Everything else about it - 70 utterances, no held-out speakers, frame accuracy as the only metric - means the numbers carry no weight. Treat it as a historical reference for the bottleneck-feature idea, superseded by the wav2vec-based work above.
+
+### 26. SRI-B End-to-End System for Multilingual and Code-Switching ASR Challenges for Low Resource Indian Languages
+
+- **Authors:** Hardik Sailor, Kiran Praveen T, Vikas Agrawal, Abhinav Jain, Abhishek Pandey
+- **Venue / year:** Interspeech, 2021 
+- **Link:** https://doi.org/10.21437/Interspeech.2021-1578
+- **Also:** https://www.isca-archive.org/interspeech_2021/sailor21_interspeech.html
+- **PDF saved:** `literature/pdfs/sailor_2021_srib_e2e_mucs.pdf`
+- **Task:** Multilingual ASR (not CS) — 6 monolingual Indian languages (MUCS subtask-1 only)
+- **Dataset:** MUCS 2021 subtask-1: Hindi 95.05 h, Marathi 93.89 h, Odia 94.54 h, Gujarati/Tamil/Telugu 40 h each.
+- **Model:** ESPnet hybrid CTC/attention Transformer (12 encoder, 6 decoder), 83-dim features (80 mel + 3 pitch), language embeddings from a transformer LID classifier superimposed on every input frame, plus a hypothesis-elimination step using normalised log-probability.
+- **Metrics:** WER; LID accuracy
+- **Key results:** 3.02% average relative WER improvement over the challenge hybrid baseline on the blind set. LID accuracy: Hindi 98.70%, Marathi 99.37%, Odia 96.88%, Gujarati 95.17%, Telugu 93.84%, Tamil 88.34%. Blind-set WER excluding Marathi: baseline average 33.5, hypothesis elimination 32.4.
+- **Code:** none stated
+- **Gaps for replication:** Not a code-switching paper. SRI-B did submit to subtask-2 (leaderboard: Hindi-English 28.77 WER / 28.77 T-WER) but this paper describes only subtask-1, so the code-switching system is undocumented.
+
+INCLUDED ONLY AS A NEGATIVE RESULT FOR SCOPE: despite its title, this paper addresses MUCS subtask-1 (monolingual/multilingual ASR over six Indian languages) and contains no code-switched Hindi-English experiment. It is listed here because the title is a standing trap when searching for Hindi-English CS ASR systems. Its one transferable idea is conditioning a multilingual Transformer on language embeddings taken from a separate LID classifier.
+
+### 27. Interspeech 2018 Low Resource Automatic Speech Recognition Challenge for Indian Languages
+
+- **Authors:** Brij Mohan Lal Srivastava, Sunayana Sitaram, Rupesh Kumar Mehta, Krishna Doss Mohan, Pallavi Matani, Sandeepkumar Satpal, Kalika Bali, Radhakrishnan Srikanth, Niranjan Nayak
+- **Venue / year:** SLTU, 2018 
+- **Link:** https://doi.org/10.21437/SLTU.2018-3
+- **Also:** https://www.isca-archive.org/sltu_2018/srivastava18_sltu.html
+- **PDF saved:** `literature/pdfs/srivastava_2018_is2018_lowresource_challenge.pdf`
+- **Task:** Low-resource ASR challenge (not CS) — Tamil, Telugu, Gujarati (monolingual)
+- **Dataset:** 40 h train / 5 h test / ~4-5 h blind per language, provided by SpeechOcean and Microsoft.
+- **Model:** Kaldi GMM-HMM (tri3b), Karel DNN (7 x 2048), TDNN chain models; participant systems used multilingual TDNN with transfer learning and ROVER combination.
+- **Metrics:** WER
+- **Key results:** Baselines: Tamil 33.55 / 25.47 / 19.45, Telugu 40.12 / 34.97 / 22.61, Gujarati 23.78 / 27.79 / 19.76 (GMM-HMM / DNN / TDNN). Best participant systems around 13.9-14.1% WER.
+- **Code:** none stated
+- **Gaps for replication:** Not a code-switching paper and no Hindi. Participant hyperparameters, seeds and hardware are unstated.
+
+INCLUDED FOR PROVENANCE ONLY: this is the 2018 predecessor challenge whose Tamil/Telugu/Gujarati data was folded into MUCS 2021 subtask-1. It contains no Hindi and no code-switching, but it explains why three of the six MUCS monolingual languages have only 40 h while Hindi/Marathi/Odia have ~95 h, which matters when reading MUCS multilingual results.
+
+### 28. Spoken language change detection inspired by speaker change detection
+
+- **Authors:** Jagabandhu Mishra, S. R. Mahadeva Prasanna
+- **Venue / year:** Journal of the Acoustical Society of America (JASA) - venue as stated on the preprint; not independently verified via Crossref, 2023 
+- **Link:** https://arxiv.org/abs/2302.05265
+- **Also:** -
+- **PDF saved:** `literature/pdfs/mishra_2023_arxiv_spoken_language_change_detection.pdf`
+- **Task:** Switch-point detection — Hindi-English among 10 pairs in the human study and in the synthetic TTSF-LC corpus; Gujarati/Tamil/Telugu-English for the automatic experiments on real data
+- **Dataset:** Human listening study: 390 utterances (240 language-change, 150 speaker-change) judged by 18 subjects, with 4 Hindi-English utterances among 10 pairs. TTSF-LC: 4,000 synthetic Hindi-English utterances with one to five change points, mean monolingual segment 6.5 s Hindi / 5.2 s English. MSCSTB: Gujarati/Tamil/Telugu-English, ~16 h train and ~2 h dev per pair.
+- **Model:** Unsupervised KL-divergence between Gaussians fitted on sliding windows of MFCC/LPCC/SDC/PLP; supervised GMM-UBM (32 mixtures), i-vector (50-dim), u-vector, a-vector and TDNN x-vector (512-dim, SpeechBrain) with LDA/WCCN/PLDA scoring.
+- **Metrics:** Detection error rate, times-replayed and response time for the human study; IDR, FAR, MR and mean deviation for automatic change detection; EER for within- versus between-language trials
+- **Key results:** Humans and unsupervised systems both find language change far harder than speaker change: unsupervised IDR 84.1% for speaker change versus 51.2% (rising to 66.1% when retuned) for language change on synthetic Hindi-English. Supervised x-vectors reach IDR 92.27% for speaker change and 87.01% for language change on synthetic Hindi-English, but only 50.84-54.74% on real MSCSTB data at a 50-frame window. Representation EER: UBM 28.5, adapted 17.35, i-vector 12.55, x-vector 3.6. EER degrades sharply with shorter analysis windows: 7.1, 9.8, 12.8, 19.8, 29.2 at N = 200, 150, 100, 75, 50.
+- **Code:** https://github.com/jagabandhumishra/HUMAN-SUBJECTIVE-STUDY-FOR-LCD-and-SCD
+- **Gaps for replication:** Published venue not independently verified. The Hindi-English component is synthetic and single-speaker plus 4 utterances of human judgement; the real-data experiments use no Hindi-English. Optimiser, batch size, TDNN detail beyond "the SpeechBrain recipe", and the MSCSTB test-split construction are unstated.
+
+INCLUDED BECAUSE IT CONTAINS THE ONLY HINDI-ENGLISH SWITCH-POINT NUMBERS of any kind, even though they are on synthetic speech. Its most useful contribution is quantifying the analysis-window trade-off that governs every switch-point detector: language-discrimination EER rises from 7.1% at a 200-frame window to 29.2% at 50 frames, which is exactly the regime of one- or two-word English insertions in Hindi. It also shows humans themselves detect language change much less reliably than speaker change, which sets a realistic ceiling on what a detector should be expected to achieve.
+
+### 29. Improving Under-Resourced Code-Switched Speech Recognition: Large Pre-trained Models or Architectural Interventions
+
+- **Authors:** Joshua Jansen van Vuren, Thomas Niesler
+- **Venue / year:** Interspeech, 2023 
+- **Link:** https://doi.org/10.21437/Interspeech.2023-1841
+- **Also:** https://www.isca-archive.org/interspeech_2023/vanvuren23_interspeech.html
+- **PDF saved:** `literature/pdfs/vanvuren_2023_large_pretrained_vs_architectural.pdf`
+- **Task:** CS language modelling — isiZulu, isiXhosa, Sesotho, Setswana, Sepedi - each paired with English (South African)
+- **Dataset:** Spontaneous code-switched South African soap-opera speech, split into five bilingual sets; the smallest has about 10 minutes of training speech and the largest about 22 hours.
+- **Model:** n-best rescoring with (a) fine-tuned multilingual BERT, (b) word-level and sub-word LSTM language models, and (c) an LSTM with a new architectural mechanism designed for code-switched text.
+- **Metrics:** Absolute WER change under n-best rescoring; parameter count and rescoring runtime
+- **Key results:** The adapted LSTM language model beats fine-tuned M-BERT by 0.17% absolute WER in n-best rescoring, with a seven-fold reduction in parameters and a 100-fold reduction in rescoring runtime. Contrary to the trend, sub-word vocabularies do NOT outperform word-level models here. Allowing language-independent modelling costs only 0.13% absolute WER on the development set while enabling data pooling across bilingual sets.
+- **Code:** none stated
+- **Gaps for replication:** Not Hindi-English, and the corpus is far smaller than MUCS (10 min to 22 h per pair versus 89.86 h). Concerns language modelling only - the acoustic encoder question is not addressed.
+
+INCLUDED AS A CAUTIONARY COUNTERPOINT, not as support for scaling up. Its title invites the reading that large pretrained models win in under-resourced code-switching; its actual conclusion is the opposite - a small purpose-built LSTM beats a fine-tuned multilingual BERT at a fraction of the cost. The relevant transfer to Hindi-English is the warning, not a method: on ~90 h of MUCS data, "use a bigger pretrained model" is a hypothesis to test rather than a default. Note the finding is about language models; nothing here speaks to acoustic encoder choice.
+
+---
+
+## 4. Comparability warnings
+
+**Do not put these numbers in the same table without a footnote.** Each row below is a concrete reason two published Hindi–English results are not comparable.
+
+| # | Issue | Detail |
+|---|---|---|
+| 1 | **Four different "baselines" are all called "the MUCS baseline"** | Diwan et al. report six Hindi–English baseline numbers: GMM-HMM / TDNN / Transformer × unaligned (UnA) and realigned (ReA). The *official leaderboard* baseline is 25.53 WER / 23.80 T-WER, which is the **GMM-HMM UnA blind** figure. Papers citing "baseline 25.53" (Chadha et al.) and "baseline 25.5" (Kumar et al.) are using that one; Antony et al. cite 32.45, which is the **Transformer UnA average over both language pairs** on the *test* set. |
+| 2 | **Test set vs blind test set** | Diwan: Hin-Eng GMM-HMM is 31.56 on test but 24.66 on blind; the Transformer is 25.9 on test but 31.19 on blind. The ordering of architectures *reverses* between the two sets. Always state which. |
+| 3 | **Unaligned vs realigned training segments** | The corpus ships with misaligned timestamps. Diwan et al. report both; realigning changes Hin-Eng GMM-HMM test WER from 44.30 to 31.56. A replication that skips realignment is reproducing a different system. |
+| 4 | **Private per-paper splits** | Wiesner et al. invent NoDup / Dup / Whole splits based on lecture overlap and report 19.5 % T-WER on *their* NoDup dev set — while the same team's official blind score is 16.43 WER / 15.51 T-WER. Klejch et al. report 27.2 → 18.1 % WER on *their* Hindi split; their blind score is 20.41 WER. Dhawan et al. (2023) evaluate on a cleaned 5 h / 3,136-sample subset of the MUCS Hindi test set. None of these are the same set. |
+| 5 | **WER vs T-WER vs MER vs poWER vs TER** | Biswas et al. (2025) report only **MER**; Srivastava & Sitaram report **poWER**; Garg et al. report **TER**. None converts to WER. The MUCS leaderboard has *separate rankings* for WER and T-WER, and they disagree: JHU is 1st on WER (16.43) and 2nd on T-WER (15.51), CSTR is 2nd on WER (20.41) and 1st on T-WER (15.64). |
+| 6 | **Switch-point metrics are each defined differently** | Taneja et al.'s CM-WER = *edits* / switch-adjacent words; Sharma et al.'s CS-WER = 1 − *correct* / switch-adjacent words; Biswas et al.'s CBA = correct bigrams at switch points. Higher is worse for the first two and better for the third. |
+| 7 | **Proprietary corpora** | Taneja et al. (353 h HI + 133 h EN + 12.6k CS), Sharma et al. (~12 h CS-Real), Srivastava & Sitaram (46 h conversational), Srivastava et al. 2019 (46.65 h) and Verma et al. (136 h call-centre Hinglish) all use Microsoft/private data. Their *numbers* can never be reproduced, only their *methods*. |
+| 8 | **LID error rate ≠ LID accuracy ≠ EER** | Ganji et al. (2020) report an edit-distance LID error rate over predicted label sequences (16.60 % word-level). Rangan et al. and Liu et al. report frame/segment accuracy and EER. These do not map onto each other. |
+| 9 | **Synthetic vs real for diarization** | Mishra & Prasanna's Hindi–English JER of 6.38 is on *synthetic single-speaker* TTS speech; the same system scores 60.4 JER on real (non-Hindi) code-switched data. The gap is ~10×. |
+| 10 | **HingCoS exists in two sizes** | The 2018 preprint describes 7,005 utterances / 71 speakers; the 2019–2020 papers on the same corpus describe 9,251 utterances / ~25 h / 101 speakers. Also, Ganji et al. (2020) state a test set of **100** sentences where Dhawan et al. state **1,152** for the same corpus and identical train/dev sizes — almost certainly a typo, but unresolved. |
+| 11 | **Antony et al.'s reference number is untraceable** | Their "DNN-HMM 32.45 WER / 29.80 T-WER" pair does not exist as one Hindi–English system in Diwan et al.: 32.45 is a two-pair average on the unaligned test set, 29.80 is the Hindi–English Transformer T-WER on the realigned blind set. Their own 29.63 is reported without naming a split. |
+| 12 | **Internal inconsistency** | Antony et al. give Common Voice volumes as 2,224 h English / 21 h Hindi in one section and 2,185 h / 16 h in another. |
+
+---
+
+## 5. MUCS 2021 Subtask-2 official blind-test leaderboard (Hindi–English)
+
+Verified from the official challenge site (https://navana-tech.github.io/MUCS2021/leaderboard.html). Ranks are by **average** over Hindi–English and Bengali–English, so the Hindi–English column is not monotonic.
+
+| Rank (by avg WER) | Team | Hindi–English WER | Hindi–English T-WER | Paper in this review |
+|---|---|---|---|---|
+| 1 | JHU-CLSP/GoVivace | **16.43** | **15.51** | P02 Wiesner et al. 2021 |
+| 2 | CSTR | 20.41 | 15.64 | P03 Klejch et al. 2021 |
+| 3 | Sayint | 20.85 | 18.78 | — |
+| 4 | KARI | 22.54 | 20.49 | — |
+| 5 | Bytedance-SA | 21.56 | 19.65 | — |
+| 6 | IITM-SMT-Lab | 22.06 | 20.97 | P04 Kumar et al. 2021 |
+| 7 | Ekstep | 21.77 | 20.75 | P05 Chadha et al. 2022 |
+| 8 | TUTU | 23.96 | 22.3 | — |
+| 9 | MCSASR | 24.52 | 22.54 | — |
+| 10 | **Baseline** | **25.53** | **23.80** | P01 Diwan et al. 2021 |
+| 11 | Jio Speech | 27.69 | 23.83 | — |
+| 12 | INDIGO-IITG | 27.92 | 23.78 | — |
+| 13 | ScribeTech | 28.25 | 25.1 | — |
+| 14 | Deterministic Algorithms Lab | 32.45 | 31.15 | — |
+| 15 | SRI-B | 28.77 | 28.77 | (O06 describes their Subtask-1 system only) |
+| 16 | MIDAS | 29.81 | 28.37 | — |
+
+Teams 3, 4, 8, 9 and 11–14 have no system-description paper that I could locate.
+
+---
+
+## 6. PDF inventory
+
+**30 open-access PDFs saved** to `literature/pdfs/`. All were validated (`%PDF` magic bytes plus page count via `pypdf`).
+
+**Paywalled — publisher link only, numbers taken from the labelled open preprint:**
+
+| Paper | Publisher (paywalled) | Preprint used |
+|---|---|---|
+| P12 Ganji et al., *Joint Language Identification of Code-Switching Speech…*, SPCOM 2020 | https://doi.org/10.1109/SPCOM50965.2020.9179636 | arXiv:1907.06342 |
+| P13 Mishra & Prasanna, *Implicit Self-supervised Language Representation…*, TASLP 2024 | https://doi.org/10.1109/TASLP.2024.3426978 | arXiv:2308.10470 |
+| S01 Ganji et al., *IITG-HingCoS corpus*, Speech Communication 2019 | https://doi.org/10.1016/j.specom.2019.04.007 | arXiv:1810.00662 (earlier, smaller snapshot) |
+| S04 Dhawan et al., *Investigating Target Set Reduction…*, NCC 2020 | https://doi.org/10.1109/NCC48643.2020.9056083 | arXiv:1907.08293 |
+
+IEEE Xplore and Elsevier are not reachable from this environment, so the camera-ready versions of these four were **not read**. Where preprint and published numbers could differ, that is noted in the entry.
+
+**Preprint-only — no peer-reviewed venue could be verified:** P05 Chadha et al. 2022 (arXiv:2203.16578, states "submitted to Interspeech 2022"), S03 Srivastava et al. 2019 (arXiv:1906.09426), O04 Rangan et al. 2020 (arXiv:2010.07130, claims WSTCSMC 2020 acceptance but no ISCA Archive entry exists), O08 Mishra & Prasanna 2023 (arXiv:2302.05265, preprint states JASA; not independently confirmed).
+
+**Could not be verified at all:** none of the 28 entries rests on an unverified citation. Searches also surfaced several SSRN/preprints.org items on Hindi–English code-switched ASR (e.g. an SSRN record titled *"Adapting Whisper for Hindi-English Code-Switched ASR: Prompt…"*, DOI 10.2139/ssrn.7292658) which are **not peer-reviewed and were deliberately excluded**.
+
+**Tooling note:** OpenAlex was unavailable (no API key configured in this workspace — add one under Customize → Credentials → OpenAlex). Venue and DOI verification was done through Crossref, the ISCA Archive and the ACL Anthology instead; every `10.21437/…` DOI above was read off the publisher's own abstract page rather than constructed.
+
+---
+
+## 7. Open questions
+
+1. **There is no real Hindi–English language-diarization benchmark.** Would it be defensible to build one by deriving frame-level language labels from the MUCS Hindi–English forced alignments, and how noisy would those labels be given the known timestamp misalignment?
+2. **Is T-WER or MER the right primary metric** for a project that wants to claim an improvement? T-WER is the one the leaderboard ranks, but it requires the manual Latin-script annotation of the reference that the organisers performed and did not release as a tool.
+3. **How much of the MUCS Hindi–English gain is memorisation?** Test–train sentence overlap is 33.9 % while blind–train overlap is only 2.1 %. Wiesner et al.'s Dup/NoDup split shows WERs of 5.9 vs 20.9 on the same system. No other paper reports this decomposition.
+4. **Nobody has separated borrowed words from true switches** in an evaluation. Srivastava & Sitaram showed 154 of 442 mergeable vocabulary pairs are cross-script borrowings, but no paper reports error rates split by "established loanword" vs "genuine insertion".
+5. **No paper reports results by switch length.** The project brief cares about one- or two-word English insertions; the only evidence that short segments are hard is Mishra & Prasanna's window-length EER sweep (7.1 % at 200 frames → 29.2 % at 50 frames) on synthetic data.
+6. **Whisper vs IndicWav2Vec vs XLS-R has never been compared on one Hindi–English split.** Biswas et al. use Whisper with MER; Chadha et al. use wav2vec 2.0 with WER/T-WER; Verma et al. use IndicWav2Vec on private data. A single controlled comparison on the MUCS blind set does not exist.
+7. **Seeds and variance are reported by nobody.** Not one of the 28 papers states a random seed or reports run-to-run variance, so no published Hindi–English difference under ~1 WER point can be called significant.
