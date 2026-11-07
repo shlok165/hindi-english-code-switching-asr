@@ -7,9 +7,6 @@ _work/
 # with a DOI in literature/papers.md and literature/comparison_table.csv.
 literature/pdfs/
 
-# Editor / local tooling config
-.claude/
-
 # Data (never commit - MUCS is ~9 GB, CC BY-SA 4.0, fetch from OpenSLR)
 /data/
 *.tar.gz
