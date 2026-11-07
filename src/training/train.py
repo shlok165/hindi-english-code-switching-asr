@@ -203,15 +203,22 @@ def train(config: dict[str, Any], resume: str | None = None) -> dict[str, Any]:
     model.to(device)
     print(f"head: {head}", flush=True)
 
-    # The CTC head holds rows that start untrained, such as every Latin letter, so
-    # it can learn faster than the pretrained encoder without disturbing it.
+    # Three rates, because the three parts start in different states. The CNN is
+    # sensitive: one step at 1e-4 took a smoke-test batch from 63 to 93 percent WER.
+    # The head has untrained rows, and the transformer has to learn which language
+    # is being spoken, which the head cannot do alone.
+    base_rate = settings["learning_rate"]
+    cnn = [p for p in model.wav2vec2.feature_extractor.parameters() if p.requires_grad]
     head = [p for p in model.lm_head.parameters() if p.requires_grad]
-    head_ids = {id(p) for p in head}
-    encoder = [p for p in model.parameters() if p.requires_grad and id(p) not in head_ids]
+    separate = {id(p) for p in cnn + head}
+    transformer = [p for p in model.parameters() if p.requires_grad and id(p) not in separate]
+    groups = [
+        {"params": cnn, "lr": base_rate},
+        {"params": transformer, "lr": settings.get("transformer_learning_rate") or base_rate},
+        {"params": head, "lr": settings.get("head_learning_rate") or base_rate},
+    ]
     optimizer = torch.optim.AdamW(
-        [{"params": encoder},
-         {"params": head, "lr": settings.get("head_learning_rate") or settings["learning_rate"]}],
-        lr=settings["learning_rate"],
+        [group for group in groups if group["params"]],
         betas=tuple(settings["adam_betas"]),
         weight_decay=settings["weight_decay"],
     )
@@ -294,7 +301,7 @@ def train(config: dict[str, Any], resume: str | None = None) -> dict[str, Any]:
 
     def write_epoch(number: int, train_loss: float, metrics: dict[str, float], partial: bool) -> None:
         row = {"epoch": number, "update": update, "train_loss": round(train_loss, 4),
-               "lr": scheduler.get_last_lr()[0], "seconds": round(elapsed(), 1), "partial": partial}
+               "lr": scheduler.get_last_lr()[-1], "seconds": round(elapsed(), 1), "partial": partial}
         row.update({key: round(value, 4) for key, value in metrics.items()})
         print("epoch", row, flush=True)
         epoch_log.writerow(row)
@@ -338,7 +345,7 @@ def train(config: dict[str, Any], resume: str | None = None) -> dict[str, Any]:
                     "update": update,
                     "epoch": epoch,
                     "train_loss": round(window_loss / max(window_batches, 1), 4),
-                    "lr": scheduler.get_last_lr()[0],
+                    "lr": scheduler.get_last_lr()[-1],
                     "grad_norm": round(last_norm, 3),
                     "seconds": round(elapsed(), 1),
                     "peak_allocated_mb": round(torch.cuda.max_memory_allocated() / 2**20)
