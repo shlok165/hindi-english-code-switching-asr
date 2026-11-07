@@ -22,6 +22,7 @@ training:
   gradient_accumulation: 8        # Requested RTX 3050 setting: effective batch of 8 utterances
   freeze_encoder_updates: 0       # Full fine-tuning from the first update
   mixed_precision: true
+  gpu_memory_fraction: 0.75       # Measured: uncapped, the cache reached 7.25 GB on a 6 GB GPU and drained system RAM
   num_workers: 0                  # Measured: 1.11 s/update, against 1.30 with 2 workers on Windows
   log_every: 100
   eval_every: 2000

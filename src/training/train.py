@@ -171,6 +171,10 @@ def train(config: dict[str, Any], resume: str | None = None) -> dict[str, Any]:
     seed_everything(settings["seed"])
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     use_amp = bool(settings["mixed_precision"]) and device.type == "cuda"
+    if use_amp and settings.get("gpu_memory_fraction"):
+        # On Windows the allocator overflows into system RAM instead of failing, so
+        # its cache needs a ceiling. At the ceiling it releases cached blocks and retries.
+        torch.cuda.set_per_process_memory_fraction(settings["gpu_memory_fraction"])
 
     tokenizer_dir = data_path(config["data"]["tokenizer_dir"])
     vocab = json.loads((tokenizer_dir / "vocab.json").read_text(encoding="utf-8"))
