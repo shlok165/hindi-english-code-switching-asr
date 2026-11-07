@@ -1,18 +1,39 @@
 # Hindi–English Code-Switched ASR
 
-A project to replicate and then improve a Hindi–English code-switched ASR system on MUCS 2021 Subtask-2, using wav2vec 2.0 + CTC.
+A baseline for recognising Hindi–English code-switched speech: wav2vec 2.0 with a CTC head, greedy decoding and KenLM beam search, on MUCS 2021 Subtask-2. It follows the approach of Chadha et al. (2022), Approach C2. The encoder may not be the paper's exact checkpoint, so this reproduces the method, not their number.
 
-**Status: Stage 1A complete; Stage 1B execution preparation in progress.** The data pipeline and CTC training infrastructure are built and tested. **Full-scale training has not been run yet, so there are no accuracy results.**
+**Status: Stage 1A is complete. Stage 1B training is in progress, so there are no accuracy results yet.**
 
-- [Stage 1A report](docs/stage_1a_report.md): dataset statistics, model and tokenizer details, test results, GPU requirements and limitations
-- [Stage 1B handoff](docs/stage_1b_handoff.md): what comes next
+- [Stage 1A report](docs/stage_1a_report.md): dataset statistics, model, tokenizer and GPU requirements
+- [Stage 1B report](docs/stage_1b_report.md): training, evaluation and error analysis
 
-## Quick start
+## Reproducing the results
+
+Tested on Windows 11 with Python 3.14 and an RTX 3050 6 GB. The Colab notebook, `notebooks/colab_stage1b_baseline.ipynb`, has not yet been run on Colab. Commands are for PowerShell from the repository root.
+
+### 1. Environment
 
 ```powershell
 python -m venv .venv
 .venv\Scripts\python -m pip install torch==2.14.1 --index-url https://download.pytorch.org/whl/cu130
-.venv\Scripts\python -m pip install -r envequirements.txt
+.venv\Scripts\python -m pip install -r env\requirements.txt
+```
+
+KenLM decoding needs three more steps. PyPI has no Windows wheel for KenLM, and `pyctcdecode` pins an old numpy that is broken on Python 3.14. The build needs MinGW-w64 and Git Bash.
+
+```powershell
+.venv\Scripts\python -m pip install --no-deps pyctcdecode
+.venv\Scripts\python -m pip install pygtrie hypothesis
+bash scripts/build_kenlm.sh
+```
+
+`env/requirements.lock` records the exact versions used.
+
+### 2. Dataset
+
+MUCS 2021 is CC BY-SA 4.0 and is never committed here. This downloads about 8.8 GB, checks the archives, and builds manifests and the tokenizer. No manual access step is needed.
+
+```powershell
 .venv\Scripts\python -m src.data.download --only test blind train
 .venv\Scripts\python -m src.data.manifest --config configs/data.yaml
 .venv\Scripts\python -m src.models.tokenizer --config configs/data.yaml
@@ -20,55 +41,63 @@ python -m venv .venv
 .venv\Scripts\python -m src.training.smoke_test
 ```
 
-Data licence: MUCS 2021 is CC BY-SA 4.0 and is never committed here.
-
-For baseline GPU setup, use the [Stage 1B Colab notebook](notebooks/colab_stage1b_baseline.ipynb) and [Colab requirements](env/requirements-colab.txt). The notebook requires the `stage-1b-baseline` branch to be pushed to GitHub before its fresh-runtime clone cell can run. Colab/cloud setup and training have not been executed or verified from this checkout.
-
-## Stage 1B code paths
-
-The Stage 1B utilities are implemented, but **full training, KenLM decoding, and
-evaluation have not been run in this checkout**. The current environment has no
-MUCS data and CPU-only PyTorch. See
-[the code handoff](docs/stage_1b_code_report.md) for what is and is not verified.
-
-Build the 5-gram LM from `train.jsonl` only. KenLM's `lmplz` and `build_binary`
-executables must be installed and on `PATH`:
+### 3. Training
 
 ```powershell
-python -m src.language_model --config configs/data.yaml --order 5
+.venv\Scripts\python -m src.training.train --config configs/train_baseline.yaml --resume auto
 ```
 
-Transcribe one audio file greedily:
+This takes about 11 hours on an RTX 3050. The same command resumes after an interruption. Output goes to `data/checkpoints/baseline_rtx3050/`: `best/` is the best checkpoint by validation WER, and `train_log.csv` and `epoch_log.csv` hold the curves. Test and blind data are refused by the training code.
+
+### 4. Loading a checkpoint
+
+```python
+from src.models.ctc_model import load_model
+model, vocab, feature_extractor = load_model("data/checkpoints/baseline_rtx3050/best")
+```
+
+### 5. Transcribing audio
+
+The audio can be any common format at any sample rate, and `--start` and `--end` select a segment.
 
 ```powershell
-python -m src.inference --checkpoint data/checkpoints/baseline_him4200/best --audio path\to\audio.wav
+.venv\Scripts\python -m src.inference --checkpoint data/checkpoints/baseline_rtx3050/best --audio path\to\audio.wav
 ```
 
-For KenLM beam decoding, build/install the KenLM Python binding and optional
-`pyctcdecode` dependencies as described in
-[the Stage 1B handoff](docs/stage_1b_handoff.md), then supply the compiled model:
+### 6. Greedy decoding
+
+Greedy decoding is the default above, and it needs no language model. For a whole split:
 
 ```powershell
-python -m src.inference --checkpoint data/checkpoints/baseline_him4200/best --audio path\to\audio.wav --kenlm data\language_model\train_5gram.klm --beam-width 3000 --lm-weight 0.5 --word-insertion 1.0
+.venv\Scripts\python -m src.evaluate --split val --decoder greedy --checkpoint data/checkpoints/baseline_rtx3050/best
 ```
 
-Generate predictions for each permitted evaluation split. The default scorer
-reports diagnostic WER/CER against cleaned manifest text and writes a complete
-`<utterance-id> <hypothesis>` file. It does **not** substitute those diagnostics
-for official test/blind WER or T-WER:
+### 7. KenLM decoding
+
+Build the 5-gram model from training transcripts. It uses `lmplz` when installed, and otherwise a built-in Kneser-Ney builder. Then tune on validation data only, which saves the settings to `configs/decode.yaml`.
 
 ```powershell
-python -m src.evaluate --split val --checkpoint data/checkpoints/baseline_him4200/best
-python -m src.evaluate --split test --checkpoint data/checkpoints/baseline_him4200/best
-python -m src.evaluate --split blind --checkpoint data/checkpoints/baseline_him4200/best
-python -m src.analysis.error_analysis --predictions results/evaluations/blind_greedy.jsonl --output results/evaluations/blind_error_analysis.json
+.venv\Scripts\python -m src.language_model --config configs/data.yaml --order 5
+.venv\Scripts\python -m src.logit_cache --split val --checkpoint data/checkpoints/baseline_rtx3050/best
+.venv\Scripts\python -m src.tune_lm --checkpoint data/checkpoints/baseline_rtx3050/best --write-config
+.venv\Scripts\python -m src.inference --checkpoint data/checkpoints/baseline_rtx3050/best --audio path\to\audio.wav --kenlm data/language_model/train_5gram.klm
 ```
 
-For LM experiments, repeat evaluation on **validation only** while tuning
-`--lm-weight`, `--word-insertion`, and `--beam-width`. Freeze those settings
-before test/blind evaluation. The analysis tool derives script and switch-context
-labels from Unicode and is diagnostic only; it cannot identify transliteration
-or homophone causes without manual review.
+### 8. Evaluation
+
+```powershell
+.venv\Scripts\python -m src.evaluate --split blind --decoder beam --checkpoint data/checkpoints/baseline_rtx3050/best
+```
+
+On blind data, WER and T-WER follow the organisers' rules, and each run is confirmed against their own `compute_wer.py`. T-WER on test is an approximation, because test references were not annotated the same way. The word map comes from the blind references, so it is used for scoring only, never for training or tuning.
+
+### 9. Everything at once
+
+With a trained checkpoint in place, this rebuilds the language model, tunes on validation data, evaluates every split with both decoders, and redraws the figures in `results/figures/`:
+
+```powershell
+bash scripts/evaluate_baseline.sh
+```
 
 # Research Dossier
 
