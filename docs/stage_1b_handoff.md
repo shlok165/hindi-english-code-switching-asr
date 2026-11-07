@@ -4,9 +4,9 @@
 
 **Starting point:** everything in `docs/stage_1a_report.md` works. Full training has not been run. Do not begin Stage 2 work.
 
-## Decide before training
+## Settled before training
 
-1. **Encoder.** him-4200 is configured and verified. `ai4bharat/indicwav2vec-hindi` needs a Hugging Face login and a passing `verify_encoder` run.
+1. **Encoder: him-4200,** decided 7 November 2026. It is configured and verified. Using `ai4bharat/indicwav2vec-hindi` would need a Hugging Face login and a passing `verify_encoder` run.
 2. **Seeds.** Run the final configuration with 3 seeds, since no paper here reports variance.
 
 ## Rules that protect the result
