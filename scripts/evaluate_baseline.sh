@@ -22,4 +22,5 @@ for decoder in greedy beam; do
   "$PY" -m src.analysis.error_analysis --predictions "results/evaluations/blind_$decoder.jsonl" \
     --output "results/error_analysis/blind_$decoder.json"
 done
+"$PY" -m src.check_inference --checkpoint "$CHECKPOINT"
 "$PY" -m src.analysis.plots

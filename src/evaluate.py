@@ -144,6 +144,7 @@ def evaluate(
                 "reference": normalise_reference(entry["text_raw"]),
                 "reference_cleaned": entry["text"],
                 "hypothesis": normalise_hypothesis(hypothesis, maps.punctuation),
+                "hypothesis_raw": hypothesis,
             }, ensure_ascii=False) + "\n")
 
     summary = {
