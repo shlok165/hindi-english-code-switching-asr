@@ -11,7 +11,7 @@ literature/pdfs/
 .claude/
 
 # Data (never commit - MUCS is ~9 GB, CC BY-SA 4.0, fetch from OpenSLR)
-data/
+/data/
 *.tar.gz
 *.zip
 *.wav
