@@ -4,7 +4,7 @@ Beam search and LM tuning then never have to touch the GPU again. Every
 utterance in the manifest is kept, including those with empty references,
 because the official scorer needs a hypothesis for each one.
 
-    python -m src.logit_cache --split val --checkpoint data/checkpoints/baseline_him4200/best
+    python -m src.logit_cache --split val --checkpoint data/checkpoints/baseline_rtx3050/best
 """
 
 from __future__ import annotations

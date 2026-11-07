@@ -1,7 +1,7 @@
 """Decode a split from cached log-probabilities and score the result.
 
-    python -m src.evaluate --split val --decoder greedy --checkpoint data/checkpoints/baseline_him4200/best
-    python -m src.evaluate --split blind --decoder beam --checkpoint data/checkpoints/baseline_him4200/best
+    python -m src.evaluate --split val --decoder greedy --checkpoint data/checkpoints/baseline_rtx3050/best
+    python -m src.evaluate --split blind --decoder beam --checkpoint data/checkpoints/baseline_rtx3050/best
 
 Metrics written, and what each one is:
 - `wer`, `cer`: scored against the raw references with the organisers' rules, so

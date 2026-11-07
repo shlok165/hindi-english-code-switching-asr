@@ -3,7 +3,7 @@
 Greedy inference is self-contained. Beam decoding also needs the optional
 ``pyctcdecode`` and ``kenlm`` packages and a compiled KenLM model.
 
-    python -m src.inference --checkpoint data/checkpoints/baseline_him4200/best --audio a.wav
+    python -m src.inference --checkpoint data/checkpoints/baseline_rtx3050/best --audio a.wav
     python -m src.inference --checkpoint ... --audio a.wav --kenlm data/language_model/train_5gram.klm
 
 Audio is processed one utterance at a time. This checkpoint uses group
