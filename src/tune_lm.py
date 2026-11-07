@@ -1,10 +1,10 @@
 """Tune the LM weight and word insertion score on validation data only.
 
-    python -m src.tune_lm --checkpoint data/checkpoints/baseline_him4200/best
+    python -m src.tune_lm --checkpoint data/checkpoints/baseline_rtx3050/best
 
-Decodes a fixed subset of val for every grid point at a modest beam width, keeps
-the best settings, then tests wider beams with them. Every result is written to
-results/lm_tuning.csv. This command cannot read test or blind data: it only ever
+Decodes val (all of it by default) for every grid point at a modest beam width,
+refines the LM weight around the winner, then tests wider beams with it. Every
+result is written to results/lm_tuning.csv. This command cannot read test or blind data: it only ever
 opens the val cache and val references.
 """
 
@@ -27,11 +27,13 @@ from src.utils.config import data_path, read_manifest
 ALPHAS = (0.0, 0.2, 0.35, 0.5, 0.75, 1.0, 1.5)
 BETAS = (-1.0, 0.0, 1.0, 2.0, 3.0)
 UNK_OFFSETS = (-5.0, -10.0, -20.0)
-BEAM_WIDTHS = (50, 100, 200, 500)
+BEAM_WIDTHS = (50, 100, 200, 500, 1000, 3000)  # 3000 is the width the MUCS baseline used
+REFINE_STEPS = (-0.1, -0.05, 0.05, 0.1)  # finer alpha steps tried around the coarse winner
+REFINE_BETA_STEPS = (-0.5, 0.5)
 WIDTH_TOLERANCE = 0.05  # WER points a wider beam must gain to justify its cost
 
 CONFIG_TEMPLATE = """# Tuned on validation data by src.tune_lm, with test and blind untouched.
-# Subset WER on val: {wer:.3f}. Every grid result is in results/lm_tuning.csv.
+# WER on the tuning utterances of val: {wer:.3f}. Every grid result is in results/lm_tuning.csv.
 decoder:
   kenlm_model: {kenlm}
   beam_width: {beam_width}
@@ -51,7 +53,7 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--checkpoint", required=True, type=Path)
     parser.add_argument("--kenlm", default="data/language_model/train_5gram.klm")
-    parser.add_argument("--subset", type=int, default=500)
+    parser.add_argument("--subset", type=int, default=0, help="utterances to tune on; 0 means all of val")
     parser.add_argument("--grid-beam", type=int, default=50)
     parser.add_argument("--workers", type=int, default=max((os.cpu_count() or 4) - 2, 1))
     parser.add_argument("--write-config", action="store_true", help="save the winner to configs/decode.yaml")
@@ -60,7 +62,8 @@ def main() -> None:
     cache = data_path("data/processed/logits") / args.checkpoint.parent.name / args.checkpoint.name
     vocab = json.loads((args.checkpoint / "vocab.json").read_text(encoding="utf-8"))
     entries = read_manifest(data_path("data/processed/manifests") / "val.jsonl")
-    positions = [p for p in evenly_spaced(len(entries), args.subset) if entries[p]["text"]]
+    size = args.subset or len(entries)
+    positions = [p for p in evenly_spaced(len(entries), size) if entries[p]["text"]]
     references = [entries[p]["text"] for p in positions]
     kenlm = data_path(args.kenlm)
 
@@ -86,6 +89,15 @@ def main() -> None:
         for alpha, beta in itertools.product(ALPHAS, BETAS):
             candidate = replace(base, alpha=alpha, beta=beta)
             wer = run("alpha_beta", positions, references, candidate)
+            if wer < best_wer:
+                best, best_wer = candidate, wer
+        coarse = best
+        for alpha_step, beta_step in itertools.product(REFINE_STEPS + (0.0,), REFINE_BETA_STEPS + (0.0,)):
+            alpha = round(coarse.alpha + alpha_step, 3)
+            if alpha < 0 or (alpha_step == 0 and beta_step == 0):
+                continue
+            candidate = replace(coarse, alpha=alpha, beta=coarse.beta + beta_step)
+            wer = run("refine", positions, references, candidate)
             if wer < best_wer:
                 best, best_wer = candidate, wer
         for offset in UNK_OFFSETS:
