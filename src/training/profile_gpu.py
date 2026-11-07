@@ -30,6 +30,7 @@ def main() -> None:
     parser.add_argument("--sizes", type=int, nargs="+",
                         default=[160_000, 240_000, 320_000, 400_000, 480_000, 640_000])
     parser.add_argument("--repeats", type=int, default=5)
+    parser.add_argument("--output", default="results/gpu_profile.json")
     args = parser.parse_args()
     config = load_config(args.config)
     seed_everything(config["training"]["seed"])
@@ -98,7 +99,7 @@ def main() -> None:
         "encoder_frozen": False,
         "results": results,
     }
-    output = ROOT / "results" / "gpu_profile.json"
+    output = ROOT / args.output
     output.parent.mkdir(exist_ok=True)
     output.write_text(json.dumps(report, indent=2), encoding="utf-8")
 

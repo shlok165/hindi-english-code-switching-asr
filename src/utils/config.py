@@ -16,7 +16,6 @@ from pathlib import Path
 from typing import Any
 
 import numpy as np
-import torch
 import yaml
 
 from src import ROOT
@@ -86,12 +85,19 @@ def load_config(path: str | Path, overrides: list[str] | None = None) -> dict[st
     return apply_overrides(load_yaml(path), overrides or [])
 
 
+def read_manifest(path: str | Path) -> list[dict[str, Any]]:
+    with Path(path).open(encoding="utf-8") as handle:
+        return [json.loads(line) for line in handle]
+
+
 def config_hash(config: dict) -> str:
     text = json.dumps(config, sort_keys=True, ensure_ascii=False)
     return hashlib.sha256(text.encode("utf-8")).hexdigest()[:12]
 
 
 def seed_everything(seed: int) -> None:
+    import torch
+
     random.seed(seed)
     np.random.seed(seed)
     torch.manual_seed(seed)
@@ -100,6 +106,7 @@ def seed_everything(seed: int) -> None:
 
 def run_metadata(config: dict) -> dict[str, Any]:
     """Everything needed to tie a result back to code, config and packages."""
+    import torch
     import transformers
 
     def git(*args: str) -> str:

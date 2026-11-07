@@ -4,24 +4,25 @@ includes:
   - configs/data.yaml
   - configs/model_him4200.yaml
 
-run_name: baseline_him4200
+run_name: baseline_rtx3050
 
 training:
   seed: 42                        # GUESSED: no paper in this literature reports one
   output_dir: data/checkpoints
-  max_updates: 20000              # GUESSED: brief suggests 20-40 k
-  learning_rate: 1.0e-4           # GUESSED
+  max_updates: 38000              # About 6 passes over the data at 8 utterances per update
+  learning_rate: 1.0e-5           # Requested RTX 3050 setting
   warmup_fraction: 0.10           # GUESSED: tri-stage 10/40/50
   hold_fraction: 0.40             # GUESSED
   adam_betas: [0.9, 0.98]         # GUESSED
   weight_decay: 0.01              # GUESSED
   max_grad_norm: 1.0              # GUESSED
-  max_samples_per_batch: 1600000  # GUESSED as the update size; measured to fit (3.5 GB, results/gpu_profile.json)
-  max_samples_per_eval_batch: 1600000
-  gradient_accumulation: 1        # Not needed on this GPU; raise it and lower the line above for smaller GPUs
-  freeze_encoder_updates: 2000    # GUESSED: lets the new Latin head rows settle first
+  max_samples_per_batch: 1600000  # Upper bound only; the line below is the active limit
+  max_utterances_per_batch: 1     # Requested RTX 3050 setting: no padding at all
+  max_samples_per_eval_batch: 640000  # Measured: 1.6 M reached 5.7 GB reserved during validation
+  gradient_accumulation: 8        # Requested RTX 3050 setting: effective batch of 8 utterances
+  freeze_encoder_updates: 0       # Full fine-tuning from the first update
   mixed_precision: true
-  num_workers: 0                  # Audio reads are cheap; Windows workers cost GBs of RAM
-  log_every: 50
-  eval_every: 1000
+  num_workers: 0                  # Measured: 1.11 s/update, against 1.30 with 2 workers on Windows
+  log_every: 100
+  eval_every: 2000
   keep_checkpoints: 2

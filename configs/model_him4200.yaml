@@ -8,3 +8,4 @@ model:
   mask_time_prob: 0.065         # GUESSED: wav2vec 2.0 default
   mask_time_length: 10          # GUESSED: wav2vec 2.0 default
   gradient_checkpointing: true  # Saves memory with no effect on the result
+  freeze_feature_encoder: false # Full encoder fine-tuning, CNN included

@@ -38,10 +38,11 @@ from src.models.ctc_model import (
 )
 from src.utils.config import data_path, load_config, run_metadata, seed_everything
 
-# The default 65536 overflows fp16 CTC gradients and skips the first few updates.
-GRAD_SCALE_INIT = 1024.0
+# Higher starting scales overflow fp16 CTC gradients and skip early updates.
+GRAD_SCALE_INIT = 256.0
 LOG_FIELDS = ["update", "epoch", "train_loss", "val_loss", "val_wer", "val_blank_percent", "lr",
-              "grad_norm", "seconds", "peak_gpu_mb", "skipped_batches", "overflow_steps"]
+              "grad_norm", "seconds", "peak_allocated_mb", "peak_reserved_mb", "skipped_batches",
+              "overflow_steps"]
 EPOCH_FIELDS = ["epoch", "update", "train_loss", "val_loss", "val_wer", "val_blank_percent",
                 "lr", "seconds", "partial"]
 
@@ -80,6 +81,7 @@ def make_loader(dataset: MucsDataset, sampler: LengthBatchSampler, extractor, wo
         batch_sampler=sampler,
         collate_fn=Collator(extractor),
         num_workers=workers,
+        persistent_workers=workers > 0,
         pin_memory=torch.cuda.is_available(),
         generator=torch.Generator().manual_seed(0),
     )
@@ -182,13 +184,16 @@ def train(config: dict[str, Any], resume: str | None = None) -> dict[str, Any]:
     print(f"train {len(train_set)} utts (dropped {train_set.dropped}); "
           f"val {len(val_set)} utts (dropped {val_set.dropped})", flush=True)
 
-    sampler = LengthBatchSampler(train_set.samples, settings["max_samples_per_batch"], settings["seed"])
+    sampler = LengthBatchSampler(
+        train_set.samples, settings["max_samples_per_batch"], settings["seed"],
+        max_utterances=settings.get("max_utterances_per_batch"),
+    )
     val_sampler = LengthBatchSampler(
         val_set.samples, settings["max_samples_per_eval_batch"], settings["seed"], shuffle=False
     )
-    workers = settings["num_workers"]
-    train_loader = make_loader(train_set, sampler, extractor, workers)
-    val_loader = make_loader(val_set, val_sampler, extractor, workers)
+    train_loader = make_loader(train_set, sampler, extractor, settings["num_workers"])
+    # Validation runs rarely, so it does not justify two more worker processes.
+    val_loader = make_loader(val_set, val_sampler, extractor, 0)
 
     model, head = build_model(config["model"], vocab)
     model.to(device)
@@ -258,7 +263,11 @@ def train(config: dict[str, Any], resume: str | None = None) -> dict[str, Any]:
         return earlier_seconds + time.time() - started
 
     def validate_and_save() -> dict[str, float]:
+        # Training leaves cached blocks of the wrong sizes, and validation batches
+        # stack on top of them unless they are released first.
+        torch.cuda.empty_cache()
         metrics = evaluate(model, val_loader, vocab, device, use_amp)
+        torch.cuda.empty_cache()
         if metrics["val_wer"] < position["best_wer"]:
             position.update(best_wer=metrics["val_wer"], best_update=update)
             save_model(run_dir / "best", model, vocab, extractor)
@@ -322,7 +331,9 @@ def train(config: dict[str, Any], resume: str | None = None) -> dict[str, Any]:
                     "lr": scheduler.get_last_lr()[0],
                     "grad_norm": round(last_norm, 3),
                     "seconds": round(elapsed(), 1),
-                    "peak_gpu_mb": round(torch.cuda.max_memory_allocated() / 2**20)
+                    "peak_allocated_mb": round(torch.cuda.max_memory_allocated() / 2**20)
+                    if device.type == "cuda" else 0,
+                    "peak_reserved_mb": round(torch.cuda.max_memory_reserved() / 2**20)
                     if device.type == "cuda" else 0,
                     "skipped_batches": position["skipped"],
                     "overflow_steps": position["overflow"],

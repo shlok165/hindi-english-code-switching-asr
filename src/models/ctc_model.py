@@ -84,7 +84,8 @@ def build_model(model_config: dict[str, Any], vocab: dict[str, int]) -> tuple[Wa
     model.config.bos_token_id = vocab["<s>"]
     model.config.eos_token_id = vocab["</s>"]
 
-    model.freeze_feature_encoder()
+    if model_config.get("freeze_feature_encoder", True):
+        model.freeze_feature_encoder()
     if model_config.get("gradient_checkpointing"):
         model.gradient_checkpointing_enable(gradient_checkpointing_kwargs={"use_reentrant": False})
     return model, {
@@ -95,7 +96,7 @@ def build_model(model_config: dict[str, Any], vocab: dict[str, int]) -> tuple[Wa
 
 
 def set_encoder_frozen(model: Wav2Vec2ForCTC, frozen: bool) -> None:
-    """Freeze or release the transformer. The CNN feature encoder stays frozen."""
+    """Freeze or release the transformer. The CNN is controlled separately."""
     for block in (model.wav2vec2.encoder, model.wav2vec2.feature_projection):
         for parameter in block.parameters():
             parameter.requires_grad = not frozen

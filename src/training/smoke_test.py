@@ -152,9 +152,11 @@ def main() -> None:
     scaler.update()
     optimizer.zero_grad(set_to_none=True)
     moved = float((model.lm_head.weight - watched).abs().max())
-    if moved == 0 or not torch.equal(frozen, next(model.wav2vec2.feature_extractor.parameters())):
-        raise AssertionError("trainable weights did not move, or frozen weights did")
-    step(results, "8_training_step", head_weight_change=moved, feature_encoder_unchanged=True)
+    cnn_moved = not torch.equal(frozen, next(model.wav2vec2.feature_extractor.parameters()))
+    cnn_frozen = config["model"].get("freeze_feature_encoder", True)
+    if moved == 0 or cnn_moved == cnn_frozen:
+        raise AssertionError(f"head moved {moved}; CNN moved {cnn_moved}, frozen {cnn_frozen}")
+    step(results, "8_training_step", head_weight_change=moved, cnn_frozen=cnn_frozen, cnn_moved=cnn_moved)
 
     temporary = Path(tempfile.mkdtemp(prefix="smoke_", dir=data_path("data")))
     try:

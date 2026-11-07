@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import json
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Iterator
@@ -14,18 +13,13 @@ from transformers import Wav2Vec2FeatureExtractor
 
 from src.data.preprocessing import TARGET_SAMPLE_RATE, load_audio
 from src.models.tokenizer import encode
-from src.utils.config import data_path
+from src.utils.config import data_path, read_manifest
 
 # Labels must fit in the CTC output. wav2vec 2.0 downsamples by 320, so this
 # many samples yield one frame, ignoring the small loss at the utterance edges.
 SAMPLES_PER_FRAME = 320
 PAD_LABEL = -100
 TRAINABLE_SPLITS = {"train", "val"}
-
-
-def read_manifest(path: Path) -> list[dict[str, Any]]:
-    with Path(path).open(encoding="utf-8") as handle:
-        return [json.loads(line) for line in handle]
 
 
 class MucsDataset(Dataset):
@@ -109,11 +103,13 @@ class LengthBatchSampler(Sampler[list[int]]):
 
     CHUNK_BATCHES = 50
 
-    def __init__(self, lengths: np.ndarray, max_samples: int, seed: int, shuffle: bool = True) -> None:
+    def __init__(self, lengths: np.ndarray, max_samples: int, seed: int, shuffle: bool = True,
+                 max_utterances: int | None = None) -> None:
         if lengths.max(initial=0) > max_samples:
             raise ValueError(f"an utterance has {lengths.max()} samples, over max_samples={max_samples}")
         self.lengths = lengths
         self.max_samples = max_samples
+        self.max_utterances = max_utterances or len(lengths) or 1
         self.seed = seed
         self.shuffle = shuffle
         self.epoch = 0
@@ -125,6 +121,7 @@ class LengthBatchSampler(Sampler[list[int]]):
         if self.shuffle:
             order = rng.permutation(count)
             typical = max(int(self.max_samples / max(self.lengths.mean(), 1)), 1)
+            typical = min(typical, self.max_utterances)
             size = typical * self.CHUNK_BATCHES
             chunks = [order[i : i + size] for i in range(0, count, size)]
             order = np.concatenate([c[np.argsort(-self.lengths[c], kind="stable")] for c in chunks])
@@ -134,7 +131,8 @@ class LengthBatchSampler(Sampler[list[int]]):
         batches, current, longest = [], [], 0
         for index in order.tolist():
             candidate = max(longest, int(self.lengths[index]))
-            if current and candidate * (len(current) + 1) > self.max_samples:
+            full = len(current) >= self.max_utterances
+            if current and (full or candidate * (len(current) + 1) > self.max_samples):
                 batches.append(current)
                 current, candidate = [], int(self.lengths[index])
             current.append(index)

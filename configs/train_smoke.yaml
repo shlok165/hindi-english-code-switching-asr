@@ -12,7 +12,9 @@ data:
 training:
   max_updates: 6
   max_samples_per_batch: 480000
+  max_utterances_per_batch: 8
   gradient_accumulation: 2
+  num_workers: 0
   warmup_fraction: 0.2
   hold_fraction: 0.4
   freeze_encoder_updates: 2
