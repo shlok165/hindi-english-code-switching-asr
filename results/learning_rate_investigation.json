@@ -1,0 +1,43 @@
+{
+  "question": "Why did early fine-tuning delete words and produce no Latin output?",
+  "method": "Greedy decoding of the same 150 validation utterances on the CPU. Validation loss and WER come from the training logs. Latin probability is the mean total probability of Latin letters on non-blank frames, over the 50 of those utterances that contain Latin words.",
+  "reference": {"words": 1814, "latin_word_percent": 23.2},
+  "runs": [
+    {
+      "name": "pretrained him-4200, untouched",
+      "update": 0,
+      "wer_150": 45.15, "substitutions": 524, "deletions": 175, "insertions": 120,
+      "latin_word_percent": 0.0, "blank_percent": 79.1
+    },
+    {
+      "name": "all parts at 1e-5",
+      "update": 2000,
+      "val_loss": 1.9095, "val_wer": 43.96,
+      "wer_150": 42.01, "substitutions": 269, "deletions": 457, "insertions": 36,
+      "latin_word_percent": 0.0, "blank_percent": 84.1
+    },
+    {
+      "name": "all parts at 1e-5",
+      "update": 4000,
+      "val_loss": 1.5832, "val_wer": 42.08,
+      "wer_150": 39.86, "substitutions": 388, "deletions": 298, "insertions": 37,
+      "latin_word_percent": 0.0, "blank_percent": 83.8, "mean_latin_probability": 0.0329
+    },
+    {
+      "name": "encoder 1e-5, head 1e-4",
+      "update": 2000,
+      "val_loss": 1.602, "val_wer": 44.03,
+      "wer_150": 42.12, "substitutions": 413, "deletions": 298, "insertions": 53,
+      "latin_word_percent": 0.0, "blank_percent": 83.1, "mean_latin_probability": 0.0328
+    },
+    {
+      "name": "CNN 1e-5, transformer and head 1e-4",
+      "update": 2000,
+      "val_loss": 1.1724, "val_wer": 43.89,
+      "wer_150": 42.83, "substitutions": 579, "deletions": 111, "insertions": 87,
+      "latin_word_percent": 29.6, "blank_percent": 78.8, "mean_latin_probability": 0.1834
+    }
+  ],
+  "conclusion": "A faster head alone did not raise Latin probability, because the head cannot tell which language is being spoken. Raising the transformer's learning rate did. The untouched pretrained model recognised the same audio well, which ruled out misaligned segments as the main cause of the deletions.",
+  "misalignment_check": "13 of the 150 utterances lost over 40 percent of their characters with the pretrained model, so misalignment exists but is a minority effect."
+}
