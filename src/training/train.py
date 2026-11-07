@@ -40,8 +40,10 @@ from src.utils.config import data_path, load_config, run_metadata, seed_everythi
 
 # The default 65536 overflows fp16 CTC gradients and skips the first few updates.
 GRAD_SCALE_INIT = 1024.0
-LOG_FIELDS = ["update", "epoch", "train_loss", "val_loss", "val_wer", "lr", "grad_norm",
-              "seconds", "peak_gpu_mb", "skipped_batches"]
+LOG_FIELDS = ["update", "epoch", "train_loss", "val_loss", "val_wer", "val_blank_percent", "lr",
+              "grad_norm", "seconds", "peak_gpu_mb", "skipped_batches", "overflow_steps"]
+EPOCH_FIELDS = ["epoch", "update", "train_loss", "val_loss", "val_wer", "val_blank_percent",
+                "lr", "seconds", "partial"]
 
 
 def tri_stage(update: int, total: int, warmup: float, hold: float) -> float:
@@ -96,6 +98,7 @@ def evaluate(model, loader, vocab, device, use_amp: bool) -> dict[str, float]:
     """
     model.eval()
     loss_sum, weight, pairs = 0.0, 0, []
+    blank_frames, total_frames = 0, 0
     for batch in loader:
         inputs = to_device(batch, device)
         with torch.autocast(device.type, dtype=torch.float16, enabled=use_amp):
@@ -105,8 +108,16 @@ def evaluate(model, loader, vocab, device, use_amp: bool) -> dict[str, float]:
         weight += size
         lengths = output_lengths(model, inputs["attention_mask"].sum(-1))
         pairs.extend(zip(batch["texts"], greedy_decode(output.logits, lengths, vocab)))
+        best = output.logits.argmax(-1)
+        for row, length in zip(best, lengths.tolist()):
+            blank_frames += int((row[:length] == vocab["<pad>"]).sum())
+            total_frames += length
     model.train()
-    return {"val_loss": loss_sum / max(weight, 1), "val_wer": score(pairs).wer}
+    return {
+        "val_loss": loss_sum / max(weight, 1),
+        "val_wer": score(pairs).wer,
+        "val_blank_percent": 100 * blank_frames / max(total_frames, 1),
+    }
 
 
 def rng_state() -> dict[str, Any]:
@@ -198,7 +209,8 @@ def train(config: dict[str, Any], resume: str | None = None) -> dict[str, Any]:
 
     run_dir = data_path(settings["output_dir"]) / config["run_name"]
     run_dir.mkdir(parents=True, exist_ok=True)
-    position = {"update": 0, "epoch": 0, "batch": 0, "best_wer": float("inf"), "skipped": 0}
+    position = {"update": 0, "epoch": 0, "batch": 0, "best_wer": float("inf"), "best_update": 0,
+                "skipped": 0, "overflow": 0, "elapsed": 0.0, "epoch_loss": 0.0, "epoch_batches": 0}
 
     source = latest_checkpoint(run_dir) if resume == "auto" else Path(resume) if resume else None
     if source is not None:
@@ -223,6 +235,12 @@ def train(config: dict[str, Any], resume: str | None = None) -> dict[str, Any]:
     log = csv.DictWriter(log_file, LOG_FIELDS)
     if new_log:
         log.writeheader()
+    epoch_path = run_dir / "epoch_log.csv"
+    new_epoch_log = not epoch_path.exists()
+    epoch_file = epoch_path.open("a", newline="", encoding="utf-8")
+    epoch_log = csv.DictWriter(epoch_file, EPOCH_FIELDS)
+    if new_epoch_log:
+        epoch_log.writeheader()
 
     accumulate = settings["gradient_accumulation"]
     frozen_until = settings["freeze_encoder_updates"]
@@ -233,7 +251,36 @@ def train(config: dict[str, Any], resume: str | None = None) -> dict[str, Any]:
         torch.cuda.reset_peak_memory_stats()
 
     update, epoch, batch_index = position["update"], position["epoch"], position["batch"]
+    earlier_seconds = position["elapsed"]
     final_metrics: dict[str, float] = {}
+
+    def elapsed() -> float:
+        return earlier_seconds + time.time() - started
+
+    def validate_and_save() -> dict[str, float]:
+        metrics = evaluate(model, val_loader, vocab, device, use_amp)
+        if metrics["val_wer"] < position["best_wer"]:
+            position.update(best_wer=metrics["val_wer"], best_update=update)
+            save_model(run_dir / "best", model, vocab, extractor)
+        position.update(update=update, epoch=epoch, batch=batch_index, elapsed=elapsed())
+        directory = run_dir / f"step-{update:06d}"
+        save_checkpoint(directory, model, vocab, extractor, optimizer, scheduler, scaler, position)
+        prune_checkpoints(run_dir, settings["keep_checkpoints"])
+        return metrics
+
+    def take_epoch_loss() -> float:
+        loss = position["epoch_loss"] / max(position["epoch_batches"], 1)
+        position.update(epoch_loss=0.0, epoch_batches=0)
+        return loss
+
+    def write_epoch(number: int, train_loss: float, metrics: dict[str, float], partial: bool) -> None:
+        row = {"epoch": number, "update": update, "train_loss": round(train_loss, 4),
+               "lr": scheduler.get_last_lr()[0], "seconds": round(elapsed(), 1), "partial": partial}
+        row.update({key: round(value, 4) for key, value in metrics.items()})
+        print("epoch", row, flush=True)
+        epoch_log.writerow(row)
+        epoch_file.flush()
+
     while update < total:
         sampler.set_position(epoch, batch_index)
         for batch in train_loader:
@@ -248,18 +295,25 @@ def train(config: dict[str, Any], resume: str | None = None) -> dict[str, Any]:
             scaler.scale(loss).backward()
             window_loss += loss.item() * accumulate
             window_batches += 1
+            position["epoch_loss"] += loss.item() * accumulate
+            position["epoch_batches"] += 1
             if batch_index % accumulate:
                 continue
 
             scaler.unscale_(optimizer)
             last_norm = torch.nn.utils.clip_grad_norm_(model.parameters(), settings["max_grad_norm"]).item()
+            scale_before = scaler.get_scale()
             scaler.step(optimizer)
             scaler.update()
+            if scaler.get_scale() < scale_before:
+                position["overflow"] += 1
             scheduler.step()
             optimizer.zero_grad(set_to_none=True)
             update += 1
 
             validate = update % settings["eval_every"] == 0 or update == total
+            if validate:
+                final_metrics = validate_and_save()
             if update % settings["log_every"] == 0 or validate:
                 row = {
                     "update": update,
@@ -267,39 +321,37 @@ def train(config: dict[str, Any], resume: str | None = None) -> dict[str, Any]:
                     "train_loss": round(window_loss / max(window_batches, 1), 4),
                     "lr": scheduler.get_last_lr()[0],
                     "grad_norm": round(last_norm, 3),
-                    "seconds": round(time.time() - started, 1),
+                    "seconds": round(elapsed(), 1),
                     "peak_gpu_mb": round(torch.cuda.max_memory_allocated() / 2**20)
                     if device.type == "cuda" else 0,
                     "skipped_batches": position["skipped"],
+                    "overflow_steps": position["overflow"],
                 }
                 window_loss, window_batches = 0.0, 0
                 if validate:
-                    final_metrics = evaluate(model, val_loader, vocab, device, use_amp)
                     row.update({k: round(v, 4) for k, v in final_metrics.items()})
                 print(row, flush=True)
                 log.writerow(row)
                 log_file.flush()
-
-            if validate:
-                position.update(update=update, epoch=epoch, batch=batch_index)
-                directory = run_dir / f"step-{update:06d}"
-                save_checkpoint(directory, model, vocab, extractor, optimizer, scheduler, scaler, position)
-                if final_metrics["val_wer"] < position["best_wer"]:
-                    position["best_wer"] = final_metrics["val_wer"]
-                    save_model(run_dir / "best", model, vocab, extractor)
-                    save_checkpoint(directory, model, vocab, extractor, optimizer, scheduler, scaler, position)
-                prune_checkpoints(run_dir, settings["keep_checkpoints"])
             if update >= total:
                 break
         else:
             # A partial accumulation window does not carry over to a new epoch.
             optimizer.zero_grad(set_to_none=True)
             epoch, batch_index = epoch + 1, 0
+            train_loss = take_epoch_loss()
+            final_metrics = validate_and_save()
+            write_epoch(epoch, train_loss, final_metrics, partial=False)
+    if position["epoch_batches"]:
+        write_epoch(epoch + 1, take_epoch_loss(), final_metrics, partial=True)
     log_file.close()
+    epoch_file.close()
     return {
         "updates": update,
         "epochs_started": epoch + 1,
         "best_wer": position["best_wer"],
+        "best_update": position["best_update"],
+        "seconds": round(elapsed(), 1),
         "last": final_metrics,
         "run_dir": str(run_dir),
     }
