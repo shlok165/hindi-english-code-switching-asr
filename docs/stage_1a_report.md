@@ -5,9 +5,9 @@
 
 Every number below was measured on this machine. The sources are `docs/dataset_stats.json`, `docs/vocab_report.json`, `results/encoder_*.json`, `results/gpu_profile.json`, `results/smoke_test.json` and `results/pilot_300_log.csv`.
 
-## Decision needed: which encoder
+## Encoder decision: him-4200
 
-The proposed encoder could not be verified, so nothing here has run on it.
+**Decided 7 November 2026:** the project uses him-4200. The proposed encoder could not be verified, so nothing here has run on it.
 
 | | `ai4bharat/indicwav2vec-hindi` (proposed) | `Harveenchadha/vakyansh-wav2vec2-hindi-him-4200` (used) |
 |---|---|---|
@@ -15,9 +15,9 @@ The proposed encoder could not be verified, so nothing here has run on it.
 | Architecture | Not inspectable until unlocked | wav2vec 2.0 base, 94.42 M parameters |
 | Fit with Chadha et al. | Different group's model | Same author, same 4,200 h Hindi lineage |
 
-**Recommendation:** use him-4200 for Stage 1B. It is the same architecture type, so this is a checkpoint choice and not an architecture change. It may not be the same weights as the paper's: the paper calls Hindi-4200 pretrained on unlabelled data, while this model card describes fine-tuning on 4,200 h of labelled data from CLSRIL-23. Report it as "same lineage, identity unverified".
+him-4200 is the same architecture type, so this is a checkpoint choice and not an architecture change. It may not be the same weights as the paper's: the paper calls Hindi-4200 pretrained on unlabelled data, while this model card describes fine-tuning on 4,200 h of labelled data from CLSRIL-23. Report it as "same lineage, identity unverified".
 
-To evaluate the proposed encoder instead, accept its terms on Hugging Face, run `hf auth login`, then run:
+To evaluate the proposed encoder later, accept its terms on Hugging Face, run `hf auth login`, then run:
 
 ```
 python -m src.models.verify_encoder --config configs/model_indicwav2vec.yaml
