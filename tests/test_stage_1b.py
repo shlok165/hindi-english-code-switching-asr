@@ -169,6 +169,8 @@ def test_skeletons_match_across_scripts():
 
 def test_homophone_key_folds_vowel_length_and_nukta():
     assert homophone_key("जरूर") == homophone_key("ज़रुर")
+    assert homophone_key("गयी") == homophone_key("गई")
+    assert homophone_key("किये") == homophone_key("किए")
     assert homophone_key("दिन") != homophone_key("दीन".replace("द", "ब"))
 
 

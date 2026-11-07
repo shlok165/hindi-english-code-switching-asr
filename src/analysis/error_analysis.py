@@ -89,7 +89,8 @@ def consonant_skeleton(word: str) -> str:
 
 def homophone_key(word: str) -> str:
     """Fold spellings that a listener cannot hear apart in fluent Hindi."""
-    return unicodedata.normalize("NFD", word).translate(HOMOPHONE_FOLDS)
+    decomposed = unicodedata.normalize("NFD", word).replace("यी", "ई").replace("ये", "ए")
+    return decomposed.translate(HOMOPHONE_FOLDS)
 
 
 def is_listed_transliteration(reference: str, hypothesis: str, word_map: Mapping[str, str]) -> bool:
