@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Build the kenlm Python extension for Windows + Python 3.14 with MinGW-w64.
+# Build the kenlm Python extension and build_binary for Windows + Python 3.14 with MinGW-w64.
 # PyPI has no Windows wheel, and the bundled kenlm.cpp (Cython 0.29) does not
 # compile on 3.14, so the binding is regenerated with Cython 3 first.
 # Usage: scripts/build_kenlm.sh   (from the repository root, Git Bash)
@@ -18,5 +18,10 @@ FILES=$(ls util/*.cc lm/*.cc util/double-conversion/*.cc python/*.cc | grep -vE 
 g++ -O2 -DNDEBUG -DKENLM_MAX_ORDER=6 -DMS_WIN64 -std=c++17 -w -I. -I"$PYBASE/Include" -shared \
   -o kenlm.cp314-win_amd64.pyd $FILES python/kenlm.cpp -L"$PYBASE/libs" -lpython314 -static
 cp kenlm.cp314-win_amd64.pyd "$ROOT/.venv/Lib/site-packages/"
+# build_binary turns an ARPA file into the fast .klm format. It needs no Boost,
+# unlike lmplz, which is why src/language_model.py can work without lmplz.
+g++ -O2 -DNDEBUG -DKENLM_MAX_ORDER=6 -std=c++17 -w -I. -o build_binary.exe \
+  lm/build_binary_main.cc $(echo "$FILES" | grep -v '^python/') -static
+cp build_binary.exe "$ROOT/.venv/Scripts/"
 rm -rf "$WORK"
 echo "kenlm installed"

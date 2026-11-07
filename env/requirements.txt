@@ -1,7 +1,13 @@
-# Direct dependencies for Stage 1A. Install torch first, from the CUDA index:
+# Direct dependencies. Install torch first, from the CUDA index:
 #   pip install torch==2.14.1 --index-url https://download.pytorch.org/whl/cu130
 #   pip install -r env/requirements.txt
 # On Colab, keep the preinstalled torch and run only the second command.
+#
+# KenLM decoding also needs these, installed separately because pyctcdecode pins
+# numpy<2, and numpy 1.26 is broken on Python 3.14:
+#   pip install --no-deps pyctcdecode
+#   pip install pygtrie hypothesis
+#   bash scripts/build_kenlm.sh
 # env/requirements.lock records the exact versions used for the reported results.
 numpy>=2.3
 soundfile
@@ -11,4 +17,6 @@ transformers
 safetensors
 huggingface_hub
 jiwer
+rapidfuzz
+matplotlib
 pytest

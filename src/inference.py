@@ -1,7 +1,13 @@
 """Single-file wav2vec 2.0 CTC inference with greedy or KenLM beam decoding.
 
-Greedy inference is self-contained. Beam decoding requires the optional
+Greedy inference is self-contained. Beam decoding also needs the optional
 ``pyctcdecode`` and ``kenlm`` packages and a compiled KenLM model.
+
+    python -m src.inference --checkpoint data/checkpoints/baseline_him4200/best --audio a.wav
+    python -m src.inference --checkpoint ... --audio a.wav --kenlm data/language_model/train_5gram.klm
+
+Audio is processed one utterance at a time. This checkpoint uses group
+normalisation, so padding in a batch would change the features slightly.
 """
 
 from __future__ import annotations
@@ -10,66 +16,24 @@ import argparse
 from pathlib import Path
 from typing import Any
 
-import numpy as np
 import torch
 
+from src.beam_search import BeamSettings, beam_decode, build_beam_decoder, decoder_labels  # noqa: F401
 from src.data.preprocessing import TARGET_SAMPLE_RATE, load_audio
-from src.models.ctc_model import greedy_decode, load_model, output_lengths
-from src.models.tokenizer import BLANK, BOS, EOS, UNK
-
-
-def decoder_labels(vocab: dict[str, int]) -> list[str]:
-    """Return labels in model-id order, using a space for the word delimiter."""
-    indices = sorted(vocab.values())
-    if indices != list(range(len(indices))):
-        raise ValueError("vocabulary ids must be contiguous and zero-based")
-    labels = [""] * len(vocab)
-    for token, index in vocab.items():
-        if token == BLANK:
-            labels[index] = ""
-        else:
-            labels[index] = " " if token == "|" else token
-    if vocab.get(BLANK) != 0:
-        raise ValueError("the CTC blank must be vocabulary id 0")
-    return labels
-
-
-def build_beam_decoder(
-    vocab: dict[str, int], kenlm_path: str | Path, lm_weight: float, word_insertion: float
-) -> Any:
-    path = Path(kenlm_path)
-    if not path.is_file():
-        raise FileNotFoundError(f"KenLM binary model not found: {path}")
-    try:
-        from pyctcdecode import build_ctcdecoder
-    except ImportError as error:
-        raise RuntimeError(
-            "KenLM beam decoding requires pyctcdecode and kenlm; see docs/stage_1b_handoff.md"
-        ) from error
-    return build_ctcdecoder(
-        decoder_labels(vocab),
-        kenlm_model_path=str(path),
-        alpha=lm_weight,
-        beta=word_insertion,
-    )
-
-
-def decode_logits(
-    logits: torch.Tensor,
-    vocab: dict[str, int],
-    decoder: Any | None = None,
-    beam_width: int = 3000,
-) -> str:
-    if decoder is None:
-        return greedy_decode(logits, torch.tensor([logits.shape[1]]), vocab)[0]
-
-    scores = logits[0].detach().float().cpu().numpy().copy()
-    for token in (BOS, EOS, UNK):
-        scores[:, vocab[token]] = np.finfo(scores.dtype).min
-    return " ".join(decoder.decode(scores, beam_width=beam_width).split())
+from src.models.ctc_model import greedy_decode, load_model
+from src.utils.config import load_config
 
 
 @torch.inference_mode()
+def log_probabilities(audio, model: torch.nn.Module, feature_extractor, device: torch.device) -> torch.Tensor:
+    """Return (frames, vocab) log-probabilities for one float32 waveform."""
+    values = feature_extractor(
+        audio, sampling_rate=TARGET_SAMPLE_RATE, return_tensors="pt"
+    ).input_values.to(device)
+    model.eval()
+    return torch.log_softmax(model(values).logits[0].float(), dim=-1)
+
+
 def transcribe_audio(
     audio_path: str | Path,
     model: torch.nn.Module,
@@ -79,23 +43,20 @@ def transcribe_audio(
     start: float = 0.0,
     end: float | None = None,
     decoder: Any | None = None,
-    beam_width: int = 3000,
+    settings: BeamSettings | None = None,
 ) -> str:
-    """Transcribe one audio range; single-item inference avoids group-norm drift."""
+    """Transcribe one audio range, greedily unless a beam decoder is given."""
     audio = load_audio(str(audio_path), start, end, TARGET_SAMPLE_RATE)
-    features = feature_extractor(
-        audio,
-        sampling_rate=TARGET_SAMPLE_RATE,
-        return_attention_mask=True,
-        return_tensors="pt",
-    )
-    inputs = {key: value.to(device) for key, value in features.items()}
-    model.eval()
-    logits = model(**inputs).logits
+    scores = log_probabilities(audio, model, feature_extractor, device)
     if decoder is None:
-        length = output_lengths(model, inputs["attention_mask"].sum(-1))
-        return greedy_decode(logits, length, vocab)[0]
-    return decode_logits(logits, vocab, decoder, beam_width)
+        return greedy_decode(scores.unsqueeze(0), torch.tensor([len(scores)]), vocab)[0]
+    return beam_decode(scores.cpu().numpy(), vocab, decoder, settings or BeamSettings())
+
+
+def settings_from_config(path: str | Path) -> tuple[BeamSettings, str]:
+    decoder = load_config(path)["decoder"]
+    fields = BeamSettings.__dataclass_fields__
+    return BeamSettings(**{k: v for k, v in decoder.items() if k in fields}), decoder["kenlm_model"]
 
 
 def main() -> None:
@@ -105,28 +66,17 @@ def main() -> None:
     parser.add_argument("--start", type=float, default=0.0, help="segment start in seconds")
     parser.add_argument("--end", type=float, help="segment end in seconds")
     parser.add_argument("--kenlm", type=Path, help="compiled KenLM model; enables beam decoding")
-    parser.add_argument("--beam-width", type=int, default=3000)
-    parser.add_argument("--lm-weight", type=float, default=0.5)
-    parser.add_argument("--word-insertion", type=float, default=1.0)
+    parser.add_argument("--decode-config", default="configs/decode.yaml")
     args = parser.parse_args()
-    if args.beam_width < 1:
-        parser.error("--beam-width must be positive")
     if args.start < 0 or (args.end is not None and args.end <= args.start):
         parser.error("audio segment must satisfy 0 <= start < end")
 
     model, vocab, extractor = load_model(args.checkpoint)
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model.to(device)
-    decoder = (
-        build_beam_decoder(vocab, args.kenlm, args.lm_weight, args.word_insertion)
-        if args.kenlm
-        else None
-    )
-    print(
-        transcribe_audio(
-            args.audio, model, vocab, extractor, device, args.start, args.end, decoder, args.beam_width
-        )
-    )
+    settings, _ = settings_from_config(args.decode_config)
+    decoder = build_beam_decoder(vocab, args.kenlm, settings) if args.kenlm else None
+    print(transcribe_audio(args.audio, model, vocab, extractor, device, args.start, args.end, decoder, settings))
 
 
 if __name__ == "__main__":
