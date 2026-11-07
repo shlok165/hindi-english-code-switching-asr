@@ -21,7 +21,7 @@ import torch
 from src.beam_search import BeamSettings, beam_decode, build_beam_decoder, decoder_labels  # noqa: F401
 from src.data.preprocessing import TARGET_SAMPLE_RATE, load_audio
 from src.models.ctc_model import greedy_decode, load_model
-from src.utils.config import load_config
+from src.utils.config import data_path, load_config
 
 
 @torch.inference_mode()
@@ -71,7 +71,7 @@ def main() -> None:
     if args.start < 0 or (args.end is not None and args.end <= args.start):
         parser.error("audio segment must satisfy 0 <= start < end")
 
-    model, vocab, extractor = load_model(args.checkpoint)
+    model, vocab, extractor = load_model(data_path(args.checkpoint))
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model.to(device)
     settings, _ = settings_from_config(args.decode_config)

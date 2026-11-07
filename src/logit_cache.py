@@ -60,7 +60,8 @@ def main() -> None:
     parser.add_argument("--split", required=True, choices=("val", "test", "blind"))
     parser.add_argument("--checkpoint", required=True, type=Path)
     args = parser.parse_args()
-    build_cache(args.split, args.checkpoint, cache_directory(args.checkpoint))
+    checkpoint = data_path(args.checkpoint)
+    build_cache(args.split, checkpoint, cache_directory(checkpoint))
 
 
 if __name__ == "__main__":

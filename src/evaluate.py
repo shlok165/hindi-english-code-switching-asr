@@ -171,7 +171,7 @@ def main() -> None:
     parser.add_argument("--output-dir", type=Path, default=ROOT / "results" / "evaluations")
     parser.add_argument("--workers", type=int, default=max((os.cpu_count() or 4) - 2, 1))
     args = parser.parse_args()
-    evaluate(args.split, args.checkpoint, args.decoder, args.decode_config, args.output_dir, args.workers)
+    evaluate(args.split, data_path(args.checkpoint), args.decoder, args.decode_config, args.output_dir, args.workers)
 
 
 if __name__ == "__main__":

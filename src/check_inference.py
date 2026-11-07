@@ -33,7 +33,7 @@ def main() -> None:
         rows = [json.loads(line) for line in handle]
     chosen = rows[:: max(len(rows) // args.utterances, 1)][: args.utterances]
 
-    model, vocab, extractor = load_model(args.checkpoint)
+    model, vocab, extractor = load_model(data_path(args.checkpoint))
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model.to(device)
     samples, mismatches = [], 0

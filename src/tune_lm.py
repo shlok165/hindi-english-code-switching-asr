@@ -58,6 +58,7 @@ def main() -> None:
     parser.add_argument("--workers", type=int, default=max((os.cpu_count() or 4) - 2, 1))
     parser.add_argument("--write-config", action="store_true", help="save the winner to configs/decode.yaml")
     args = parser.parse_args()
+    args.checkpoint = data_path(args.checkpoint)
 
     cache = data_path("data/processed/logits") / args.checkpoint.parent.name / args.checkpoint.name
     vocab = json.loads((args.checkpoint / "vocab.json").read_text(encoding="utf-8"))
