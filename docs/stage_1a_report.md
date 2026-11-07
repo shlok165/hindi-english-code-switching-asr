@@ -182,7 +182,7 @@ python -m venv .venv
 .venv\Scripts\python -m src.training.train --config configs/train_baseline.yaml --resume auto
 ```
 
-Outputs go to `data/checkpoints/baseline_him4200/`: `best/`, `step-*/`, `train_log.csv` and `run_meta.json`. Override any value with `--set`, for example `--set training.seed=7 --set run_name=baseline_seed7`.
+Outputs go to `data/checkpoints/baseline_rtx3050/`: `best/`, `step-*/`, `train_log.csv` and `run_meta.json`. Override any value with `--set`, for example `--set training.seed=7 --set run_name=baseline_seed7`.
 
 ## 9. Handoff
 

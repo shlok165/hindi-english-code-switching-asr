@@ -28,6 +28,19 @@ ALPHAS = (0.0, 0.2, 0.35, 0.5, 0.75, 1.0, 1.5)
 BETAS = (-1.0, 0.0, 1.0, 2.0, 3.0)
 UNK_OFFSETS = (-5.0, -10.0, -20.0)
 BEAM_WIDTHS = (50, 100, 200, 500)
+WIDTH_TOLERANCE = 0.05  # WER points a wider beam must gain to justify its cost
+
+CONFIG_TEMPLATE = """# Tuned on validation data by src.tune_lm, with test and blind untouched.
+# Subset WER on val: {wer:.3f}. Every grid result is in results/lm_tuning.csv.
+decoder:
+  kenlm_model: {kenlm}
+  beam_width: {beam_width}
+  alpha: {alpha}               # LM weight
+  beta: {beta}                # Word insertion score
+  unk_score_offset: {unk_score_offset}  # Penalty for words outside the LM vocabulary
+  beam_prune_logp: {beam_prune_logp}   # pyctcdecode default
+  token_min_logp: {token_min_logp}     # pyctcdecode default
+"""
 
 
 def evenly_spaced(count: int, size: int) -> list[int]:
@@ -41,6 +54,7 @@ def main() -> None:
     parser.add_argument("--subset", type=int, default=500)
     parser.add_argument("--grid-beam", type=int, default=50)
     parser.add_argument("--workers", type=int, default=max((os.cpu_count() or 4) - 2, 1))
+    parser.add_argument("--write-config", action="store_true", help="save the winner to configs/decode.yaml")
     args = parser.parse_args()
 
     cache = data_path("data/processed/logits") / args.checkpoint.parent.name / args.checkpoint.name
@@ -80,8 +94,13 @@ def main() -> None:
             if wer < best_wer:
                 best, best_wer = candidate, wer
         for width in BEAM_WIDTHS:
-            run("beam_width", positions, references, replace(best, beam_width=width))
+            wer = run("beam_width", positions, references, replace(best, beam_width=width))
+            if wer < best_wer - WIDTH_TOLERANCE:
+                best, best_wer = replace(best, beam_width=width), wer
 
+    if args.write_config:
+        text = CONFIG_TEMPLATE.format(wer=best_wer, kenlm=args.kenlm, **asdict(best))
+        (ROOT / "configs" / "decode.yaml").write_text(text, encoding="utf-8", newline="\n")
     print(json.dumps({"best": asdict(best), "subset_val_wer": round(best_wer, 3)}, indent=2))
 
 

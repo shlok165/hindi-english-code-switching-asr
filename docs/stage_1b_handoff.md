@@ -24,7 +24,7 @@
 ```
 
 - It takes about 4.5 hours and resumes after a crash.
-- `data/checkpoints/baseline_him4200/train_log.csv` already logs train loss, val loss and val WER, and `best/` holds the best checkpoint by val WER.
+- `data/checkpoints/baseline_rtx3050/train_log.csv` already logs train loss, val loss and val WER, and `best/` holds the best checkpoint by val WER.
 - That val WER is for selecting checkpoints only: greedy, on cleaned text.
 - The pilot leveled off near 43 % val WER by update 300 because its LR schedule ended there. It predicts nothing about the full run.
 
