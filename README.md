@@ -1,7 +1,30 @@
-# Hindi–English Code-Switching Speech — Research Dossier
+# Hindi–English Code-Switched ASR
 
-Research phase for a project to replicate and then improve a Hindi–English code-switched ASR system.
-**No experiment code here and nothing has been trained** — implementation is handed off separately.
+A project to replicate and then improve a Hindi–English code-switched ASR system on MUCS 2021 Subtask-2, using wav2vec 2.0 + CTC.
+
+**Status: Stage 1A complete.** The data pipeline and CTC training infrastructure are built and tested. **Full-scale training has not been run yet, so there are no accuracy results.**
+
+- [Stage 1A report](docs/stage_1a_report.md): dataset statistics, model and tokenizer details, test results, GPU requirements and limitations
+- [Stage 1B handoff](docs/stage_1b_handoff.md): what comes next
+
+## Quick start
+
+```powershell
+python -m venv .venv
+.venv\Scripts\python -m pip install torch==2.14.1 --index-url https://download.pytorch.org/whl/cu130
+.venv\Scripts\python -m pip install -r envequirements.txt
+.venv\Scripts\python -m src.data.download --only test blind train
+.venv\Scripts\python -m src.data.manifest --config configs/data.yaml
+.venv\Scripts\python -m src.models.tokenizer --config configs/data.yaml
+.venv\Scripts\python -m pytest tests -q
+.venv\Scripts\python -m src.training.smoke_test
+```
+
+Data licence: MUCS 2021 is CC BY-SA 4.0 and is never committed here. Colab users can start from `notebooks/colab_stage1a.ipynb`, which has not yet been run on Colab.
+
+# Research Dossier
+
+The research phase behind the project. Some of its findings were later corrected; see the corrections table in the Stage 1A report.
 
 ## Contents
 

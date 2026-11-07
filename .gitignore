@@ -17,3 +17,13 @@ data/
 *.wav
 *.pt
 *.bin
+
+# Implementation phase
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+checkpoints/
+*.safetensors
+*.arpa
+*.klm

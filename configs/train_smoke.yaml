@@ -1,0 +1,21 @@
+# Minutes-long run over a few utterances. It proves the pipeline works and says
+# nothing about accuracy.
+includes:
+  - configs/train_baseline.yaml
+
+run_name: smoke
+
+data:
+  limit_train: 64
+  limit_val: 8
+
+training:
+  max_updates: 6
+  max_samples_per_batch: 480000
+  gradient_accumulation: 2
+  warmup_fraction: 0.2
+  hold_fraction: 0.4
+  freeze_encoder_updates: 2
+  log_every: 1
+  eval_every: 3
+  keep_checkpoints: 2

@@ -1,0 +1,10 @@
+# Same Vakyansh 4,200 h Hindi lineage as the encoder in Chadha et al. 2022.
+# Ungated, MIT licence. Identity with the paper's fairseq checkpoint is unverified.
+model:
+  pretrained: Harveenchadha/vakyansh-wav2vec2-hindi-him-4200
+  source_blank: "<s>"           # Measured on real audio: fairseq export, despite pad_token_id=1 in its config
+  ctc_loss_reduction: mean      # GUESSED: 'sum' scales the loss with batch contents
+  ctc_zero_infinity: true       # GUESSED: stops one impossible alignment producing inf
+  mask_time_prob: 0.065         # GUESSED: wav2vec 2.0 default
+  mask_time_length: 10          # GUESSED: wav2vec 2.0 default
+  gradient_checkpointing: true  # Saves memory with no effect on the result

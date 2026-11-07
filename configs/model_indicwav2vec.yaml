@@ -1,0 +1,11 @@
+# The proposed encoder. Gated: accept the terms on its Hugging Face page, then
+# run `hf auth login`, then:
+#   python -m src.models.verify_encoder --config configs/model_indicwav2vec.yaml
+model:
+  pretrained: ai4bharat/indicwav2vec-hindi
+  source_blank: "<s>"           # UNVERIFIED (model gated): verify_encoder measures this and fails if wrong
+  ctc_loss_reduction: mean      # GUESSED
+  ctc_zero_infinity: true       # GUESSED
+  mask_time_prob: 0.065         # GUESSED: wav2vec 2.0 default
+  mask_time_length: 10          # GUESSED: wav2vec 2.0 default
+  gradient_checkpointing: true

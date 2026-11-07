@@ -1,0 +1,61 @@
+{
+  "source": "train.jsonl only",
+  "transcripts": 50509,
+  "vocab_size": 120,
+  "groups": {
+    "devanagari": 63,
+    "latin": 26,
+    "digit": 10,
+    "symbol": 16
+  },
+  "symbols": [
+    "#",
+    "$",
+    "%",
+    "&",
+    "*",
+    "+",
+    "/",
+    "<",
+    "=",
+    ">",
+    "@",
+    "\\",
+    "_",
+    "{",
+    "}"
+  ],
+  "ids": {
+    "blank": 0,
+    "unk": 3,
+    "delimiter": 4
+  },
+  "dropped_rare_characters": {
+    "^": 7,
+    "°": 7,
+    "~": 3,
+    "२": 4,
+    "०": 6,
+    "७": 3,
+    "ॅ": 6,
+    "º": 2,
+    "१": 4,
+    "×": 1,
+    "λ": 1,
+    "⅓": 1,
+    "३": 1,
+    "४": 1,
+    "५": 2,
+    "६": 1,
+    "८": 1,
+    "९": 1,
+    "•": 3,
+    "−": 6,
+    "φ": 3,
+    "π": 2,
+    "›": 2
+  },
+  "transcripts_changed_by_dropping": 43,
+  "round_trip_exact_percent": 99.915,
+  "hf_tokenizer_agrees_on_sample": true
+}

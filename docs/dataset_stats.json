@@ -1,0 +1,186 @@
+{
+  "expected_sample_rate_hz": 16000,
+  "audit": {
+    "train": {
+      "recordings_listed": 521,
+      "wav_scp_entries": 521,
+      "recordings_missing_audio": [],
+      "recordings_unreadable": [],
+      "recordings_truncated": [],
+      "recordings_silent": [],
+      "recordings_non_finite": [],
+      "sample_rates_hz": {
+        "16000": 521
+      },
+      "channels": {
+        "1": 521
+      },
+      "subtypes": {
+        "PCM_16": 521
+      },
+      "recording_hours": 89.86,
+      "problems": {
+        "text_without_segment": 0
+      }
+    },
+    "test": {
+      "recordings_listed": 30,
+      "wav_scp_entries": 30,
+      "recordings_missing_audio": [],
+      "recordings_unreadable": [],
+      "recordings_truncated": [],
+      "recordings_silent": [],
+      "recordings_non_finite": [],
+      "sample_rates_hz": {
+        "16000": 30
+      },
+      "channels": {
+        "1": 30
+      },
+      "subtypes": {
+        "PCM_16": 30
+      },
+      "recording_hours": 5.19,
+      "problems": {
+        "text_without_segment": 0
+      }
+    },
+    "blind": {
+      "recordings_listed": 35,
+      "wav_scp_entries": 35,
+      "recordings_missing_audio": [],
+      "recordings_unreadable": [],
+      "recordings_truncated": [],
+      "recordings_silent": [],
+      "recordings_non_finite": [],
+      "sample_rates_hz": {
+        "16000": 35
+      },
+      "channels": {
+        "1": 35
+      },
+      "subtypes": {
+        "PCM_16": 35
+      },
+      "recording_hours": 6.34,
+      "problems": {
+        "text_without_segment": 0
+      }
+    }
+  },
+  "splits": {
+    "train": {
+      "utterances": 50509,
+      "empty_transcripts": 0,
+      "unique_sentences": 42124,
+      "recordings": 499,
+      "segment_hours": 85.55,
+      "duration_seconds": {
+        "min": 0.5,
+        "p50": 5.0,
+        "p95": 12.0,
+        "p99": 19.0,
+        "max": 57.0
+      },
+      "seconds_over_20s": 8879.3,
+      "utterances_over_20s": 341,
+      "utterances_under_0.5s": 0,
+      "words": 604999,
+      "vocabulary_words": 17005,
+      "latin_word_percent": 25.11,
+      "devanagari_word_percent": 73.78,
+      "chars_per_second": {
+        "p1": 2.1,
+        "p50": 8.5,
+        "p99": 17.5
+      },
+      "implausible_rate_over_35cps": 13
+    },
+    "val": {
+      "utterances": 2316,
+      "empty_transcripts": 0,
+      "unique_sentences": 2225,
+      "recordings": 22,
+      "segment_hours": 4.01,
+      "duration_seconds": {
+        "min": 1.0,
+        "p50": 6.0,
+        "p95": 12.0,
+        "p99": 15.0,
+        "max": 25.0
+      },
+      "seconds_over_20s": 112.0,
+      "utterances_over_20s": 5,
+      "utterances_under_0.5s": 0,
+      "words": 28469,
+      "vocabulary_words": 3281,
+      "latin_word_percent": 23.76,
+      "devanagari_word_percent": 75.88,
+      "chars_per_second": {
+        "p1": 3.25,
+        "p50": 8.33,
+        "p99": 16.58
+      },
+      "implausible_rate_over_35cps": 0,
+      "utterances_with_sentence_in_train_percent": 13.21
+    },
+    "test": {
+      "utterances": 3136,
+      "empty_transcripts": 0,
+      "unique_sentences": 2886,
+      "recordings": 30,
+      "segment_hours": 5.18,
+      "duration_seconds": {
+        "min": 1.0,
+        "p50": 5.0,
+        "p95": 12.0,
+        "p99": 22.0,
+        "max": 41.0
+      },
+      "seconds_over_20s": 952.5,
+      "utterances_over_20s": 37,
+      "utterances_under_0.5s": 0,
+      "words": 37595,
+      "vocabulary_words": 3296,
+      "latin_word_percent": 24.26,
+      "devanagari_word_percent": 75.05,
+      "chars_per_second": {
+        "p1": 3.24,
+        "p50": 8.79,
+        "p99": 16.97
+      },
+      "implausible_rate_over_35cps": 0,
+      "utterances_with_sentence_in_train_percent": 41.55
+    },
+    "blind": {
+      "utterances": 4034,
+      "empty_transcripts": 8,
+      "unique_sentences": 3830,
+      "recordings": 35,
+      "segment_hours": 6.24,
+      "duration_seconds": {
+        "min": 1.0,
+        "p50": 5.0,
+        "p95": 10.0,
+        "p99": 15.0,
+        "max": 37.0
+      },
+      "seconds_over_20s": 228.0,
+      "utterances_over_20s": 9,
+      "utterances_under_0.5s": 0,
+      "words": 47419,
+      "vocabulary_words": 3510,
+      "latin_word_percent": 32.27,
+      "devanagari_word_percent": 66.25,
+      "chars_per_second": {
+        "p1": 2.76,
+        "p50": 9.0,
+        "p99": 14.5
+      },
+      "implausible_rate_over_35cps": 0,
+      "utterances_with_sentence_in_train_percent": 4.55
+    }
+  },
+  "train_val_shared_utterances": 0,
+  "train_val_shared_recordings": 0
+}

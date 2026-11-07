@@ -1,0 +1,124 @@
+{
+  "checkpoint": "Harveenchadha/vakyansh-wav2vec2-hindi-him-4200",
+  "accessible": true,
+  "architecture": {
+    "class": [
+      "Wav2Vec2ForCTC"
+    ],
+    "hidden_size": 768,
+    "layers": 12,
+    "heads": 12,
+    "feat_extract_norm": "group",
+    "do_stable_layer_norm": false,
+    "downsampling": 320
+  },
+  "feature_extractor": {
+    "sampling_rate": 16000,
+    "do_normalize": true,
+    "return_attention_mask": false,
+    "matches_16k_data": true
+  },
+  "tokenizer": {
+    "size": 67,
+    "blank": "<pad>",
+    "blank_id": 1,
+    "delimiter": "|",
+    "has_latin": false
+  },
+  "parameters_million": 94.42,
+  "forward": {
+    "input_samples": 32000,
+    "last_hidden_shape": [
+      1,
+      99,
+      768
+    ],
+    "logits_shape": [
+      1,
+      99,
+      67
+    ],
+    "frames_match_length_formula": true,
+    "hidden_size_matches_head": true
+  },
+  "blank": {
+    "dominant_token": "<s>",
+    "dominant_frame_percent": 77.2,
+    "config_pad_token": "<pad>",
+    "configured_source_blank": "<s>",
+    "configured_blank_is_correct": true,
+    "sample_reference": "यहाँ हम संरचना में कोई बदलाव नहीं देखते हैं",
+    "sample_pretrained_output": "यह हम संरचना में कोई बदलाव नहीं देखते हैं क्योंकि "
+  },
+  "retargeted_head": {
+    "head_rows_copied": 62,
+    "head_rows_new": 58,
+    "new_tokens": [
+      "#",
+      "$",
+      "%",
+      "&",
+      "*",
+      "+",
+      "/",
+      "0",
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7",
+      "8",
+      "9",
+      "<",
+      "</s>",
+      "<s>",
+      "<unk>",
+      "=",
+      ">",
+      "@",
+      "\\",
+      "_",
+      "a",
+      "b",
+      "c",
+      "d",
+      "e",
+      "f",
+      "g",
+      "h",
+      "i",
+      "j",
+      "k",
+      "l",
+      "m",
+      "n",
+      "o",
+      "p",
+      "q",
+      "r",
+      "s",
+      "t",
+      "u",
+      "v",
+      "w",
+      "x",
+      "y",
+      "z",
+      "{",
+      "}",
+      "ω",
+      "ऍ",
+      "ऩ",
+      "ऱ"
+    ],
+    "logits_shape": [
+      1,
+      99,
+      120
+    ],
+    "vocab_size_matches": true
+  },
+  "compatible": true
+}

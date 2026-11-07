@@ -1,0 +1,27 @@
+# Baseline fine-tuning on the full training split. Chadha et al. publish none of
+# these training values, so every number marked GUESSED is ours, not theirs.
+includes:
+  - configs/data.yaml
+  - configs/model_him4200.yaml
+
+run_name: baseline_him4200
+
+training:
+  seed: 42                        # GUESSED: no paper in this literature reports one
+  output_dir: data/checkpoints
+  max_updates: 20000              # GUESSED: brief suggests 20-40 k
+  learning_rate: 1.0e-4           # GUESSED
+  warmup_fraction: 0.10           # GUESSED: tri-stage 10/40/50
+  hold_fraction: 0.40             # GUESSED
+  adam_betas: [0.9, 0.98]         # GUESSED
+  weight_decay: 0.01              # GUESSED
+  max_grad_norm: 1.0              # GUESSED
+  max_samples_per_batch: 1600000  # GUESSED as the update size; measured to fit (3.5 GB, results/gpu_profile.json)
+  max_samples_per_eval_batch: 1600000
+  gradient_accumulation: 1        # Not needed on this GPU; raise it and lower the line above for smaller GPUs
+  freeze_encoder_updates: 2000    # GUESSED: lets the new Latin head rows settle first
+  mixed_precision: true
+  num_workers: 0                  # Audio reads are cheap; Windows workers cost GBs of RAM
+  log_every: 50
+  eval_every: 1000
+  keep_checkpoints: 2

@@ -4,6 +4,8 @@
 **Prepared:** 4 November 2026, from the research in `literature/`, `datasets/`, `replication_candidates/` and `improvement_ideas/`.
 **Status:** research phase complete; **no experiment code has been written and nothing has been trained.**
 
+> **Correction, 7 November 2026.** Stage 1A found that parts of this brief are out of date: an official T-WER scorer does exist, `ai4bharat/indicwav2vec-hindi` is gated, a Hindi-4200 release exists on Hugging Face, no baseline hypotheses are released, and the full data fits a 6 GB GPU. See the corrections table in `docs/stage_1a_report.md`. Where they disagree, that report wins.
+
 ---
 
 ## 0. Read this first — four verified facts that change the plan

@@ -1,0 +1,10 @@
+# Paths are relative to the repository, or to MUCS_DATA_ROOT when it is set.
+data:
+  extracted_dir: data/interim/extracted
+  manifest_dir: data/processed/manifests
+  tokenizer_dir: data/processed/tokenizer
+  val_hours: 4.0          # Biswas et al. 2025 hold out 4 h from train
+  val_seed: 1234
+  min_seconds: 0.5        # GUESSED: shorter segments rarely hold a whole word
+  max_seconds: 20.0       # GUESSED: drops 341 train utterances (2.9 % of speech), which are the likeliest misalignments
+  vocab_min_count: 10     # Chadha et al. 2022: symbols under 10 occurrences removed
