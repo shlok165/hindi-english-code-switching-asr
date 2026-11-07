@@ -2,7 +2,7 @@
 
 A project to replicate and then improve a Hindi–English code-switched ASR system on MUCS 2021 Subtask-2, using wav2vec 2.0 + CTC.
 
-**Status: Stage 1A complete.** The data pipeline and CTC training infrastructure are built and tested. **Full-scale training has not been run yet, so there are no accuracy results.**
+**Status: Stage 1A complete; Stage 1B execution preparation in progress.** The data pipeline and CTC training infrastructure are built and tested. **Full-scale training has not been run yet, so there are no accuracy results.**
 
 - [Stage 1A report](docs/stage_1a_report.md): dataset statistics, model and tokenizer details, test results, GPU requirements and limitations
 - [Stage 1B handoff](docs/stage_1b_handoff.md): what comes next
@@ -20,7 +20,55 @@ python -m venv .venv
 .venv\Scripts\python -m src.training.smoke_test
 ```
 
-Data licence: MUCS 2021 is CC BY-SA 4.0 and is never committed here. Colab users can start from `notebooks/colab_stage1a.ipynb`, which has not yet been run on Colab.
+Data licence: MUCS 2021 is CC BY-SA 4.0 and is never committed here.
+
+For baseline GPU setup, use the [Stage 1B Colab notebook](notebooks/colab_stage1b_baseline.ipynb) and [Colab requirements](env/requirements-colab.txt). The notebook requires the `stage-1b-baseline` branch to be pushed to GitHub before its fresh-runtime clone cell can run. Colab/cloud setup and training have not been executed or verified from this checkout.
+
+## Stage 1B code paths
+
+The Stage 1B utilities are implemented, but **full training, KenLM decoding, and
+evaluation have not been run in this checkout**. The current environment has no
+MUCS data and CPU-only PyTorch. See
+[the code handoff](docs/stage_1b_code_report.md) for what is and is not verified.
+
+Build the 5-gram LM from `train.jsonl` only. KenLM's `lmplz` and `build_binary`
+executables must be installed and on `PATH`:
+
+```powershell
+python -m src.language_model --config configs/data.yaml --order 5
+```
+
+Transcribe one audio file greedily:
+
+```powershell
+python -m src.inference --checkpoint data/checkpoints/baseline_him4200/best --audio path\to\audio.wav
+```
+
+For KenLM beam decoding, build/install the KenLM Python binding and optional
+`pyctcdecode` dependencies as described in
+[the Stage 1B handoff](docs/stage_1b_handoff.md), then supply the compiled model:
+
+```powershell
+python -m src.inference --checkpoint data/checkpoints/baseline_him4200/best --audio path\to\audio.wav --kenlm data\language_model\train_5gram.klm --beam-width 3000 --lm-weight 0.5 --word-insertion 1.0
+```
+
+Generate predictions for each permitted evaluation split. The default scorer
+reports diagnostic WER/CER against cleaned manifest text and writes a complete
+`<utterance-id> <hypothesis>` file. It does **not** substitute those diagnostics
+for official test/blind WER or T-WER:
+
+```powershell
+python -m src.evaluate --split val --checkpoint data/checkpoints/baseline_him4200/best
+python -m src.evaluate --split test --checkpoint data/checkpoints/baseline_him4200/best
+python -m src.evaluate --split blind --checkpoint data/checkpoints/baseline_him4200/best
+python -m src.analysis.error_analysis --predictions results/evaluations/blind_greedy.jsonl --output results/evaluations/blind_error_analysis.json
+```
+
+For LM experiments, repeat evaluation on **validation only** while tuning
+`--lm-weight`, `--word-insertion`, and `--beam-width`. Freeze those settings
+before test/blind evaluation. The analysis tool derives script and switch-context
+labels from Unicode and is diagnostic only; it cannot identify transliteration
+or homophone causes without manual review.
 
 # Research Dossier
 
@@ -43,7 +91,7 @@ The research phase behind the project. Some of its findings were later corrected
 
 1. **MUCS 2021 Subtask-2** is the only open, licensed, benchmarked Hindi–English code-switched speech corpus: 89.86 h train / 5.18 h test / 6.24 h blind, CC BY-SA 4.0, OpenSLR SLR104.
 2. **The Microsoft MSCS / WSTCSMC 2020 corpus has no Hindi–English pair** (Gujarati-, Tamil- and Telugu-English only), so there is no real Hindi–English language-diarization or frame-level LID benchmark. All published Hindi–English diarization numbers are on synthetic single-speaker speech.
-3. **Recommendation:** replicate Chadha et al. (2022) "Approach C2" — wav2vec 2.0 + CTC + KenLM — with `ai4bharat/indicwav2vec-hindi` substituted, because the Vakyansh "Hindi-4200" checkpoint is no longer hosted (HTTP 403, billing account absent). Official blind-set baseline 25.53 WER / 23.80 T-WER; Chadha et al. 21.77 / 20.75; best leaderboard entry 16.43 / 15.51.
+3. **Recommendation:** replicate Chadha et al. (2022) "Approach C2" — wav2vec 2.0 + CTC + KenLM — using the configured Vakyansh Hindi-4200 lineage checkpoint. Its identity with the paper's weights is unverified. `ai4bharat/indicwav2vec-hindi` is gated in the Stage 1A audit. Official blind-set baseline 25.53 WER / 23.80 T-WER; Chadha et al. 21.77 / 20.75; best leaderboard entry 16.43 / 15.51.
 
 ## A note on the PDFs
 

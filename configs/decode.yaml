@@ -1,0 +1,6 @@
+# Initial values only; tune lm_weight and word_insertion on validation data.
+decoder:
+  beam_width: 3000
+  lm_weight: 0.5       # GUESSED starting point; not tuned
+  word_insertion: 1.0  # GUESSED starting point; not tuned
+  kenlm_model: data/language_model/train_5gram.klm

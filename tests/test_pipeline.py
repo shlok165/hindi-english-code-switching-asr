@@ -11,6 +11,10 @@ import src  # noqa: F401  (sets the cache location before transformers loads)
 from src.data.dataset import PAD_LABEL, Collator, LengthBatchSampler, MucsDataset
 from src.data.manifest import split_validation, summarise
 from src.data.preprocessing import clean_transcript, load_audio, normalise_unicode, resample, to_mono
+from src.inference import decoder_labels
+from src.analysis.error_analysis import analyse, script_of
+from src.language_model import training_text
+from src.metrics.cer import score as score_cer
 from src.metrics.wer import align, count, score
 from src.models.tokenizer import (
     build_vocab,
@@ -220,6 +224,64 @@ def test_wer_counts_each_error_type():
     assert (result.substitutions, result.deletions, result.insertions) == (2, 0, 1)
     assert count("a b c".split(), "a c".split()).deletions == 1
     assert count("a b".split(), "a b c".split()).insertions == 1
+
+
+def test_cer_counts_codepoints_and_normalizes_punctuation():
+    result = score_cer([("ab.", "ac!")])
+    assert result.counts.ref_words == 2
+    assert result.counts.substitutions == 1
+    assert result.wer == pytest.approx(50.0)
+
+
+def test_cer_includes_word_boundaries_and_empty_hypotheses():
+    result = score_cer([("a b", "ab"), ("", "x")])
+    assert result.counts.ref_words == 3
+    assert result.counts.deletions == 1
+    assert result.counts.insertions == 1
+
+
+def test_decoder_labels_follow_vocab_order_and_map_word_delimiter():
+    vocab, _ = build_vocab(["a b"] * 20)
+    labels = decoder_labels(vocab)
+    assert labels[vocab["<pad>"]] == ""
+    assert labels[vocab["|"]] == " "
+    assert labels[vocab["a"]] == "a"
+
+
+def test_language_model_reads_training_manifest_only(tmp_path):
+    manifest = tmp_path / "train.jsonl"
+    manifest.write_text(
+        json.dumps({"split": "train", "text": "hello नमस्ते"}) + "\n"
+        + json.dumps({"split": "train", "text": ""}) + "\n",
+        encoding="utf-8",
+    )
+    assert training_text(manifest) == ["hello नमस्ते"]
+    with pytest.raises(ValueError, match="train.jsonl"):
+        training_text(tmp_path / "blind.jsonl")
+    manifest.write_text(json.dumps({"split": "blind", "text": "leak"}) + "\n", encoding="utf-8")
+    with pytest.raises(ValueError, match="non-training"):
+        training_text(manifest)
+
+
+def test_error_analysis_reports_unicode_script_and_operations(tmp_path):
+    predictions = tmp_path / "predictions.jsonl"
+    predictions.write_text(
+        json.dumps(
+            {
+                "id": "utt-1",
+                "reference": "नमस्ते world",
+                "hypothesis": "नमस्ते word",
+                "duration": 16.0,
+            },
+            ensure_ascii=False,
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+    report = analyse(predictions)
+    assert script_of("नमस्ते") == "hindi_script"
+    assert report["error_counts"]["substitution:english_script"] == 1
+    assert report["error_counts"]["substitution:long"] == 1
 
 
 def test_wer_agrees_with_jiwer_on_random_sentences():
