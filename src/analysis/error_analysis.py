@@ -252,7 +252,13 @@ def main() -> None:
     args = parser.parse_args()
     if args.examples_per_category < 0:
         parser.error("example count must be non-negative")
-    report = analyse(args.predictions, load_maps().words, args.examples_per_category)
+    with args.predictions.open(encoding="utf-8") as handle:
+        split = json.loads(handle.readline()).get("split")
+    # The official word map was built from blind references, so it only labels
+    # splits that are scored with it. A val analysis must not carry blind vocabulary.
+    word_map = load_maps().words if split in ("test", "blind") else {}
+    report = analyse(args.predictions, word_map, args.examples_per_category)
+    report["word_map_used"] = bool(word_map)
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
     print(json.dumps({key: report[key] for key in ("utterances", "wer", "error_types", "by_language",

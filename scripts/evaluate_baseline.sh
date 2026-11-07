@@ -18,9 +18,13 @@ for split in val test blind; do
   done
 done
 
-for decoder in greedy beam; do
-  "$PY" -m src.analysis.error_analysis --predictions "results/evaluations/blind_$decoder.jsonl" \
-    --output "results/error_analysis/blind_$decoder.json"
+# Blind is the reported analysis. The val one exists so later stages can study
+# errors and tune without looking at blind references.
+for split in val blind; do
+  for decoder in greedy beam; do
+    "$PY" -m src.analysis.error_analysis --predictions "results/evaluations/${split}_$decoder.jsonl" \
+      --output "results/error_analysis/${split}_$decoder.json"
+  done
 done
 "$PY" -m src.check_inference --checkpoint "$CHECKPOINT"
 "$PY" -m src.analysis.plots
