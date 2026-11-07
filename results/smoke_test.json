@@ -1,9 +1,9 @@
 {
   "device": "cuda",
   "meta": {
-    "git_commit": "5758c4c376aa85422e432c89bcf52d3eb815fc2f",
+    "git_commit": "e37feb7cd4fb25580465f02041c48282011160ce",
     "git_dirty": true,
-    "config_hash": "a71e9dbd1d4d",
+    "config_hash": "f706f86b3019",
     "python": "3.14.7",
     "torch": "2.14.1+cu130",
     "transformers": "5.22.2",
@@ -134,7 +134,8 @@
     },
     "8_training_step": {
       "head_weight_change": 0.0001004338264465332,
-      "feature_encoder_unchanged": true
+      "cnn_frozen": false,
+      "cnn_moved": true
     },
     "9_save_checkpoint": {
       "files": [
@@ -147,20 +148,20 @@
     },
     "10_reload_and_infer": {
       "largest_logit_difference": 0.0,
-      "sample_output": "दोस्तों बैमें और मलटीलेवस्टेटमेंट के में आपका स्वागत है"
+      "sample_output": "में आपका स्वागतहै"
     },
     "11_overfit_small_batch": {
       "steps": 500,
-      "first_loss": 3.4707,
-      "last_loss": 0.1691,
-      "wer_before": 63.33,
-      "wer_after": 0.0,
+      "first_loss": 3.5813,
+      "last_loss": 0.1779,
+      "wer_before": 93.33,
+      "wer_after": 3.33,
       "reference": "दोस्तों bash में nested और multilevel if statement के spoken tutorial में आपका स",
       "output": "दोस्तों bash में nested और multilevel if statement के spoken tutorial में आपका स"
     },
     "12_resume_matches_straight_run": {
-      "repeat_run_difference": 0.0003060847520828247,
-      "resume_difference": 5.549192428588867e-05
+      "repeat_run_difference": 4.9598515033721924e-05,
+      "resume_difference": 3.987690433859825e-06
     }
   }
 }

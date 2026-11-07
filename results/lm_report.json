@@ -1,0 +1,29 @@
+{
+  "builder": "built-in interpolated Kneser-Ney",
+  "ngrams_per_order": [
+    17008,
+    157702,
+    304587,
+    368621,
+    378722
+  ],
+  "discounts": [
+    0.6115,
+    0.7415,
+    0.8482,
+    0.9,
+    0.818
+  ],
+  "source": "train.jsonl only",
+  "normalisation": "the training transcript cleaner; both scripts preserved, no transliteration",
+  "tokenisation": "whitespace-separated words",
+  "order": 5,
+  "pruning": "none; with about 600 k words, every observed n-gram is kept",
+  "sentences": 50509,
+  "tokens": 604999,
+  "vocabulary": 17005,
+  "arpa_megabytes": 68.5,
+  "binary_megabytes": 27.45,
+  "arpa": "train_5gram.arpa",
+  "binary": "train_5gram.klm"
+}
