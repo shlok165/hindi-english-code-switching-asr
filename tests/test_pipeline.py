@@ -12,7 +12,10 @@ from src.data.dataset import PAD_LABEL, Collator, LengthBatchSampler, MucsDatase
 from src.data.manifest import split_validation, summarise
 from src.data.preprocessing import clean_transcript, load_audio, normalise_unicode, resample, to_mono
 from src.inference import decoder_labels
-from src.analysis.error_analysis import analyse, script_of
+from src.analysis.error_analysis import (
+    analyse,
+    script_of,
+)
 from src.language_model import training_text
 from src.metrics.cer import score as score_cer
 from src.metrics.wer import align, count, score
@@ -278,10 +281,11 @@ def test_error_analysis_reports_unicode_script_and_operations(tmp_path):
         + "\n",
         encoding="utf-8",
     )
-    report = analyse(predictions)
+    report = analyse(predictions, {})
     assert script_of("नमस्ते") == "hindi_script"
-    assert report["error_counts"]["substitution:english_script"] == 1
-    assert report["error_counts"]["substitution:long"] == 1
+    assert report["error_types"]["substitution"] == 1
+    assert report["by_language"]["en"]["errors"] == 1
+    assert report["by_duration"]["10-20 s"]["errors"] == 1
 
 
 def test_wer_agrees_with_jiwer_on_random_sentences():

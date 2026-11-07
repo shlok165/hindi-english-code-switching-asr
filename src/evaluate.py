@@ -1,110 +1,162 @@
-"""Run single-utterance inference and write complete split artifacts.
+"""Decode a split from cached log-probabilities and score the result.
 
-Local WER/CER use cleaned manifest text and are for diagnostics. Test and blind
-headline scores must be computed with the official scorer and its raw references.
+    python -m src.evaluate --split val --decoder greedy --checkpoint data/checkpoints/baseline_him4200/best
+    python -m src.evaluate --split blind --decoder beam --checkpoint data/checkpoints/baseline_him4200/best
+
+Metrics written, and what each one is:
+- `wer`, `cer`: scored against the raw references with the organisers' rules, so
+  on blind `wer` is the official metric. CER is ours, on the same strings.
+- `twer`: official, blind only. Confirmed by re-running compute_wer.py.
+- `twer_approximate`: test only. Not the official metric; see src/metrics/official.py.
+- `wer_cleaned`, `cer_cleaned`: against training-style cleaned text, for checks.
+
+Val gets no T-WER, because the word map comes from the blind references and val
+results drive tuning.
+
+Keep heavy imports out of module level. Windows starts each decoding worker by
+re-importing this file, so a torch import here would cost every worker about a
+gigabyte of memory.
 """
 
 from __future__ import annotations
 
 import argparse
 import json
+import os
+import re
+import subprocess
+import sys
 from pathlib import Path
 from typing import Any
 
-import torch
-
 from src import ROOT
-from src.data.dataset import read_manifest
-from src.inference import build_beam_decoder, transcribe_audio
+from src.beam_search import BeamPool, BeamSettings, LogProbCache, greedy_from_log_probs
 from src.metrics.cer import score as score_cer
+from src.metrics.official import (
+    INFERENCE_DIR,
+    approximate_twer,
+    load_maps,
+    normalise_hypothesis,
+    normalise_reference,
+    official_wer,
+)
 from src.metrics.wer import score as score_wer
-from src.models.ctc_model import load_model
-from src.utils.config import data_path
+from src.utils.config import data_path, load_config, read_manifest
+
+BLIND_REFERENCES = "data/interim/extracted/blind/subtask2_blindtest_wReadme/hindi/files/text"
+
+
+def beam_settings(decode_config: str) -> tuple[BeamSettings, Path]:
+    decoder = load_config(decode_config)["decoder"]
+    fields = BeamSettings.__dataclass_fields__
+    settings = BeamSettings(**{key: value for key, value in decoder.items() if key in fields})
+    return settings, data_path(decoder["kenlm_model"])
+
+
+def run_official_script(hypotheses: Path) -> dict[str, float]:
+    """Run the organisers' own scorer, unchanged, on a hypothesis file."""
+    root = data_path(INFERENCE_DIR)
+    result = subprocess.run(
+        [sys.executable, "-I", "-X", "utf8", str(root / "compute_wer.py"),
+         "--reffile", str(data_path(BLIND_REFERENCES)), "--hypfile", str(hypotheses),
+         "--punctmappingfile", str(root / "punct.mapping.txt"),
+         "--wordmappingfile", str(root / "hin2engwords.txt")],
+        capture_output=True, text=True, encoding="utf-8", check=True,
+    )
+    values = re.findall(r"WER: ([0-9.]+)", result.stdout)
+    return {"wer": float(values[0]), "twer": float(values[1])}
+
+
+def compute_metrics(split: str, entries: list[dict], hypotheses: list[str], hyp_path: Path) -> dict[str, Any]:
+    maps = load_maps()
+    raw_pairs = [(e["text_raw"], h) for e, h in zip(entries, hypotheses)]
+    scored = [(normalise_reference(r), normalise_hypothesis(h, maps.punctuation))
+              for r, h in raw_pairs if normalise_reference(r)]
+    cleaned = [(e["text"], h) for e, h in zip(entries, hypotheses) if e["text"]]
+    official = official_wer(raw_pairs, maps)
+    metrics: dict[str, Any] = {
+        "wer": official["wer"],
+        "cer": score_cer(scored, clean=False).wer,
+        "wer_cleaned": score_wer(cleaned).wer,
+        "cer_cleaned": score_cer(cleaned).wer,
+        "reference_words": official["reference_words"],
+        "scored_utterances": official["scored_utterances"],
+        "empty_references": len(entries) - official["scored_utterances"],
+        "empty_hypotheses": sum(not h for h in hypotheses),
+    }
+    if split == "blind":
+        metrics["twer"] = official["twer"]
+        check = run_official_script(hyp_path)
+        metrics["official_script"] = check
+        if abs(check["wer"] - metrics["wer"]) > 0.01 or abs(check["twer"] - metrics["twer"]) > 0.01:
+            raise RuntimeError(f"disagrees with compute_wer.py: {check} vs {metrics}")
+    elif split == "test":
+        metrics.update(approximate_twer(raw_pairs, maps))
+    return metrics
 
 
 def evaluate(
     split: str,
     checkpoint: Path,
-    manifest: Path,
+    decoder_name: str,
+    decode_config: str,
     output_dir: Path,
-    kenlm_path: Path | None = None,
-    beam_width: int = 3000,
-    lm_weight: float = 0.5,
-    word_insertion: float = 1.0,
+    workers: int,
 ) -> dict[str, Any]:
-    if split not in {"val", "test", "blind"}:
-        raise ValueError("evaluation split must be val, test, or blind")
-    entries = read_manifest(manifest)
+    entries = read_manifest(data_path("data/processed/manifests") / f"{split}.jsonl")
     ids = [entry["id"] for entry in entries]
     if len(ids) != len(set(ids)):
-        raise ValueError(f"{manifest} contains duplicate utterance ids")
+        raise ValueError(f"{split} manifest contains duplicate utterance ids")
 
-    model, vocab, extractor = load_model(checkpoint)
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    model.to(device).eval()
-    decoder = (
-        build_beam_decoder(vocab, kenlm_path, lm_weight, word_insertion)
-        if kenlm_path is not None
-        else None
-    )
-    decoder_name = "kenlm_beam" if decoder is not None else "greedy"
+    cache_dir = data_path("data/processed/logits") / checkpoint.parent.name / checkpoint.name
+    if not (cache_dir / f"{split}.npy").exists():
+        from src.logit_cache import build_cache
+
+        build_cache(split, checkpoint, cache_dir)
+    cache = LogProbCache(cache_dir, split)
+    if [row["id"] for row in cache.index] != ids:
+        raise ValueError("cached log-probabilities do not match the manifest order")
+    vocab = json.loads((checkpoint / "vocab.json").read_text(encoding="utf-8"))
+
+    settings: BeamSettings | None = None
+    if decoder_name == "greedy":
+        hypotheses = [greedy_from_log_probs(cache[i], vocab) for i in range(len(cache))]
+    else:
+        settings, kenlm = beam_settings(decode_config)
+        with BeamPool(cache_dir, split, vocab, kenlm, workers) as pool:
+            hypotheses = pool.decode(range(len(cache)), settings)
+
     output_dir.mkdir(parents=True, exist_ok=True)
-    predictions_path = output_dir / f"{split}_{decoder_name}.jsonl"
-    hypotheses_path = output_dir / f"{split}_{decoder_name}.hyp"
-    pairs = []
+    hyp_path = output_dir / f"{split}_{decoder_name}.hyp"
+    with hyp_path.open("w", encoding="utf-8", newline="\n") as handle:
+        handle.writelines(f"{i} {h}\n" for i, h in zip(ids, hypotheses))
 
-    with predictions_path.open("w", encoding="utf-8", newline="\n") as predictions, \
-            hypotheses_path.open("w", encoding="utf-8", newline="\n") as hypotheses:
-        for entry in entries:
-            audio_path = data_path(entry["audio"])
-            if not audio_path.is_file():
-                raise FileNotFoundError(f"{entry['id']}: audio not found: {audio_path}")
-            prediction = transcribe_audio(
-                audio_path,
-                model,
-                vocab,
-                extractor,
-                device,
-                entry["start"],
-                entry["end"],
-                decoder,
-                beam_width,
-            )
-            reference = entry["text"]
-            pairs.append((reference, prediction))
-            predictions.write(
-                json.dumps(
-                    {
-                        "id": entry["id"],
-                        "split": split,
-                        "duration": entry["duration"],
-                        "reference": reference,
-                        "reference_raw": entry.get("text_raw", ""),
-                        "hypothesis": prediction,
-                    },
-                    ensure_ascii=False,
-                )
-                + "\n"
-            )
-            hypotheses.write(f"{entry['id']} {prediction}\n")
+    maps = load_maps()
+    with (output_dir / f"{split}_{decoder_name}.jsonl").open("w", encoding="utf-8", newline="\n") as handle:
+        for entry, hypothesis in zip(entries, hypotheses):
+            handle.write(json.dumps({
+                "id": entry["id"],
+                "split": split,
+                "audio": entry["audio"],
+                "start": entry["start"],
+                "end": entry["end"],
+                "duration": entry["duration"],
+                "reference": normalise_reference(entry["text_raw"]),
+                "reference_cleaned": entry["text"],
+                "hypothesis": normalise_hypothesis(hypothesis, maps.punctuation),
+            }, ensure_ascii=False) + "\n")
 
-    wer = score_wer(pairs)
-    cer = score_cer(pairs)
     summary = {
         "split": split,
-        "alignment": "UnA",
         "decoder": decoder_name,
+        "alignment": "UnA",
+        "checkpoint": checkpoint.as_posix().split("data/")[-1],
         "utterances": len(entries),
-        "wer_cleaned_percent": wer.wer,
-        "cer_cleaned_percent": cer.wer,
-        "reference_words": wer.counts.ref_words,
-        "reference_characters": cer.counts.ref_words,
-        "hypotheses": str(hypotheses_path),
-        "predictions": str(predictions_path),
-        "official_wer_twer": "not computed; use the official scorer on raw references",
+        "settings": settings.__dict__ if settings else None,
+        **compute_metrics(split, entries, hypotheses, hyp_path),
     }
-    summary_path = output_dir / f"{split}_{decoder_name}_metrics.json"
-    summary_path.write_text(json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf-8")
+    path = output_dir / f"{split}_{decoder_name}_metrics.json"
+    path.write_text(json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf-8")
     print(json.dumps(summary, ensure_ascii=False, indent=2))
     return summary
 
@@ -113,27 +165,12 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--split", required=True, choices=("val", "test", "blind"))
     parser.add_argument("--checkpoint", required=True, type=Path)
-    parser.add_argument("--manifest", type=Path)
+    parser.add_argument("--decoder", default="greedy", choices=("greedy", "beam"))
+    parser.add_argument("--decode-config", default="configs/decode.yaml")
     parser.add_argument("--output-dir", type=Path, default=ROOT / "results" / "evaluations")
-    parser.add_argument("--kenlm", type=Path)
-    parser.add_argument("--beam-width", type=int, default=3000)
-    parser.add_argument("--lm-weight", type=float, default=0.5)
-    parser.add_argument("--word-insertion", type=float, default=1.0)
+    parser.add_argument("--workers", type=int, default=max((os.cpu_count() or 4) - 2, 1))
     args = parser.parse_args()
-    if args.beam_width < 1:
-        parser.error("--beam-width must be positive")
-    if args.manifest is None:
-        args.manifest = data_path("data/processed/manifests") / f"{args.split}.jsonl"
-    evaluate(
-        args.split,
-        args.checkpoint,
-        args.manifest,
-        args.output_dir,
-        args.kenlm,
-        args.beam_width,
-        args.lm_weight,
-        args.word_insertion,
-    )
+    evaluate(args.split, args.checkpoint, args.decoder, args.decode_config, args.output_dir, args.workers)
 
 
 if __name__ == "__main__":
