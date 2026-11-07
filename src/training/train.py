@@ -203,8 +203,14 @@ def train(config: dict[str, Any], resume: str | None = None) -> dict[str, Any]:
     model.to(device)
     print(f"head: {head}", flush=True)
 
+    # The CTC head holds rows that start untrained, such as every Latin letter, so
+    # it can learn faster than the pretrained encoder without disturbing it.
+    head = [p for p in model.lm_head.parameters() if p.requires_grad]
+    head_ids = {id(p) for p in head}
+    encoder = [p for p in model.parameters() if p.requires_grad and id(p) not in head_ids]
     optimizer = torch.optim.AdamW(
-        [p for p in model.parameters() if p.requires_grad],
+        [{"params": encoder},
+         {"params": head, "lr": settings.get("head_learning_rate") or settings["learning_rate"]}],
         lr=settings["learning_rate"],
         betas=tuple(settings["adam_betas"]),
         weight_decay=settings["weight_decay"],

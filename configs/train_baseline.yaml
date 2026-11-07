@@ -10,7 +10,8 @@ training:
   seed: 42                        # GUESSED: no paper in this literature reports one
   output_dir: data/checkpoints
   max_updates: 38000              # About 6 passes over the data at 8 utterances per update
-  learning_rate: 1.0e-5           # Requested RTX 3050 setting
+  learning_rate: 1.0e-5           # Requested RTX 3050 setting; applies to the encoder
+  head_learning_rate: 1.0e-4      # Measured: at 1e-5 for all, 4000 updates produced no Latin output at all
   warmup_fraction: 0.10           # GUESSED: tri-stage 10/40/50
   hold_fraction: 0.40             # GUESSED
   adam_betas: [0.9, 0.98]         # GUESSED
