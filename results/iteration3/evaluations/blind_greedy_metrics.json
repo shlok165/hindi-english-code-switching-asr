@@ -1,0 +1,22 @@
+{
+  "split": "blind",
+  "decoder": "greedy",
+  "alignment": "UnA",
+  "checkpoint": "checkpoints/iteration3/best",
+  "references": "data/processed/manifests",
+  "utterances": 4034,
+  "settings": null,
+  "wer": 21.865840381877565,
+  "cer": 11.909999873808012,
+  "wer_cleaned": 21.674856070351545,
+  "cer_cleaned": 12.037208909888626,
+  "reference_words": 47764,
+  "scored_utterances": 4026,
+  "empty_references": 8,
+  "empty_hypotheses": 4,
+  "twer": 21.398961561008292,
+  "official_script": {
+    "wer": 21.87,
+    "twer": 21.4
+  }
+}

@@ -1,0 +1,1303 @@
+{
+  "utterances": 2316,
+  "reference_words": 28471,
+  "total_errors": 5552,
+  "wer": 19.5,
+  "error_types": {
+    "substitution": 3523,
+    "other_substitution": 3228,
+    "deletion": 1091,
+    "insertion": 938,
+    "homophone_confusion": 238,
+    "incorrect_transliteration": 57
+  },
+  "by_language": {
+    "hi": {
+      "words": 20250,
+      "errors": 2587,
+      "error_rate": 12.78,
+      "share_of_word_errors": 56.07
+    },
+    "en": {
+      "words": 8011,
+      "errors": 1956,
+      "error_rate": 24.42,
+      "share_of_word_errors": 42.39
+    },
+    "other": {
+      "words": 210,
+      "errors": 71,
+      "error_rate": 33.81,
+      "share_of_word_errors": 1.54
+    }
+  },
+  "by_switch": {
+    "hi_to_en": {
+      "words": 6962,
+      "errors": 1256,
+      "error_rate": 18.04
+    },
+    "en_to_hi": {
+      "words": 6773,
+      "errors": 961,
+      "error_rate": 14.19
+    }
+  },
+  "by_duration": {
+    "under 5 s": {
+      "words": 5013,
+      "errors": 1088,
+      "wer": 21.7
+    },
+    "5-10 s": {
+      "words": 17853,
+      "errors": 3201,
+      "wer": 17.93
+    },
+    "10-20 s": {
+      "words": 5457,
+      "errors": 1240,
+      "wer": 22.72
+    },
+    "over 20 s": {
+      "words": 148,
+      "errors": 23,
+      "wer": 15.54
+    }
+  },
+  "top_confusions": [
+    [
+      "हैं",
+      "है",
+      43
+    ],
+    [
+      "है",
+      "हैं",
+      26
+    ],
+    [
+      "दबाएँ",
+      "दबाएं",
+      18
+    ],
+    [
+      "down",
+      "dropdown",
+      16
+    ],
+    [
+      "underscore",
+      "_",
+      15
+    ],
+    [
+      "क्लास",
+      "class",
+      14
+    ],
+    [
+      "dot",
+      ".",
+      14
+    ],
+    [
+      "बनाएँ",
+      "बनाएं",
+      14
+    ],
+    [
+      "यहां",
+      "यहाँ",
+      13
+    ],
+    [
+      "office",
+      "libreoffice",
+      13
+    ],
+    [
+      "एंटर",
+      "enter",
+      12
+    ],
+    [
+      "जोकि",
+      "कि",
+      11
+    ],
+    [
+      "z3950",
+      "3950",
+      11
+    ],
+    [
+      "हैश",
+      "#",
+      10
+    ],
+    [
+      "equal",
+      "=",
+      9
+    ],
+    [
+      "weather",
+      "wether",
+      9
+    ],
+    [
+      "करूंगी",
+      "करूँगी",
+      9
+    ],
+    [
+      "bar",
+      "toolbar",
+      9
+    ],
+    [
+      "underscore",
+      "अंडरस्कोर",
+      8
+    ],
+    [
+      "औऱ",
+      "और",
+      8
+    ],
+    [
+      "quotes",
+      "'",
+      8
+    ],
+    [
+      "नाम",
+      "name",
+      7
+    ],
+    [
+      "object",
+      "objects",
+      7
+    ],
+    [
+      "force",
+      "fource",
+      7
+    ],
+    [
+      "बॉक्स",
+      "box",
+      6
+    ],
+    [
+      "हैं",
+      "ैं",
+      6
+    ],
+    [
+      "tutorials",
+      "tutorial",
+      6
+    ],
+    [
+      "कमांड",
+      "command",
+      6
+    ],
+    [
+      "सकते",
+      "कते",
+      6
+    ],
+    [
+      "booktitle",
+      "title",
+      6
+    ],
+    [
+      "world",
+      "helloworld",
+      6
+    ],
+    [
+      "उपर",
+      "ऊपर",
+      5
+    ],
+    [
+      "aliases",
+      "aless",
+      5
+    ],
+    [
+      "किए",
+      "किये",
+      5
+    ],
+    [
+      "hyphen",
+      "-",
+      5
+    ],
+    [
+      "करुँगी",
+      "करूँगी",
+      5
+    ],
+    [
+      "मॉड्यूल",
+      "module",
+      5
+    ],
+    [
+      "ज्यादा",
+      "ज़्यादा",
+      5
+    ],
+    [
+      "कमेंट्स",
+      "comments",
+      5
+    ],
+    [
+      "miller",
+      "millar",
+      5
+    ]
+  ],
+  "top_deletions": [
+    [
+      "और",
+      26
+    ],
+    [
+      "अब",
+      18
+    ],
+    [
+      "पर",
+      18
+    ],
+    [
+      "एक",
+      18
+    ],
+    [
+      "dot",
+      17
+    ],
+    [
+      "हम",
+      16
+    ],
+    [
+      "type",
+      16
+    ],
+    [
+      "के",
+      15
+    ],
+    [
+      "का",
+      14
+    ],
+    [
+      "लिबरे",
+      14
+    ],
+    [
+      "है",
+      13
+    ],
+    [
+      "tool",
+      13
+    ],
+    [
+      "यह",
+      12
+    ],
+    [
+      "drop",
+      11
+    ],
+    [
+      "में",
+      11
+    ],
+    [
+      "उपयोग",
+      10
+    ],
+    [
+      "लिए",
+      10
+    ],
+    [
+      "द्वारा",
+      9
+    ],
+    [
+      "file",
+      9
+    ],
+    [
+      "करके",
+      8
+    ],
+    [
+      "को",
+      8
+    ],
+    [
+      "करें",
+      8
+    ],
+    [
+      "script",
+      8
+    ],
+    [
+      "मैं",
+      8
+    ],
+    [
+      "फिर",
+      7
+    ]
+  ],
+  "top_insertions": [
+    [
+      "है",
+      23
+    ],
+    [
+      "और",
+      19
+    ],
+    [
+      "हैं",
+      14
+    ],
+    [
+      "के",
+      14
+    ],
+    [
+      "में",
+      14
+    ],
+    [
+      "पर",
+      14
+    ],
+    [
+      "type",
+      12
+    ],
+    [
+      "जो",
+      11
+    ],
+    [
+      "लिए",
+      10
+    ],
+    [
+      "एक",
+      9
+    ],
+    [
+      "करें",
+      9
+    ],
+    [
+      "यह",
+      8
+    ],
+    [
+      "z",
+      8
+    ],
+    [
+      "इस",
+      7
+    ],
+    [
+      "book",
+      7
+    ],
+    [
+      "अब",
+      6
+    ],
+    [
+      "path",
+      6
+    ],
+    [
+      "से",
+      6
+    ],
+    [
+      "$",
+      6
+    ],
+    [
+      "types",
+      6
+    ],
+    [
+      "compartment",
+      6
+    ],
+    [
+      "apply",
+      5
+    ],
+    [
+      "द",
+      4
+    ],
+    [
+      "member",
+      4
+    ],
+    [
+      "talktoa",
+      4
+    ]
+  ],
+  "examples": {
+    "deletion": [
+      {
+        "id": "160830_v8x2RzJs3DwC4jE9_0001",
+        "duration": 4.0,
+        "reference": "complex जटिल forms के इस tutorial में हम in बारे में सीखेंगे",
+        "hypothesis": "complex forms के इस tutorial में हम इनके बारे में सीखेंगे",
+        "reference_word": "जटिल",
+        "hypothesis_word": null
+      },
+      {
+        "id": "160830_v8x2RzJs3DwC4jE9_0007",
+        "duration": 10.0,
+        "reference": "यदि base पहले से ही खुला है तो हम library database यहाँ file menu में open पर click करके खोल सकते हैं",
+        "hypothesis": "यदि base पहले से ही खुला है तो हम library database यहाँ file menu में open पर click करेगे",
+        "reference_word": "करके",
+        "hypothesis_word": null
+      },
+      {
+        "id": "160830_v8x2RzJs3DwC4jE9_0007",
+        "duration": 10.0,
+        "reference": "यदि base पहले से ही खुला है तो हम library database यहाँ file menu में open पर click करके खोल सकते हैं",
+        "hypothesis": "यदि base पहले से ही खुला है तो हम library database यहाँ file menu में open पर click करेगे",
+        "reference_word": "खोल",
+        "hypothesis_word": null
+      },
+      {
+        "id": "160830_v8x2RzJs3DwC4jE9_0007",
+        "duration": 10.0,
+        "reference": "यदि base पहले से ही खुला है तो हम library database यहाँ file menu में open पर click करके खोल सकते हैं",
+        "hypothesis": "यदि base पहले से ही खुला है तो हम library database यहाँ file menu में open पर click करेगे",
+        "reference_word": "सकते",
+        "hypothesis_word": null
+      },
+      {
+        "id": "160830_v8x2RzJs3DwC4jE9_0012",
+        "duration": 5.0,
+        "reference": "और फिर use wizard to create form पर click करिये",
+        "hypothesis": "use wizard to create form पर click करें",
+        "reference_word": "और",
+        "hypothesis_word": null
+      },
+      {
+        "id": "160830_v8x2RzJs3DwC4jE9_0012",
+        "duration": 5.0,
+        "reference": "और फिर use wizard to create form पर click करिये",
+        "hypothesis": "use wizard to create form पर click करें",
+        "reference_word": "फिर",
+        "hypothesis_word": null
+      },
+      {
+        "id": "160830_v8x2RzJs3DwC4jE9_0015",
+        "duration": 13.0,
+        "reference": "step 1 में field selection चलिए tables or queries label के नीचे drop down box में से tables: booksissued चुनते हैं",
+        "hypothesis": "step 1 में field selection चलिए tables और queries label के नीचे dropdown box में से tables books issued चुनते हैं",
+        "reference_word": "drop",
+        "hypothesis_word": null
+      },
+      {
+        "id": "160830_v8x2RzJs3DwC4jE9_0019",
+        "duration": 10.0,
+        "reference": "हम अब step 5 में हैं पहला arrangement columnar – labels left चुनते हैं और next button पर click करते हैं",
+        "hypothesis": "म अ 5ैपहला arrangement columnnar labels left चुनते हैं और next button पर click करते हैं",
+        "reference_word": "हम",
+        "hypothesis_word": null
+      },
+      {
+        "id": "160830_v8x2RzJs3DwC4jE9_0019",
+        "duration": 10.0,
+        "reference": "हम अब step 5 में हैं पहला arrangement columnar – labels left चुनते हैं और next button पर click करते हैं",
+        "hypothesis": "म अ 5ैपहला arrangement columnnar labels left चुनते हैं और next button पर click करते हैं",
+        "reference_word": "अब",
+        "hypothesis_word": null
+      },
+      {
+        "id": "160830_v8x2RzJs3DwC4jE9_0019",
+        "duration": 10.0,
+        "reference": "हम अब step 5 में हैं पहला arrangement columnar – labels left चुनते हैं और next button पर click करते हैं",
+        "hypothesis": "म अ 5ैपहला arrangement columnnar labels left चुनते हैं और next button पर click करते हैं",
+        "reference_word": "step",
+        "hypothesis_word": null
+      }
+    ],
+    "en_to_hi": [
+      {
+        "id": "160830_v8x2RzJs3DwC4jE9_0001",
+        "duration": 4.0,
+        "reference": "complex जटिल forms के इस tutorial में हम in बारे में सीखेंगे",
+        "hypothesis": "complex forms के इस tutorial में हम इनके बारे में सीखेंगे",
+        "reference_word": "जटिल",
+        "hypothesis_word": null
+      },
+      {
+        "id": "160830_v8x2RzJs3DwC4jE9_0007",
+        "duration": 10.0,
+        "reference": "यदि base पहले से ही खुला है तो हम library database यहाँ file menu में open पर click करके खोल सकते हैं",
+        "hypothesis": "यदि base पहले से ही खुला है तो हम library database यहाँ file menu में open पर click करेगे",
+        "reference_word": "करके",
+        "hypothesis_word": null
+      },
+      {
+        "id": "160830_v8x2RzJs3DwC4jE9_0012",
+        "duration": 5.0,
+        "reference": "और फिर use wizard to create form पर click करिये",
+        "hypothesis": "use wizard to create form पर click करें",
+        "reference_word": "करिये",
+        "hypothesis_word": "करें"
+      },
+      {
+        "id": "160830_v8x2RzJs3DwC4jE9_0015",
+        "duration": 13.0,
+        "reference": "step 1 में field selection चलिए tables or queries label के नीचे drop down box में से tables: booksissued चुनते हैं",
+        "hypothesis": "step 1 में field selection चलिए tables और queries label के नीचे dropdown box में से tables books issued चुनते हैं",
+        "reference_word": "booksissued",
+        "hypothesis_word": "issued"
+      },
+      {
+        "id": "160830_v8x2RzJs3DwC4jE9_0024",
+        "duration": 3.0,
+        "reference": "अगला finish button पर click करिये",
+        "hypothesis": "अगला finish b ckकें",
+        "reference_word": "button",
+        "hypothesis_word": null
+      },
+      {
+        "id": "160830_v8x2RzJs3DwC4jE9_0024",
+        "duration": 3.0,
+        "reference": "अगला finish button पर click करिये",
+        "hypothesis": "अगला finish b ckकें",
+        "reference_word": "पर",
+        "hypothesis_word": null
+      },
+      {
+        "id": "160830_v8x2RzJs3DwC4jE9_0024",
+        "duration": 3.0,
+        "reference": "अगला finish button पर click करिये",
+        "hypothesis": "अगला finish b ckकें",
+        "reference_word": "करिये",
+        "hypothesis_word": "ckकें"
+      },
+      {
+        "id": "160830_v8x2RzJs3DwC4jE9_0025",
+        "duration": 7.0,
+        "reference": "ध्यान दीजिये कि wizard पॉपअप window जा चुकी है और हम form design window को देख रहे हैं",
+        "hypothesis": "ध्यान दीजिये कि wizard popअप wind ow जा चत है",
+        "reference_word": "पॉपअप",
+        "hypothesis_word": "wind"
+      },
+      {
+        "id": "160830_v8x2RzJs3DwC4jE9_0025",
+        "duration": 7.0,
+        "reference": "ध्यान दीजिये कि wizard पॉपअप window जा चुकी है और हम form design window को देख रहे हैं",
+        "hypothesis": "ध्यान दीजिये कि wizard popअप wind ow जा चत है",
+        "reference_word": "window",
+        "hypothesis_word": null
+      },
+      {
+        "id": "160830_v8x2RzJs3DwC4jE9_0025",
+        "duration": 7.0,
+        "reference": "ध्यान दीजिये कि wizard पॉपअप window जा चुकी है और हम form design window को देख रहे हैं",
+        "hypothesis": "ध्यान दीजिये कि wizard popअप wind ow जा चत है",
+        "reference_word": "को",
+        "hypothesis_word": null
+      }
+    ],
+    "en_word": [
+      {
+        "id": "160830_v8x2RzJs3DwC4jE9_0001",
+        "duration": 4.0,
+        "reference": "complex जटिल forms के इस tutorial में हम in बारे में सीखेंगे",
+        "hypothesis": "complex forms के इस tutorial में हम इनके बारे में सीखेंगे",
+        "reference_word": "in",
+        "hypothesis_word": "इनके"
+      },
+      {
+        "id": "160830_v8x2RzJs3DwC4jE9_0003",
+        "duration": 9.0,
+        "reference": "पिछले tutorial में हमने सीखा था कि forms का उपयोग करके कैसे data प्रविष्ट करें और libreoffice base का उपयोग करके कैसे forms में बदलाव करें",
+        "hypothesis": "पिछले tutorial में हमने सीखा था कि forms का उपयोग करके कैसे data प्रविष्ट करें और libreoffice base का उपयोग करके कैसे form में बदलाव करें",
+        "reference_word": "forms",
+        "hypothesis_word": "form"
+      },
+      {
+        "id": "160830_v8x2RzJs3DwC4jE9_0011",
+        "duration": 11.0,
+        "reference": "libreoffice base मुख्य window पर जाते हैं और base panel में database सूची में forms icon पर click करें",
+        "hypothesis": "libreoffice base मुख्य window पर जाते हैं और बाएँ panel में database सूची में forms icon पर click करें",
+        "reference_word": "base",
+        "hypothesis_word": "बाएँ"
+      },
+      {
+        "id": "160830_v8x2RzJs3DwC4jE9_0015",
+        "duration": 13.0,
+        "reference": "step 1 में field selection चलिए tables or queries label के नीचे drop down box में से tables: booksissued चुनते हैं",
+        "hypothesis": "step 1 में field selection चलिए tables और queries label के नीचे dropdown box में से tables books issued चुनते हैं",
+        "reference_word": "or",
+        "hypothesis_word": "और"
+      },
+      {
+        "id": "160830_v8x2RzJs3DwC4jE9_0015",
+        "duration": 13.0,
+        "reference": "step 1 में field selection चलिए tables or queries label के नीचे drop down box में से tables: booksissued चुनते हैं",
+        "hypothesis": "step 1 में field selection चलिए tables और queries label के नीचे dropdown box में से tables books issued चुनते हैं",
+        "reference_word": "drop",
+        "hypothesis_word": null
+      },
+      {
+        "id": "160830_v8x2RzJs3DwC4jE9_0015",
+        "duration": 13.0,
+        "reference": "step 1 में field selection चलिए tables or queries label के नीचे drop down box में से tables: booksissued चुनते हैं",
+        "hypothesis": "step 1 में field selection चलिए tables और queries label के नीचे dropdown box में से tables books issued चुनते हैं",
+        "reference_word": "down",
+        "hypothesis_word": "dropdown"
+      },
+      {
+        "id": "160830_v8x2RzJs3DwC4jE9_0015",
+        "duration": 13.0,
+        "reference": "step 1 में field selection चलिए tables or queries label के नीचे drop down box में से tables: booksissued चुनते हैं",
+        "hypothesis": "step 1 में field selection चलिए tables और queries label के नीचे dropdown box में से tables books issued चुनते हैं",
+        "reference_word": "tables:",
+        "hypothesis_word": "books"
+      },
+      {
+        "id": "160830_v8x2RzJs3DwC4jE9_0015",
+        "duration": 13.0,
+        "reference": "step 1 में field selection चलिए tables or queries label के नीचे drop down box में से tables: booksissued चुनते हैं",
+        "hypothesis": "step 1 में field selection चलिए tables और queries label के नीचे dropdown box में से tables books issued चुनते हैं",
+        "reference_word": "booksissued",
+        "hypothesis_word": "issued"
+      },
+      {
+        "id": "160830_v8x2RzJs3DwC4jE9_0019",
+        "duration": 10.0,
+        "reference": "हम अब step 5 में हैं पहला arrangement columnar – labels left चुनते हैं और next button पर click करते हैं",
+        "hypothesis": "म अ 5ैपहला arrangement columnnar labels left चुनते हैं और next button पर click करते हैं",
+        "reference_word": "step",
+        "hypothesis_word": null
+      },
+      {
+        "id": "160830_v8x2RzJs3DwC4jE9_0019",
+        "duration": 10.0,
+        "reference": "हम अब step 5 में हैं पहला arrangement columnar – labels left चुनते हैं और next button पर click करते हैं",
+        "hypothesis": "म अ 5ैपहला arrangement columnnar labels left चुनते हैं और next button पर click करते हैं",
+        "reference_word": "columnar",
+        "hypothesis_word": null
+      }
+    ],
+    "hi_to_en": [
+      {
+        "id": "160830_v8x2RzJs3DwC4jE9_0001",
+        "duration": 4.0,
+        "reference": "complex जटिल forms के इस tutorial में हम in बारे में सीखेंगे",
+        "hypothesis": "complex forms के इस tutorial में हम इनके बारे में सीखेंगे",
+        "reference_word": "in",
+        "hypothesis_word": "इनके"
+      },
+      {
+        "id": "160830_v8x2RzJs3DwC4jE9_0003",
+        "duration": 9.0,
+        "reference": "पिछले tutorial में हमने सीखा था कि forms का उपयोग करके कैसे data प्रविष्ट करें और libreoffice base का उपयोग करके कैसे forms में बदलाव करें",
+        "hypothesis": "पिछले tutorial में हमने सीखा था कि forms का उपयोग करके कैसे data प्रविष्ट करें और libreoffice base का उपयोग करके कैसे form में बदलाव करें",
+        "reference_word": "forms",
+        "hypothesis_word": "form"
+      },
+      {
+        "id": "160830_v8x2RzJs3DwC4jE9_0011",
+        "duration": 11.0,
+        "reference": "libreoffice base मुख्य window पर जाते हैं और base panel में database सूची में forms icon पर click करें",
+        "hypothesis": "libreoffice base मुख्य window पर जाते हैं और बाएँ panel में database सूची में forms icon पर click करें",
+        "reference_word": "base",
+        "hypothesis_word": "बाएँ"
+      },
+      {
+        "id": "160830_v8x2RzJs3DwC4jE9_0012",
+        "duration": 5.0,
+        "reference": "और फिर use wizard to create form पर click करिये",
+        "hypothesis": "use wizard to create form पर click करें",
+        "reference_word": "फिर",
+        "hypothesis_word": null
+      },
+      {
+        "id": "160830_v8x2RzJs3DwC4jE9_0015",
+        "duration": 13.0,
+        "reference": "step 1 में field selection चलिए tables or queries label के नीचे drop down box में से tables: booksissued चुनते हैं",
+        "hypothesis": "step 1 में field selection चलिए tables और queries label के नीचे dropdown box में से tables books issued चुनते हैं",
+        "reference_word": "drop",
+        "hypothesis_word": null
+      },
+      {
+        "id": "160830_v8x2RzJs3DwC4jE9_0015",
+        "duration": 13.0,
+        "reference": "step 1 में field selection चलिए tables or queries label के नीचे drop down box में से tables: booksissued चुनते हैं",
+        "hypothesis": "step 1 में field selection चलिए tables और queries label के नीचे dropdown box में से tables books issued चुनते हैं",
+        "reference_word": "tables:",
+        "hypothesis_word": "books"
+      },
+      {
+        "id": "160830_v8x2RzJs3DwC4jE9_0019",
+        "duration": 10.0,
+        "reference": "हम अब step 5 में हैं पहला arrangement columnar – labels left चुनते हैं और next button पर click करते हैं",
+        "hypothesis": "म अ 5ैपहला arrangement columnnar labels left चुनते हैं और next button पर click करते हैं",
+        "reference_word": "अब",
+        "hypothesis_word": null
+      },
+      {
+        "id": "160830_v8x2RzJs3DwC4jE9_0019",
+        "duration": 10.0,
+        "reference": "हम अब step 5 में हैं पहला arrangement columnar – labels left चुनते हैं और next button पर click करते हैं",
+        "hypothesis": "म अ 5ैपहला arrangement columnnar labels left चुनते हैं और next button पर click करते हैं",
+        "reference_word": "step",
+        "hypothesis_word": null
+      },
+      {
+        "id": "160830_v8x2RzJs3DwC4jE9_0019",
+        "duration": 10.0,
+        "reference": "हम अब step 5 में हैं पहला arrangement columnar – labels left चुनते हैं और next button पर click करते हैं",
+        "hypothesis": "म अ 5ैपहला arrangement columnnar labels left चुनते हैं और next button पर click करते हैं",
+        "reference_word": "पहला",
+        "hypothesis_word": "5ैपहला"
+      },
+      {
+        "id": "160830_v8x2RzJs3DwC4jE9_0024",
+        "duration": 3.0,
+        "reference": "अगला finish button पर click करिये",
+        "hypothesis": "अगला finish b ckकें",
+        "reference_word": "click",
+        "hypothesis_word": "b"
+      }
+    ],
+    "hi_word": [
+      {
+        "id": "160830_v8x2RzJs3DwC4jE9_0001",
+        "duration": 4.0,
+        "reference": "complex जटिल forms के इस tutorial में हम in बारे में सीखेंगे",
+        "hypothesis": "complex forms के इस tutorial में हम इनके बारे में सीखेंगे",
+        "reference_word": "जटिल",
+        "hypothesis_word": null
+      },
+      {
+        "id": "160830_v8x2RzJs3DwC4jE9_0005",
+        "duration": 16.0,
+        "reference": "चलिए सबसे पहले libreoffice base program खोलते हैं यदि वह पहले से नही खुला है",
+        "hypothesis": "चलिए सबसे पहले libreoffice base program खोलते हैं यदि वह पहले से नहीं खुला है",
+        "reference_word": "नही",
+        "hypothesis_word": "नहीं"
+      },
+      {
+        "id": "160830_v8x2RzJs3DwC4jE9_0007",
+        "duration": 10.0,
+        "reference": "यदि base पहले से ही खुला है तो हम library database यहाँ file menu में open पर click करके खोल सकते हैं",
+        "hypothesis": "यदि base पहले से ही खुला है तो हम library database यहाँ file menu में open पर click करेगे",
+        "reference_word": "करके",
+        "hypothesis_word": null
+      },
+      {
+        "id": "160830_v8x2RzJs3DwC4jE9_0007",
+        "duration": 10.0,
+        "reference": "यदि base पहले से ही खुला है तो हम library database यहाँ file menu में open पर click करके खोल सकते हैं",
+        "hypothesis": "यदि base पहले से ही खुला है तो हम library database यहाँ file menu में open पर click करेगे",
+        "reference_word": "खोल",
+        "hypothesis_word": null
+      },
+      {
+        "id": "160830_v8x2RzJs3DwC4jE9_0007",
+        "duration": 10.0,
+        "reference": "यदि base पहले से ही खुला है तो हम library database यहाँ file menu में open पर click करके खोल सकते हैं",
+        "hypothesis": "यदि base पहले से ही खुला है तो हम library database यहाँ file menu में open पर click करेगे",
+        "reference_word": "सकते",
+        "hypothesis_word": null
+      },
+      {
+        "id": "160830_v8x2RzJs3DwC4jE9_0007",
+        "duration": 10.0,
+        "reference": "यदि base पहले से ही खुला है तो हम library database यहाँ file menu में open पर click करके खोल सकते हैं",
+        "hypothesis": "यदि base पहले से ही खुला है तो हम library database यहाँ file menu में open पर click करेगे",
+        "reference_word": "हैं",
+        "hypothesis_word": "करेगे"
+      },
+      {
+        "id": "160830_v8x2RzJs3DwC4jE9_0009",
+        "duration": 9.0,
+        "reference": "एक नया form बनाते हैं जो हमें library के सदस्यों को दी गयी पुस्तकों की खोज करने में मदद करेगा",
+        "hypothesis": "एक नया form बनाते हैं जो हमें library के सदस्यों को दी गी पुस्तकों की खोज करने में मदद करेगा",
+        "reference_word": "गयी",
+        "hypothesis_word": "गी"
+      },
+      {
+        "id": "160830_v8x2RzJs3DwC4jE9_0012",
+        "duration": 5.0,
+        "reference": "और फिर use wizard to create form पर click करिये",
+        "hypothesis": "use wizard to create form पर click करें",
+        "reference_word": "और",
+        "hypothesis_word": null
+      },
+      {
+        "id": "160830_v8x2RzJs3DwC4jE9_0012",
+        "duration": 5.0,
+        "reference": "और फिर use wizard to create form पर click करिये",
+        "hypothesis": "use wizard to create form पर click करें",
+        "reference_word": "फिर",
+        "hypothesis_word": null
+      },
+      {
+        "id": "160830_v8x2RzJs3DwC4jE9_0012",
+        "duration": 5.0,
+        "reference": "और फिर use wizard to create form पर click करिये",
+        "hypothesis": "use wizard to create form पर click करें",
+        "reference_word": "करिये",
+        "hypothesis_word": "करें"
+      }
+    ],
+    "homophone_confusion": [
+      {
+        "id": "160830_v8x2RzJs3DwC4jE9_0031",
+        "duration": 10.0,
+        "reference": "सबसे उपर view menu पर click करके फिर toolbars पर click करिये और फिर form design click करिये",
+        "hypothesis": "सबसे ऊपर view menu पर click करके फिर toolbars पर click करिये और फिर form design click करिये",
+        "reference_word": "उपर",
+        "hypothesis_word": "ऊपर"
+      },
+      {
+        "id": "160830_v8x2RzJs3DwC4jE9_0035",
+        "duration": 8.0,
+        "reference": "अब form पर उपरी बायीं तरफ click करते हैं और तिरछा निचले दायीं तरफ drag करते हैं",
+        "hypothesis": "अब form पर ऊपरी बायीं तरफ click करते हैं और तिर्झा निचली दायीं तरफ drag करते हैं",
+        "reference_word": "उपरी",
+        "hypothesis_word": "ऊपरी"
+      },
+      {
+        "id": "160830_v8x2RzJs3DwC4jE9_0036",
+        "duration": 6.0,
+        "reference": "अब आप काले और सफेद lines के एकान्तर का एक आयत यानि rectangle देखेंगे",
+        "hypothesis": "आप काले और सफ़ेद lines के एकांतर का एक आयत यानी rectangle देखेंगे",
+        "reference_word": "सफेद",
+        "hypothesis_word": "सफ़ेद"
+      },
+      {
+        "id": "160830_v8x2RzJs3DwC4jE9_0036",
+        "duration": 6.0,
+        "reference": "अब आप काले और सफेद lines के एकान्तर का एक आयत यानि rectangle देखेंगे",
+        "hypothesis": "आप काले और सफ़ेद lines के एकांतर का एक आयत यानी rectangle देखेंगे",
+        "reference_word": "यानि",
+        "hypothesis_word": "यानी"
+      },
+      {
+        "id": "160830_v8x2RzJs3DwC4jE9_0041",
+        "duration": 6.0,
+        "reference": "अब mouse pointer को यहाँ किसी भी label के उपर let जाते हैं",
+        "hypothesis": "अब mouse pointer को यहाँ किसी भी label के ऊपर ले जाते हैं",
+        "reference_word": "उपर",
+        "hypothesis_word": "ऊपर"
+      },
+      {
+        "id": "160830_v8x2RzJs3DwC4jE9_0042",
+        "duration": 10.0,
+        "reference": "ध्यान दीजिये कि mouse pointer labels या text boxes के उपर plus चिह्न की तरह दिख रहा है",
+        "hypothesis": "ध्यान दीजिये कि mouse pointer labels या text boxes के ऊपर + चिन्ह की तरह दिख रहा है",
+        "reference_word": "उपर",
+        "hypothesis_word": "ऊपर"
+      },
+      {
+        "id": "160830_v8x2RzJs3DwC4jE9_0049",
+        "duration": 7.0,
+        "reference": "अब cursor को वहां लाते हैं जहाँ हम शीर्षक लिखना चाहते हैं",
+        "hypothesis": "cursor को वहाँ लाते हैं जहाँ हम शीर्षक लिखना चाहते हैं",
+        "reference_word": "वहां",
+        "hypothesis_word": "वहाँ"
+      },
+      {
+        "id": "160830_v8x2RzJs3DwC4jE9_0050",
+        "duration": 7.0,
+        "reference": "यह करने के लिए form window क्षेत्र के उपरी बायीं तरफ click करते हैं",
+        "hypothesis": "यह करने के लिए form window क्षेत्र के ऊपरी बायीं तरफ click करते हैं",
+        "reference_word": "उपरी",
+        "hypothesis_word": "ऊपरी"
+      },
+      {
+        "id": "160830_v8x2RzJs3DwC4jE9_0058",
+        "duration": 9.0,
+        "reference": "ध्यान दीजिए कि properties window refreshed हो गयी है और फिर से यहाँ हम label के सामने member name type करेंगे",
+        "hypothesis": "ध्यान दीजिये कि properties window refreshd हो गयई है और फिर से यहाँ हम label के सामने member name type करेंगे",
+        "reference_word": "दीजिए",
+        "hypothesis_word": "दीजिये"
+      },
+      {
+        "id": "160830_v8x2RzJs3DwC4jE9_0065",
+        "duration": 8.0,
+        "reference": "नये पॉपअप window में bold पर click करते हैं और size 8 पर click करते हैं",
+        "hypothesis": "नए popअप window में boold पर click करते हैं और size",
+        "reference_word": "नये",
+        "hypothesis_word": "नए"
+      }
+    ],
+    "incorrect_transliteration": [
+      {
+        "id": "160830_v8x2RzJs3DwC4jE9_0015",
+        "duration": 13.0,
+        "reference": "step 1 में field selection चलिए tables or queries label के नीचे drop down box में से tables: booksissued चुनते हैं",
+        "hypothesis": "step 1 में field selection चलिए tables और queries label के नीचे dropdown box में से tables books issued चुनते हैं",
+        "reference_word": "or",
+        "hypothesis_word": "और"
+      },
+      {
+        "id": "160830_v8x2RzJs3DwC4jE9_0037",
+        "duration": 6.0,
+        "reference": "चलिए सुनिश्चित कर lets हैं सारे form elements इस आयत के भीतर हैं",
+        "hypothesis": "अब सुनिश्चित कर लेते हैं सारे form elements इस आयत के भीतर हैं",
+        "reference_word": "lets",
+        "hypothesis_word": "लेते"
+      },
+      {
+        "id": "354092_QSQOcoZj95Pfx3zS_0028",
+        "duration": 6.0,
+        "reference": "यह समझने के लिए विवरण पढ़ें कि क्या plugin आपके उद्देश्य को पूरा करता है",
+        "hypothesis": "यह समझने के लिए विवरण पढ़ें कि क्याप लगिन आपके उद्देश्य को पूरा करता है",
+        "reference_word": "plugin",
+        "hypothesis_word": "लगिन"
+      },
+      {
+        "id": "354092_QSQOcoZj95Pfx3zS_0029",
+        "duration": 8.0,
+        "reference": "यह plugin और उपयोग के निर्देशों का उपयोग करने के लिए किसी और चीज का भी उल्लेख करता है यदि कोई हो",
+        "hypothesis": "यह प्लगिन और उपयोग के निर्देशों का उपयोग करने के लिए किसी और चीज़ का भी उल्लेख करता है यदि कोई हो",
+        "reference_word": "plugin",
+        "hypothesis_word": "प्लगिन"
+      },
+      {
+        "id": "354092_QSQOcoZj95Pfx3zS_0033",
+        "duration": 6.0,
+        "reference": "जब आप आश्वस्त हों कि आप plugin संस्थापित करना चाहते हैं तो versions link पर वापस जाएं",
+        "hypothesis": "जब आप आश वस्तु हों कि आप लगइन संस्थापित करना चाहते हैं तो versions link पर ते ैं",
+        "reference_word": "plugin",
+        "hypothesis_word": "लगइन"
+      },
+      {
+        "id": "354092_QSQOcoZj95Pfx3zS_0070",
+        "duration": 8.0,
+        "reference": "यह देखने के लिए कि क्या plugin सफलतापूर्वक संस्थापित है बाएं panel में site administration पर click करें",
+        "hypothesis": "यह देखने के लिए कि क्या प लगिन सफलतापूर्वक संस्थापित है बाएं panel में site administration पर clickकरें",
+        "reference_word": "plugin",
+        "hypothesis_word": "लगिन"
+      },
+      {
+        "id": "384379_0a8GyoWn0KRgXxTx_0002",
+        "duration": 13.0,
+        "reference": "इस tutorial को record करने के लिए मैं उपयोग कर रही हूँ ubuntu linux operating system 1604 और koha version 1605",
+        "hypothesis": "इस tutorial को record करने के लिए मैं उपयोग कर रही हूँ ubuntu लिनक्स operating system 1604 और koha version 1605",
+        "reference_word": "linux",
+        "hypothesis_word": "लिनक्स"
+      },
+      {
+        "id": "384379_0a8GyoWn0KRgXxTx_0029",
+        "duration": 10.0,
+        "reference": "अपनी आवश्यकता के अनुसार hide in opac के लिए checkbox को check या अनचेक करें: मैं checkbox को खाली छोड़ दूंगी",
+        "hypothesis": "अपनी आवश्यकता के अनुसार heithe in opack के लिए चैकबॉक्स को check किया अनचेक करें मैं चैकबॉक्स को खाली छोड़ दूंगी",
+        "reference_word": "checkbox",
+        "hypothesis_word": "चैकबॉक्स"
+      },
+      {
+        "id": "384379_0a8GyoWn0KRgXxTx_0029",
+        "duration": 10.0,
+        "reference": "अपनी आवश्यकता के अनुसार hide in opac के लिए checkbox को check या अनचेक करें: मैं checkbox को खाली छोड़ दूंगी",
+        "hypothesis": "अपनी आवश्यकता के अनुसार heithe in opack के लिए चैकबॉक्स को check किया अनचेक करें मैं चैकबॉक्स को खाली छोड़ दूंगी",
+        "reference_word": "checkbox",
+        "hypothesis_word": "चैकबॉक्स"
+      },
+      {
+        "id": "439704_rvDQ1chj178KanCO_0000",
+        "duration": 5.0,
+        "reference": "sample perl program पर spoken tutorial में आपका स्वागत है",
+        "hypothesis": "samपल परल program पर spoken tutorial में आपका स्वागत है",
+        "reference_word": "perl",
+        "hypothesis_word": "परल"
+      }
+    ],
+    "insertion": [
+      {
+        "id": "160830_v8x2RzJs3DwC4jE9_0015",
+        "duration": 13.0,
+        "reference": "step 1 में field selection चलिए tables or queries label के नीचे drop down box में से tables: booksissued चुनते हैं",
+        "hypothesis": "step 1 में field selection चलिए tables और queries label के नीचे dropdown box में से tables books issued चुनते हैं",
+        "reference_word": null,
+        "hypothesis_word": "tables"
+      },
+      {
+        "id": "160830_v8x2RzJs3DwC4jE9_0025",
+        "duration": 7.0,
+        "reference": "ध्यान दीजिये कि wizard पॉपअप window जा चुकी है और हम form design window को देख रहे हैं",
+        "hypothesis": "ध्यान दीजिये कि wizard popअप wind ow जा चत है",
+        "reference_word": null,
+        "hypothesis_word": "popअप"
+      },
+      {
+        "id": "160830_v8x2RzJs3DwC4jE9_0028",
+        "duration": 9.0,
+        "reference": "हम यह कर रहे हैं जिससे कि हम form पर विशिष्ट elements की विशेषताएँ आसानी से सम्पादित कर सकें",
+        "hypothesis": "उनको असमूहीकृत करते हैं हम यह कर रहे हैं जिससे कि हम form पर विशिष्ट elements की विशेषताएँ आसानी से संपादित कर सकें",
+        "reference_word": null,
+        "hypothesis_word": "उनको"
+      },
+      {
+        "id": "160830_v8x2RzJs3DwC4jE9_0028",
+        "duration": 9.0,
+        "reference": "हम यह कर रहे हैं जिससे कि हम form पर विशिष्ट elements की विशेषताएँ आसानी से सम्पादित कर सकें",
+        "hypothesis": "उनको असमूहीकृत करते हैं हम यह कर रहे हैं जिससे कि हम form पर विशिष्ट elements की विशेषताएँ आसानी से संपादित कर सकें",
+        "reference_word": null,
+        "hypothesis_word": "असमूहीकृत"
+      },
+      {
+        "id": "160830_v8x2RzJs3DwC4jE9_0028",
+        "duration": 9.0,
+        "reference": "हम यह कर रहे हैं जिससे कि हम form पर विशिष्ट elements की विशेषताएँ आसानी से सम्पादित कर सकें",
+        "hypothesis": "उनको असमूहीकृत करते हैं हम यह कर रहे हैं जिससे कि हम form पर विशिष्ट elements की विशेषताएँ आसानी से संपादित कर सकें",
+        "reference_word": null,
+        "hypothesis_word": "करते"
+      },
+      {
+        "id": "160830_v8x2RzJs3DwC4jE9_0028",
+        "duration": 9.0,
+        "reference": "हम यह कर रहे हैं जिससे कि हम form पर विशिष्ट elements की विशेषताएँ आसानी से सम्पादित कर सकें",
+        "hypothesis": "उनको असमूहीकृत करते हैं हम यह कर रहे हैं जिससे कि हम form पर विशिष्ट elements की विशेषताएँ आसानी से संपादित कर सकें",
+        "reference_word": null,
+        "hypothesis_word": "हैं"
+      },
+      {
+        "id": "160830_v8x2RzJs3DwC4jE9_0044",
+        "duration": 7.0,
+        "reference": "अब एक शीर्षक लिखते हैं जोकि सारे form elements के ऊपर होगा",
+        "hypothesis": "अब एक शीर्षक लिखते हैं जो कि सारे form elements के ऊपर होगा",
+        "reference_word": null,
+        "hypothesis_word": "जो"
+      },
+      {
+        "id": "160830_v8x2RzJs3DwC4jE9_0046",
+        "duration": 7.0,
+        "reference": "अतः पहले down arrow button लगभग सात बार दबाएँ",
+        "hypothesis": "और फिर form के अंदर मध्य में अतः पहले down arrow button लगभग 70 बार दबाएँ",
+        "reference_word": null,
+        "hypothesis_word": "और"
+      },
+      {
+        "id": "160830_v8x2RzJs3DwC4jE9_0046",
+        "duration": 7.0,
+        "reference": "अतः पहले down arrow button लगभग सात बार दबाएँ",
+        "hypothesis": "और फिर form के अंदर मध्य में अतः पहले down arrow button लगभग 70 बार दबाएँ",
+        "reference_word": null,
+        "hypothesis_word": "फिर"
+      },
+      {
+        "id": "160830_v8x2RzJs3DwC4jE9_0046",
+        "duration": 7.0,
+        "reference": "अतः पहले down arrow button लगभग सात बार दबाएँ",
+        "hypothesis": "और फिर form के अंदर मध्य में अतः पहले down arrow button लगभग 70 बार दबाएँ",
+        "reference_word": null,
+        "hypothesis_word": "form"
+      }
+    ],
+    "other_substitution": [
+      {
+        "id": "160830_v8x2RzJs3DwC4jE9_0001",
+        "duration": 4.0,
+        "reference": "complex जटिल forms के इस tutorial में हम in बारे में सीखेंगे",
+        "hypothesis": "complex forms के इस tutorial में हम इनके बारे में सीखेंगे",
+        "reference_word": "in",
+        "hypothesis_word": "इनके"
+      },
+      {
+        "id": "160830_v8x2RzJs3DwC4jE9_0003",
+        "duration": 9.0,
+        "reference": "पिछले tutorial में हमने सीखा था कि forms का उपयोग करके कैसे data प्रविष्ट करें और libreoffice base का उपयोग करके कैसे forms में बदलाव करें",
+        "hypothesis": "पिछले tutorial में हमने सीखा था कि forms का उपयोग करके कैसे data प्रविष्ट करें और libreoffice base का उपयोग करके कैसे form में बदलाव करें",
+        "reference_word": "forms",
+        "hypothesis_word": "form"
+      },
+      {
+        "id": "160830_v8x2RzJs3DwC4jE9_0005",
+        "duration": 16.0,
+        "reference": "चलिए सबसे पहले libreoffice base program खोलते हैं यदि वह पहले से नही खुला है",
+        "hypothesis": "चलिए सबसे पहले libreoffice base program खोलते हैं यदि वह पहले से नहीं खुला है",
+        "reference_word": "नही",
+        "hypothesis_word": "नहीं"
+      },
+      {
+        "id": "160830_v8x2RzJs3DwC4jE9_0007",
+        "duration": 10.0,
+        "reference": "यदि base पहले से ही खुला है तो हम library database यहाँ file menu में open पर click करके खोल सकते हैं",
+        "hypothesis": "यदि base पहले से ही खुला है तो हम library database यहाँ file menu में open पर click करेगे",
+        "reference_word": "हैं",
+        "hypothesis_word": "करेगे"
+      },
+      {
+        "id": "160830_v8x2RzJs3DwC4jE9_0009",
+        "duration": 9.0,
+        "reference": "एक नया form बनाते हैं जो हमें library के सदस्यों को दी गयी पुस्तकों की खोज करने में मदद करेगा",
+        "hypothesis": "एक नया form बनाते हैं जो हमें library के सदस्यों को दी गी पुस्तकों की खोज करने में मदद करेगा",
+        "reference_word": "गयी",
+        "hypothesis_word": "गी"
+      },
+      {
+        "id": "160830_v8x2RzJs3DwC4jE9_0011",
+        "duration": 11.0,
+        "reference": "libreoffice base मुख्य window पर जाते हैं और base panel में database सूची में forms icon पर click करें",
+        "hypothesis": "libreoffice base मुख्य window पर जाते हैं और बाएँ panel में database सूची में forms icon पर click करें",
+        "reference_word": "base",
+        "hypothesis_word": "बाएँ"
+      },
+      {
+        "id": "160830_v8x2RzJs3DwC4jE9_0012",
+        "duration": 5.0,
+        "reference": "और फिर use wizard to create form पर click करिये",
+        "hypothesis": "use wizard to create form पर click करें",
+        "reference_word": "करिये",
+        "hypothesis_word": "करें"
+      },
+      {
+        "id": "160830_v8x2RzJs3DwC4jE9_0015",
+        "duration": 13.0,
+        "reference": "step 1 में field selection चलिए tables or queries label के नीचे drop down box में से tables: booksissued चुनते हैं",
+        "hypothesis": "step 1 में field selection चलिए tables और queries label के नीचे dropdown box में से tables books issued चुनते हैं",
+        "reference_word": "down",
+        "hypothesis_word": "dropdown"
+      },
+      {
+        "id": "160830_v8x2RzJs3DwC4jE9_0015",
+        "duration": 13.0,
+        "reference": "step 1 में field selection चलिए tables or queries label के नीचे drop down box में से tables: booksissued चुनते हैं",
+        "hypothesis": "step 1 में field selection चलिए tables और queries label के नीचे dropdown box में से tables books issued चुनते हैं",
+        "reference_word": "tables:",
+        "hypothesis_word": "books"
+      },
+      {
+        "id": "160830_v8x2RzJs3DwC4jE9_0015",
+        "duration": 13.0,
+        "reference": "step 1 में field selection चलिए tables or queries label के नीचे drop down box में से tables: booksissued चुनते हैं",
+        "hypothesis": "step 1 में field selection चलिए tables और queries label के नीचे dropdown box में से tables books issued चुनते हैं",
+        "reference_word": "booksissued",
+        "hypothesis_word": "issued"
+      }
+    ],
+    "other_word": [
+      {
+        "id": "160830_v8x2RzJs3DwC4jE9_0019",
+        "duration": 10.0,
+        "reference": "हम अब step 5 में हैं पहला arrangement columnar – labels left चुनते हैं और next button पर click करते हैं",
+        "hypothesis": "म अ 5ैपहला arrangement columnnar labels left चुनते हैं और next button पर click करते हैं",
+        "reference_word": "5",
+        "hypothesis_word": null
+      },
+      {
+        "id": "160830_v8x2RzJs3DwC4jE9_0019",
+        "duration": 10.0,
+        "reference": "हम अब step 5 में हैं पहला arrangement columnar – labels left चुनते हैं और next button पर click करते हैं",
+        "hypothesis": "म अ 5ैपहला arrangement columnnar labels left चुनते हैं और next button पर click करते हैं",
+        "reference_word": "–",
+        "hypothesis_word": "columnnar"
+      },
+      {
+        "id": "160830_v8x2RzJs3DwC4jE9_0047",
+        "duration": 7.0,
+        "reference": "फिर right arrow की लगभग 14 बार",
+        "hypothesis": "फिर wright arrow की लगभग 40 बार",
+        "reference_word": "14",
+        "hypothesis_word": "40"
+      },
+      {
+        "id": "160830_v8x2RzJs3DwC4jE9_0065",
+        "duration": 8.0,
+        "reference": "नये पॉपअप window में bold पर click करते हैं और size 8 पर click करते हैं",
+        "hypothesis": "नए popअप window में boold पर click करते हैं और size",
+        "reference_word": "8",
+        "hypothesis_word": null
+      },
+      {
+        "id": "254595_FDBypaVFplHxtmil_0006",
+        "duration": 2.0,
+        "reference": "ubuntu version 1204",
+        "hypothesis": "ubuntu version 2",
+        "reference_word": "1204",
+        "hypothesis_word": "2"
+      },
+      {
+        "id": "254595_FDBypaVFplHxtmil_0065",
+        "duration": 4.0,
+        "reference": "product = productnew",
+        "hypothesis": "product =u product new",
+        "reference_word": "=",
+        "hypothesis_word": "product"
+      },
+      {
+        "id": "254595_FDBypaVFplHxtmil_0121",
+        "duration": 2.0,
+        "reference": "आप लाइन्स देखेंगे :",
+        "hypothesis": "आप lines देखेंगे",
+        "reference_word": ":",
+        "hypothesis_word": null
+      },
+      {
+        "id": "254595_FDBypaVFplHxtmil_0161",
+        "duration": 2.0,
+        "reference": "एक नियत कार्य की तरह :",
+        "hypothesis": "निनयत कार्य की तरह",
+        "reference_word": ":",
+        "hypothesis_word": null
+      },
+      {
+        "id": "254595_FDBypaVFplHxtmil_0164",
+        "duration": 4.0,
+        "reference": "values set करने के लिए = sign उपयोग करके method परिभाषित करना",
+        "hypothesis": "value set करने के लिए =u",
+        "reference_word": "=",
+        "hypothesis_word": null
+      },
+      {
+        "id": "354092_QSQOcoZj95Pfx3zS_0002",
+        "duration": 8.0,
+        "reference": "इस tutorial को record करने के लिए मैं उपयोग कर रही हूं: ubuntu linux os 1604",
+        "hypothesis": "इस tutorial को record करने के लिए मैं उपयोग कर रही हूँ",
+        "reference_word": "1604",
+        "hypothesis_word": "हूँ"
+      }
+    ]
+  },
+  "limitations": [
+    "Language labels are derived from script and the word map, not gold annotations.",
+    "Switch rates count reference words next to a Hindi-English script boundary.",
+    "Rates exclude insertions unless stated, because an insertion has no reference word.",
+    "Transliteration and homophone labels are phonetic heuristics; sample them before relying on them."
+  ],
+  "word_map_used": false
+}
