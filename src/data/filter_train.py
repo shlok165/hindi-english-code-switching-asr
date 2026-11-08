@@ -22,10 +22,13 @@ the original transcripts, so the same utterances are dropped whichever
 manifests are filtered.
 
 Only the training split is filtered. Val, test and blind are copied unchanged,
-so iterations stay comparable. MAX_CER was set by reading samples of training
+so iterations stay comparable. MAX_CER was set by reading random training
 utterances on either side of it, before any model was trained on the result.
-This is a data-quality filter, not a way to fit the GPU: no utterance is dropped
-for its length.
+Just above it, nearly every utterance has a transcript that the audio does not
+hold: half of it cut off, a different sentence, or repeated words. Just below
+it most are still imperfect, but usually only by a word or two at an edge,
+mixed with speech the model simply got wrong. This is a data-quality filter,
+not a way to fit the GPU: no utterance is dropped for its length.
 """
 
 from __future__ import annotations
@@ -45,7 +48,8 @@ from src.data.script_normalisation import load_cmudict, pronunciations, spelling
 from src.metrics.cer import score as score_cer
 from src.utils.config import data_path, read_manifest
 
-MAX_CER = 60.0
+MAX_CER = 50.0
+DURATION_BANDS = ((0, 5), (5, 10), (10, 20), (20, 61))
 # Removed from a Devanagari word: chandrabindu, visarga, independent vowels, nukta,
 # avagraha, vowel signs, halant, stress marks and the extra vowel letters.
 DROP = re.compile("[ऀँः-औ़-्॑-ॗॠ-ॣॲ-ॷ]")
@@ -174,6 +178,10 @@ def main() -> None:
         "dropped_audio_percent": round(100 * removed / total, 2),
         "kept_utterances": len(train) - len(dropped),
         "unscored_kept": unscored,
+        "dropped_percent_by_duration": {
+            f"{low}-{high} s": round(100 * sum(r["drop"] for r in band) / max(len(band), 1), 2)
+            for low, high in DURATION_BANDS
+            for band in [[r for r in rows if low <= r["duration"] < high]]},
         "percentiles": {"cer": percentiles([row["cer"] for row in rows]),
                         "cer_one_script": percentiles([row["cer_one_script"] for row in rows]),
                         "filter_cer": percentiles(filter_cer)},
