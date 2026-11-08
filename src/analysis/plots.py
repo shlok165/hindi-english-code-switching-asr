@@ -25,7 +25,7 @@ from src.utils.config import data_path
 GREEDY, KENLM = "#2a78d6", "#eb6834"
 SERIES = {"greedy": ("Greedy CTC", GREEDY), "beam": ("KenLM beam search", KENLM)}
 INK, MUTED, GRID, SURFACE = "#0b0b0b", "#52514e", "#e6e5e0", "#fcfcfb"
-SPLIT_NAMES = {"test": "Test", "blind": "Blind test"}
+SPLIT_NAMES = {"val": "Validation\n(tuning set)", "test": "Test", "blind": "Blind test"}
 
 plt.rcParams.update({
     "figure.facecolor": SURFACE, "axes.facecolor": SURFACE, "savefig.facecolor": SURFACE,
@@ -71,7 +71,8 @@ def plot_losses(rows: list[dict[str, str]], output: Path, epochs: list[dict[str,
                           xytext=(-3, -3), textcoords="offset points", rotation=90, va="top", ha="right",
                           color=MUTED, fontsize=8)
     axis.set(title="Training and validation CTC loss", xlabel="Update", ylabel="CTC loss (per character)")
-    axis.legend(loc="upper right")
+    # Below the axis, so it cannot cover the epoch labels along the top.
+    axis.legend(loc="upper center", bbox_to_anchor=(0.5, -0.14), ncol=2)
     save(figure, output, "loss_curves.png")
 
 
@@ -96,7 +97,8 @@ def load_metrics(results: Path) -> dict[tuple[str, str], dict]:
 
 
 def plot_metric(metrics: dict, output: Path, keys: tuple[str, ...], title: str, label: str, name: str) -> None:
-    splits = [s for s in SPLIT_NAMES if any((s, d) in metrics for d in SERIES)]
+    splits = [s for s in SPLIT_NAMES
+              if any(key in metrics.get((s, d), {}) for d in SERIES for key in keys)]
     if not splits:
         return
     figure, axis = plt.subplots(figsize=(6.4, 4))
@@ -114,7 +116,7 @@ def plot_metric(metrics: dict, output: Path, keys: tuple[str, ...], title: str, 
     axis.set(title=title, ylabel=label)
     axis.grid(axis="x", visible=False)
     axis.margins(y=0.16)
-    axis.legend(loc="upper center", bbox_to_anchor=(0.5, -0.09), ncol=2)
+    axis.legend(loc="upper center", bbox_to_anchor=(0.5, -0.17), ncol=2)
     save(figure, output, name)
 
 
@@ -176,7 +178,8 @@ def main() -> None:
         with (run / "epoch_log.csv").open(encoding="utf-8") as handle:
             epochs = list(csv.DictReader(handle))
     plot_losses(rows, output, epochs)
-    plot_single(rows, output, "lr", "Learning-rate schedule", "Learning rate", "learning_rate.png")
+    plot_single(rows, output, "lr", "Learning rate: transformer and CTC head (CNN at one tenth)",
+                "Learning rate", "learning_rate.png")
     plot_single(rows, output, "val_wer", "Validation WER during training (greedy, cleaned text)",
                 "WER (%)", "val_wer.png")
 
