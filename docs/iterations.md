@@ -19,7 +19,7 @@ These carry over from Stage 1B:
 | 1 | Baseline (Stage 1B) | – | `configs/train_baseline.yaml` |
 | 2 | More training: warm start from iteration 1 for 44,000 updates at half the peak learning rate, with batches grouped by duration (1.74× faster, measured) | 1 | `configs/train_iteration2.yaml` |
 | 3 | Script normalisation: English words written in Devanagari mapped to Latin in train and val transcripts and in the LM, using a train-only map. Same recipe as iteration 2 | 1, compared with 2 | `configs/train_iteration3.yaml` |
-| 4 | Remove badly aligned training segments, found by scoring train with the best model so far | Best of 2 and 3 | To be written |
+| 4 | Remove training utterances whose transcript does not match the audio (7.03 % of them), found by scoring train with iteration 1's model | Best of 2 and 3 | Written once 2 and 3 are compared |
 
 ### Why these changes
 
@@ -41,6 +41,42 @@ Short words need stronger context evidence, because many collide with Hindi word
 The result maps 587 words and changes 3.67 % of training tokens. Common Hindi words are left alone. The full list, with counts and similarity scores, is in `results/script_map_report.json`.
 
 The rules were fixed before iteration 1's blind evaluation had been run, and were not changed after it. Some frequent loanwords are therefore deliberately left unmapped, such as सेव and यूज़र, whose context evidence was too weak.
+
+## Misalignment filter (iteration 4)
+
+MUCS segments are cut from long recordings, and some cuts leave a transcript that the audio does not hold. CTC has to emit every character of the transcript somewhere in the audio, so these utterances teach the model to invent words or skip speech. The filter runs in two steps, both on the training split only:
+
+1. `python -m src.analysis.score_train --config configs/train_baseline.yaml --checkpoint data/checkpoints/baseline_rtx3050/best --device cpu` decodes every training utterance with iteration 1's model. This took 6.7 hours on three CPU threads while iteration 2 trained on the GPU.
+2. `python -m src.data.filter_train --manifest-dir <manifests> --output-dir <manifests>_clean` drops an utterance when its character error rate is above **50** in both of two views:
+   - **As written.**
+   - **In one script:** English words are spelled in Devanagari through CMUdict, as for the script map, and both sides are reduced to consonant skeletons.
+
+   The second view keeps utterances that differ only in script (कंसोल विंडो against "console window"). The first keeps English spellings CMUdict lacks ("acetate" against "acitate").
+
+Iteration 1's model gets a median of 4.6 % of characters wrong on training utterances, but some it still gets mostly wrong after six epochs on them.
+
+### What it drops
+
+The filter drops 3,550 of 50,509 training utterances (7.03 %), or 5.65 of 85.55 hours (6.61 %).
+
+| Duration | Share dropped |
+|---|---|
+| Under 5 s | 9.9 % |
+| 5–10 s | 4.5 % |
+| 10–20 s | 8.9 % |
+| Over 20 s | 10.6 % (45 of 423) |
+
+The commonest dropped case is a full sentence paired with two or three seconds of audio. Val, test and blind are copied unchanged. The list of dropped utterances, with examples on both sides of the threshold, is in `results/train_filter_report.json`.
+
+### How the threshold was chosen
+
+The threshold was set by reading random training utterances, before any model was trained on the result, and it is not tuned on val:
+
+- **Above 60:** all 12 read were misaligned.
+- **50 to 60:** 26 of 28 were misaligned, usually with the first or second half of the transcript missing from the audio, or words repeated in the transcript ("portrait portrait landscape landscape").
+- **40 to 50:** most of the 16 read still had a word or two of extra or missing speech at an edge, mixed with aligned speech the model simply got wrong (a URL read out as "dot" and "slash", chemistry terms). This band is kept.
+
+It is a data-quality filter, not a way to fit the GPU. No utterance is dropped for its length, and the language model still uses every training transcript, because the text is valid even where the audio is cut.
 
 ## Results
 
