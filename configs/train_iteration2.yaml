@@ -1,0 +1,20 @@
+# Iteration 2: more training. Starts from iteration 1's best weights with a fresh
+# optimiser and schedule, and batches by total duration. Anything not set here is
+# iteration 1's value from configs/train_baseline.yaml.
+includes:
+  - configs/train_baseline.yaml
+
+run_name: iteration2
+
+training:
+  init_from: data/checkpoints/baseline_rtx3050/best  # Iteration 1, update 37,872, val WER 23.77
+  max_updates: 44000              # About 8 epochs, about 8 hours at the measured speed
+  learning_rate: 5.0e-6           # CNN. Half of iteration 1, because the weights are already adapted
+  transformer_learning_rate: 5.0e-5  # Half of iteration 1, for the same reason
+  head_learning_rate: 5.0e-5
+  warmup_fraction: 0.05           # A short warm-up, since the model has already trained
+  hold_fraction: 0.35
+  max_samples_per_batch: 960000   # Up to 60 s of padded audio per step. Measured: 1.74x faster than
+  max_utterances_per_batch: null  # one utterance at a time, with less memory (results/batching_benchmark.json)
+  gradient_accumulation: 1        # 57 s of audio per update on average, against 47 s in iteration 1
+  keep_checkpoints: 4             # Keep the last 8,000 updates for checkpoint averaging

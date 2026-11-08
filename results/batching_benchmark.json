@@ -1,0 +1,48 @@
+{
+  "gpu": "NVIDIA GeForce RTX 3050 6GB Laptop GPU",
+  "config": "configs/train_baseline.yaml",
+  "results": [
+    {
+      "setting": "0:1:8",
+      "max_samples": 1600000,
+      "max_utterances": 1,
+      "accumulation": 8,
+      "updates_timed": 60,
+      "seconds_per_update": 0.792,
+      "utterances_per_update": 8.0,
+      "audio_seconds_per_update": 47.4,
+      "audio_seconds_per_second": 59.8,
+      "padding_percent": 0.0,
+      "peak_allocated_mb": 2045,
+      "peak_reserved_mb": 4342
+    },
+    {
+      "setting": "960000:0:1",
+      "max_samples": 960000,
+      "max_utterances": null,
+      "accumulation": 1,
+      "updates_timed": 60,
+      "seconds_per_update": 0.544,
+      "utterances_per_update": 9.82,
+      "audio_seconds_per_update": 56.6,
+      "audio_seconds_per_second": 104.1,
+      "padding_percent": 1.8,
+      "peak_allocated_mb": 3010,
+      "peak_reserved_mb": 3660
+    },
+    {
+      "setting": "960000:0:2",
+      "max_samples": 960000,
+      "max_utterances": null,
+      "accumulation": 2,
+      "updates_timed": 60,
+      "seconds_per_update": 1.022,
+      "utterances_per_update": 17.8,
+      "audio_seconds_per_update": 113.2,
+      "audio_seconds_per_second": 110.8,
+      "padding_percent": 1.4,
+      "peak_allocated_mb": 3028,
+      "peak_reserved_mb": 4304
+    }
+  ]
+}
