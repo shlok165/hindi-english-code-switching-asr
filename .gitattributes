@@ -1,0 +1,5 @@
+# Shell scripts must keep LF endings, or Bash fails on Windows checkouts with
+# core.autocrlf=true ("$'\r': command not found").
+*.sh text eol=lf
+# Scorer inputs: one utterance per line, compared byte for byte by compute_wer.py.
+*.hyp text eol=lf
