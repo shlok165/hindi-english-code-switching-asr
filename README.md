@@ -39,6 +39,9 @@ Each iteration after the baseline changes one thing, and iterations are compared
 |---|---|---|---|---|
 | 1 | Stage 1B baseline | 17.75 | 21.54 | 20.22 |
 | 2 | More training, from iteration 1's weights | 16.54 | 21.01 | 19.74 |
+| 3 | As 2, with English words in the training transcripts written in Latin script | 16.75 | 19.36 | 18.82 |
+
+Iteration 3's blind gain comes mostly from matching the blind references, which write English in Latin script. On the val measure used to choose, it ties with iteration 2, which stays the base for the next iteration.
 
 Details, and the iterations still running, are in [docs/iterations.md](docs/iterations.md).
 

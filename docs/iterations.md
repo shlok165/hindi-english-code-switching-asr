@@ -19,7 +19,7 @@ These carry over from Stage 1B:
 | 1 | Baseline (Stage 1B) | – | `configs/train_baseline.yaml` |
 | 2 | More training: warm start from iteration 1 for 44,000 updates at half the peak learning rate, with batches grouped by duration (1.74× faster, measured) | 1 | `configs/train_iteration2.yaml` |
 | 3 | Script normalisation: English words written in Devanagari mapped to Latin in train and val transcripts and in the LM, using a train-only map. Same recipe as iteration 2 | 1, compared with 2 | `configs/train_iteration3.yaml` |
-| 4 | Remove training utterances whose transcript does not match the audio (7.03 % of them), found by scoring train with iteration 1's model | Best of 2 and 3 | Written once 2 and 3 are compared |
+| 4 | Remove training utterances whose transcript does not match the audio (7.03 % of them), found by scoring train with iteration 1's model. Same recipe as iteration 2 | 2, the better of 2 and 3 on val | `configs/train_iteration4.yaml` |
 
 ### Why these changes
 
@@ -86,8 +86,9 @@ Every result uses KenLM beam search with that iteration's own val-tuned settings
 |---|---|---|---|---|---|---|---|
 | 1 | 20.08 | 17.75 | 31.29 | 28.25 | 21.54 | 20.22 | 13.65 |
 | 2 | 18.65 | 16.54 | 30.19 | 27.22 | 21.01 | 19.74 | 13.43 |
+| 3 | 16.75 | 16.75 | 30.73 | 27.55 | 19.36 | 18.82 | 11.71 |
 
-Blind WER and T-WER are confirmed with the organisers' `compute_wer.py` for every iteration.
+Blind WER and T-WER are confirmed with the organisers' `compute_wer.py` for every iteration. Iteration 3's plain val WER is measured against its own script-normalised references, so only its script-folded val WER is comparable with the other rows.
 
 ### Iteration 2: more training
 
@@ -122,3 +123,54 @@ Greedy decoding gains more than KenLM, because the language model now has less t
 **Where the gain comes from.** The gain is spread across error types, not one fix. On blind, the error rate falls for both Hindi words (12.01 % → 11.55 %) and English words (31.04 % → 30.08 %). Substitutions drop by 251 and deletions by 82, while insertions rise by 80.
 
 The full breakdowns are in `results/iteration2/error_analysis/`.
+
+### Iteration 3: script normalisation
+
+**Training.** Iteration 3 used iteration 2's recipe exactly, with the same warm start, schedule, batching and seed. Only the targets differ. It ran 44,000 updates in 6 h 59 min.
+
+During training, greedy val WER against the script-normalised references improved as follows:
+
+| Point in iteration 3 | Greedy val WER |
+|---|---|
+| Start (iteration 1's best, scored against the same references) | 23.62 |
+| Update 2,000 | 21.33 |
+| Best, the last update (44,000) | **19.04** |
+
+Most of the first drop is the mapped words switching to Latin script. When script is ignored, iteration 1 already scores 21.78 on the same check.
+
+**Decoder.** Tuned on val with the script-normalised language model, which is built from every training transcript after mapping. The settings were α 0.4, β 0.5, unknown-word offset −5 and beam width 1000, and they were committed before test or blind was decoded. They are in `configs/decode_iteration3.yaml`.
+
+**Results.**
+
+| Measure | Iteration 2 | Iteration 3 | Change |
+|---|---|---|---|
+| Val WER, script-folded (KenLM) | 16.54 | 16.75 | +0.21 |
+| Val WER, script-folded (greedy) | 19.89 | 19.50 | −0.39 |
+| Test WER (KenLM) | 30.19 | 30.73 | +0.54 |
+| Test T-WER, approx. (KenLM) | 27.22 | 27.55 | +0.33 |
+| Blind WER (KenLM) | 21.01 | 19.36 | −1.65 |
+| Blind T-WER (KenLM) | 19.74 | 18.82 | −0.92 |
+| Blind CER (KenLM) | 13.43 | 11.71 | −1.72 |
+
+**Choice for iteration 4.** On the measure that decides, iteration 3 is 0.21 points worse than iteration 2. That is well inside single-seed noise, but the rule is to take the lower value, so iteration 4 builds on iteration 2. Blind played no part in the choice, and would have pointed the other way.
+
+With script ignored, iteration 3's greedy output is slightly better than iteration 2's. KenLM gains less on it, though: 2.75 points against 3.35. With KenLM, iteration 3 has more deletions (1,234 against 1,167).
+
+**Why val and blind disagree.** Script normalisation changes how English words are written, not how well they are heard, and the splits write English differently:
+
+| Split | Share of words written in a mapped Devanagari form |
+|---|---|
+| Train | 3.7 % |
+| Val | 4.4 % |
+| Test | 5.2 % |
+| Blind | 0.1 % |
+
+Blind's references hardly ever use the Devanagari forms in the map. Iteration 3 almost never outputs them either (once in all of blind), while iteration 2 does for 1.5 % of its blind words. So plain WER and CER on blind reward iteration 3 for matching how the blind references are written:
+
+- **English words:** on blind, the error rate falls from 30.08 % to 25.72 %, while Hindi words stay at 11.5 %.
+- **Script errors:** errors in script only, and incorrect transliterations, account for 509 of the 788 fewer errors.
+- **T-WER:** the organisers' T-WER forgives some transliteration, and it improves less (−0.92).
+
+Test is written like the training data, and moves the other way. The script-folded val measure deliberately ignores script, and on it the two iterations are level.
+
+The full breakdowns are in `results/iteration3/error_analysis/`.
