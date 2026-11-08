@@ -44,6 +44,7 @@ from src.metrics.wer import score as score_wer
 from src.utils.config import data_path, load_config, read_manifest
 
 BLIND_REFERENCES = "data/interim/extracted/blind/subtask2_blindtest_wReadme/hindi/files/text"
+ORIGINAL_MANIFESTS = "data/processed/manifests"
 
 
 def beam_settings(decode_config: str) -> tuple[BeamSettings, Path]:
@@ -102,8 +103,12 @@ def evaluate(
     decode_config: str,
     output_dir: Path,
     workers: int,
+    manifest_dir: str = ORIGINAL_MANIFESTS,
 ) -> dict[str, Any]:
-    entries = read_manifest(data_path("data/processed/manifests") / f"{split}.jsonl")
+    # Test and blind are always scored against their own references, so only val
+    # can come from another manifest directory, such as the script-normalised one.
+    manifest_dir = manifest_dir if split == "val" else ORIGINAL_MANIFESTS
+    entries = read_manifest(data_path(manifest_dir) / f"{split}.jsonl")
     ids = [entry["id"] for entry in entries]
     if len(ids) != len(set(ids)):
         raise ValueError(f"{split} manifest contains duplicate utterance ids")
@@ -152,6 +157,7 @@ def evaluate(
         "decoder": decoder_name,
         "alignment": "UnA",
         "checkpoint": checkpoint.as_posix().split("data/")[-1],
+        "references": manifest_dir,
         "utterances": len(entries),
         "settings": settings.__dict__ if settings else None,
         **compute_metrics(split, entries, hypotheses, hyp_path),
@@ -170,8 +176,11 @@ def main() -> None:
     parser.add_argument("--decode-config", default="configs/decode.yaml")
     parser.add_argument("--output-dir", type=Path, default=ROOT / "results" / "evaluations")
     parser.add_argument("--workers", type=int, default=max((os.cpu_count() or 4) - 2, 1))
+    parser.add_argument("--manifest-dir", default=ORIGINAL_MANIFESTS,
+                        help="val references only; test and blind always use the original manifests")
     args = parser.parse_args()
-    evaluate(args.split, data_path(args.checkpoint), args.decoder, args.decode_config, args.output_dir, args.workers)
+    evaluate(args.split, data_path(args.checkpoint), args.decoder, args.decode_config, args.output_dir,
+             args.workers, args.manifest_dir)
 
 
 if __name__ == "__main__":

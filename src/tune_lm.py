@@ -26,7 +26,7 @@ from src.utils.config import data_path, read_manifest
 
 ALPHAS = (0.0, 0.2, 0.35, 0.5, 0.75, 1.0, 1.5)
 BETAS = (-1.0, 0.0, 1.0, 2.0, 3.0)
-UNK_OFFSETS = (-5.0, -10.0, -20.0)
+UNK_OFFSETS = (-2.0, -3.0, -4.0, -5.0, -10.0, -20.0)  # iteration 1 tuned -5, -10, -20, then checked -4 to 0
 BEAM_WIDTHS = (50, 100, 200, 500, 1000, 3000)  # 3000 is the width the MUCS baseline used
 REFINE_STEPS = (-0.1, -0.05, 0.05, 0.1)  # finer alpha steps tried around the coarse winner
 REFINE_BETA_STEPS = (-0.5, 0.5)
@@ -56,20 +56,25 @@ def main() -> None:
     parser.add_argument("--subset", type=int, default=0, help="utterances to tune on; 0 means all of val")
     parser.add_argument("--grid-beam", type=int, default=50)
     parser.add_argument("--workers", type=int, default=max((os.cpu_count() or 4) - 2, 1))
-    parser.add_argument("--write-config", action="store_true", help="save the winner to configs/decode.yaml")
+    parser.add_argument("--write-config", action="store_true", help="save the winner to --config-out")
+    parser.add_argument("--config-out", default="configs/decode.yaml")
+    parser.add_argument("--results", default="results/lm_tuning.csv", help="where every grid result is written")
+    parser.add_argument("--manifest-dir", default="data/processed/manifests",
+                        help="where val.jsonl is read from, such as the script-normalised manifests")
     args = parser.parse_args()
     args.checkpoint = data_path(args.checkpoint)
 
     cache = data_path("data/processed/logits") / args.checkpoint.parent.name / args.checkpoint.name
     vocab = json.loads((args.checkpoint / "vocab.json").read_text(encoding="utf-8"))
-    entries = read_manifest(data_path("data/processed/manifests") / "val.jsonl")
+    entries = read_manifest(data_path(args.manifest_dir) / "val.jsonl")
     size = args.subset or len(entries)
     positions = [p for p in evenly_spaced(len(entries), size) if entries[p]["text"]]
     references = [entries[p]["text"] for p in positions]
     kenlm = data_path(args.kenlm)
 
     rows = []
-    output = ROOT / "results" / "lm_tuning.csv"
+    output = ROOT / args.results
+    output.parent.mkdir(parents=True, exist_ok=True)
     with BeamPool(cache, "val", vocab, kenlm, args.workers) as pool:
         def run(stage: str, chosen: list[int], truth: list[str], settings: BeamSettings) -> float:
             began = time.time()
@@ -113,7 +118,7 @@ def main() -> None:
 
     if args.write_config:
         text = CONFIG_TEMPLATE.format(wer=best_wer, kenlm=args.kenlm, **asdict(best))
-        (ROOT / "configs" / "decode.yaml").write_text(text, encoding="utf-8", newline="\n")
+        (ROOT / args.config_out).write_text(text, encoding="utf-8", newline="\n")
     print(json.dumps({"best": asdict(best), "subset_val_wer": round(best_wer, 3)}, indent=2))
 
 

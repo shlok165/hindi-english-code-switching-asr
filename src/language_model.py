@@ -189,7 +189,10 @@ def build_model(
     words = [word for line in lines for word in line.split()]
     report.update({
         "source": "train.jsonl only",
-        "normalisation": "the training transcript cleaner; both scripts preserved, no transliteration",
+        "normalisation": ("the training transcript cleaner; both scripts preserved, no transliteration"
+                          if manifest.parent.name == "manifests" else
+                          f"the text field of {manifest.parent.name}/train.jsonl, which already includes its "
+                          "normalisation (for manifests_latin, src.data.script_normalisation)"),
         "tokenisation": "whitespace-separated words",
         "order": order,
         "pruning": "none; with about 600 k words, every observed n-gram is kept",
@@ -210,15 +213,17 @@ def main() -> None:
     parser.add_argument("--output-dir", type=Path, default=Path("data/language_model"))
     parser.add_argument("--lmplz", default="lmplz")
     parser.add_argument("--build-binary", default="build_binary")
+    parser.add_argument("--manifest-dir", help="read train.jsonl from here instead of the config's manifest_dir")
+    parser.add_argument("--report", default="results/lm_report.json")
     args = parser.parse_args()
     config = load_config(args.config)
-    manifest = data_path(config["data"]["manifest_dir"]) / "train.jsonl"
+    manifest = data_path(args.manifest_dir or config["data"]["manifest_dir"]) / "train.jsonl"
     output_dir = data_path(args.output_dir)
     arpa, binary, report = build_model(manifest, output_dir, args.order, args.lmplz, args.build_binary)
-    report.update({"arpa": arpa.name, "binary": binary.name})
-    results = ROOT / "results"
-    results.mkdir(exist_ok=True)
-    (results / "lm_report.json").write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
+    report.update({"arpa": arpa.name, "binary": binary.name, "manifest_dir": manifest.parent.name})
+    report_path = ROOT / args.report
+    report_path.parent.mkdir(parents=True, exist_ok=True)
+    report_path.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
     print(json.dumps(report, ensure_ascii=False, indent=2))
 
 
