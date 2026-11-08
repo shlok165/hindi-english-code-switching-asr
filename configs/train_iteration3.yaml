@@ -1,0 +1,12 @@
+# Iteration 3: script normalisation. Exactly iteration 2's recipe (same warm start
+# from iteration 1, schedule, batching and seed), except that English words written
+# in Devanagari in the training and val transcripts are mapped to Latin, using the
+# train-only map from src.data.script_normalisation. Iteration 3 against iteration 2
+# therefore measures the effect of the targets alone.
+includes:
+  - configs/train_iteration2.yaml
+
+run_name: iteration3
+
+data:
+  manifest_dir: data/processed/manifests_latin  # 587 words mapped, 3.67 % of training tokens changed

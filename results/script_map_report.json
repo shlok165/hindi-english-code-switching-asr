@@ -1,0 +1,3551 @@
+{
+ "source": "train.jsonl and CMUdict only; hin2engwords.txt not used",
+ "devanagari_words_mapped": 587,
+ "train_tokens_changed": 22182,
+ "train_token_percent": 3.67,
+ "tokens_changed_by_split": {
+  "train": 22182,
+  "val": 1249
+ },
+ "rules": {
+  "min_latin_count": 3,
+  "exact_context": 0.3,
+  "exact_long_context": 0.1,
+  "exact_longer_context": 0.08,
+  "close_distance": 0.2,
+  "close_context": 0.4,
+  "window": 2,
+  "rounds": 3
+ },
+ "excluded_by_hand": {
+  "आदर": "Hindi for respect, not 'other'",
+  "गेम": "game, which is not a Latin training word; matched 'gamma'",
+  "पोर्ट्स": "ports; matched 'parts'",
+  "फेल्ड": "a misspelling of field; matched 'failed'",
+  "स्टैचू": "unclear; matched 'statue'"
+ },
+ "mapping": [
+  {
+   "devanagari": "क्लिक",
+   "latin": "click",
+   "train_count": 1227,
+   "context_similarity": 0.972
+  },
+  {
+   "devanagari": "टाइप",
+   "latin": "type",
+   "train_count": 1161,
+   "context_similarity": 0.961
+  },
+  {
+   "devanagari": "फाइल",
+   "latin": "file",
+   "train_count": 860,
+   "context_similarity": 0.853
+  },
+  {
+   "devanagari": "पेज",
+   "latin": "page",
+   "train_count": 772,
+   "context_similarity": 0.462
+  },
+  {
+   "devanagari": "ट्यूटोरियल",
+   "latin": "tutorial",
+   "train_count": 719,
+   "context_similarity": 0.943
+  },
+  {
+   "devanagari": "टैब",
+   "latin": "tab",
+   "train_count": 439,
+   "context_similarity": 0.529
+  },
+  {
+   "devanagari": "फंक्शन",
+   "latin": "function",
+   "train_count": 419,
+   "context_similarity": 0.577
+  },
+  {
+   "devanagari": "बॉम्बे",
+   "latin": "bombay",
+   "train_count": 391,
+   "context_similarity": 0.535
+  },
+  {
+   "devanagari": "डिलीट",
+   "latin": "delete",
+   "train_count": 334,
+   "context_similarity": 0.216
+  },
+  {
+   "devanagari": "ब्रैकेट",
+   "latin": "bracket",
+   "train_count": 319,
+   "context_similarity": 0.59
+  },
+  {
+   "devanagari": "वेरिएबल",
+   "latin": "variable",
+   "train_count": 290,
+   "context_similarity": 0.701
+  },
+  {
+   "devanagari": "लिंक",
+   "latin": "link",
+   "train_count": 289,
+   "context_similarity": 0.938
+  },
+  {
+   "devanagari": "स्पोकन",
+   "latin": "spoken",
+   "train_count": 284,
+   "context_similarity": 0.935
+  },
+  {
+   "devanagari": "कोड",
+   "latin": "code",
+   "train_count": 278,
+   "context_similarity": 0.673
+  },
+  {
+   "devanagari": "स्क्रिप्ट",
+   "latin": "script",
+   "train_count": 273,
+   "context_similarity": 0.81
+  },
+  {
+   "devanagari": "विंडो",
+   "latin": "window",
+   "train_count": 267,
+   "context_similarity": 0.794
+  },
+  {
+   "devanagari": "लाइन",
+   "latin": "line",
+   "train_count": 252,
+   "context_similarity": 0.724
+  },
+  {
+   "devanagari": "आउटपुट",
+   "latin": "output",
+   "train_count": 250,
+   "context_similarity": 0.524
+  },
+  {
+   "devanagari": "बटन",
+   "latin": "button",
+   "train_count": 241,
+   "context_similarity": 0.979
+  },
+  {
+   "devanagari": "टर्मिनल",
+   "latin": "terminal",
+   "train_count": 226,
+   "context_similarity": 0.899
+  },
+  {
+   "devanagari": "डेटा",
+   "latin": "data",
+   "train_count": 222,
+   "context_similarity": 0.758
+  },
+  {
+   "devanagari": "वैल्यू",
+   "latin": "value",
+   "train_count": 212,
+   "context_similarity": 0.89
+  },
+  {
+   "devanagari": "रन",
+   "latin": "run",
+   "train_count": 200,
+   "context_similarity": 0.688
+  },
+  {
+   "devanagari": "फ़ाइल",
+   "latin": "file",
+   "train_count": 193,
+   "context_similarity": 0.786
+  },
+  {
+   "devanagari": "प्लॉट",
+   "latin": "plot",
+   "train_count": 176,
+   "context_similarity": 0.437
+  },
+  {
+   "devanagari": "कीज़",
+   "latin": "keys",
+   "train_count": 173,
+   "context_similarity": 0.708
+  },
+  {
+   "devanagari": "ऑफिस",
+   "latin": "office",
+   "train_count": 173,
+   "context_similarity": 0.56
+  },
+  {
+   "devanagari": "सिस्टम",
+   "latin": "system",
+   "train_count": 169,
+   "context_similarity": 0.286
+  },
+  {
+   "devanagari": "टेक्स्ट",
+   "latin": "text",
+   "train_count": 168,
+   "context_similarity": 0.626
+  },
+  {
+   "devanagari": "पासवर्ड",
+   "latin": "password",
+   "train_count": 158,
+   "context_similarity": 0.663
+  },
+  {
+   "devanagari": "स्पेस",
+   "latin": "space",
+   "train_count": 151,
+   "context_similarity": 0.476
+  },
+  {
+   "devanagari": "कॉमा",
+   "latin": "comma",
+   "train_count": 144,
+   "context_similarity": 0.642
+  },
+  {
+   "devanagari": "सेट",
+   "latin": "set",
+   "train_count": 135,
+   "context_similarity": 0.776
+  },
+  {
+   "devanagari": "लूप",
+   "latin": "loop",
+   "train_count": 133,
+   "context_similarity": 0.702
+  },
+  {
+   "devanagari": "प्रोजेक्ट",
+   "latin": "project",
+   "train_count": 132,
+   "context_similarity": 0.956
+  },
+  {
+   "devanagari": "प्रिंट",
+   "latin": "print",
+   "train_count": 128,
+   "context_similarity": 0.63
+  },
+  {
+   "devanagari": "ब्लॉक",
+   "latin": "block",
+   "train_count": 124,
+   "context_similarity": 0.476
+  },
+  {
+   "devanagari": "अपडेट",
+   "latin": "update",
+   "train_count": 123,
+   "context_similarity": 0.106
+  },
+  {
+   "devanagari": "फोल्डर",
+   "latin": "folder",
+   "train_count": 118,
+   "context_similarity": 0.798
+  },
+  {
+   "devanagari": "डाउनलोड",
+   "latin": "download",
+   "train_count": 117,
+   "context_similarity": 0.517
+  },
+  {
+   "devanagari": "फॉर्म",
+   "latin": "form",
+   "train_count": 113,
+   "context_similarity": 0.644
+  },
+  {
+   "devanagari": "प्रोग्राम",
+   "latin": "program",
+   "train_count": 108,
+   "context_similarity": 0.487
+  },
+  {
+   "devanagari": "डायलॉग",
+   "latin": "dialog",
+   "train_count": 106,
+   "context_similarity": 0.142
+  },
+  {
+   "devanagari": "वर्जन",
+   "latin": "version",
+   "train_count": 104,
+   "context_similarity": 0.532
+  },
+  {
+   "devanagari": "सॉफ्टवेयर",
+   "latin": "software",
+   "train_count": 101,
+   "context_similarity": 0.535
+  },
+  {
+   "devanagari": "वेबसाइट",
+   "latin": "website",
+   "train_count": 101,
+   "context_similarity": 0.871
+  },
+  {
+   "devanagari": "इनपुट",
+   "latin": "input",
+   "train_count": 101,
+   "context_similarity": 0.502
+  },
+  {
+   "devanagari": "माइनस",
+   "latin": "minus",
+   "train_count": 101,
+   "context_similarity": 0.607
+  },
+  {
+   "devanagari": "कंसोल",
+   "latin": "console",
+   "train_count": 100,
+   "context_similarity": 0.783
+  },
+  {
+   "devanagari": "एरर",
+   "latin": "error",
+   "train_count": 99,
+   "context_similarity": 0.681
+  },
+  {
+   "devanagari": "वैल्यूज़",
+   "latin": "values",
+   "train_count": 97,
+   "context_similarity": 0.726
+  },
+  {
+   "devanagari": "मेथड",
+   "latin": "method",
+   "train_count": 96,
+   "context_similarity": 0.543
+  },
+  {
+   "devanagari": "मिशन",
+   "latin": "mission",
+   "train_count": 94,
+   "context_similarity": 0.798
+  },
+  {
+   "devanagari": "वेल्यू",
+   "latin": "value",
+   "train_count": 94,
+   "context_similarity": 0.544
+  },
+  {
+   "devanagari": "डेटाबेस",
+   "latin": "database",
+   "train_count": 94,
+   "context_similarity": 0.611
+  },
+  {
+   "devanagari": "स्ट्रिंग",
+   "latin": "string",
+   "train_count": 93,
+   "context_similarity": 0.585
+  },
+  {
+   "devanagari": "ट्यूटोरियल्स",
+   "latin": "tutorials",
+   "train_count": 89,
+   "context_similarity": 0.754
+  },
+  {
+   "devanagari": "ड्रॉपडाउन",
+   "latin": "dropdown",
+   "train_count": 87,
+   "context_similarity": 0.723
+  },
+  {
+   "devanagari": "ब्रैकेट्स",
+   "latin": "brackets",
+   "train_count": 87,
+   "context_similarity": 0.743
+  },
+  {
+   "devanagari": "ऑप्शन",
+   "latin": "option",
+   "train_count": 85,
+   "context_similarity": 0.631
+  },
+  {
+   "devanagari": "शीट्स",
+   "latin": "sheets",
+   "train_count": 85,
+   "context_similarity": 0.433
+  },
+  {
+   "devanagari": "नेम",
+   "latin": "name",
+   "train_count": 83,
+   "context_similarity": 0.519
+  },
+  {
+   "devanagari": "स्टाइल",
+   "latin": "style",
+   "train_count": 78,
+   "context_similarity": 0.266
+  },
+  {
+   "devanagari": "अप",
+   "latin": "up",
+   "train_count": 77,
+   "context_similarity": 0.496
+  },
+  {
+   "devanagari": "विडियो",
+   "latin": "video",
+   "train_count": 76,
+   "context_similarity": 0.388
+  },
+  {
+   "devanagari": "मैथड",
+   "latin": "method",
+   "train_count": 76,
+   "context_similarity": 0.424
+  },
+  {
+   "devanagari": "यूज़रनेम",
+   "latin": "username",
+   "train_count": 73,
+   "context_similarity": 0.696
+  },
+  {
+   "devanagari": "रिफ्रेश",
+   "latin": "refresh",
+   "train_count": 72,
+   "context_similarity": 0.307
+  },
+  {
+   "devanagari": "डबल",
+   "latin": "double",
+   "train_count": 71,
+   "context_similarity": 0.891
+  },
+  {
+   "devanagari": "कीज",
+   "latin": "keys",
+   "train_count": 71,
+   "context_similarity": 0.65
+  },
+  {
+   "devanagari": "कीवर्ड",
+   "latin": "keyword",
+   "train_count": 71,
+   "context_similarity": 0.464
+  },
+  {
+   "devanagari": "अन्डू",
+   "latin": "undo",
+   "train_count": 68,
+   "context_similarity": 0.844
+  },
+  {
+   "devanagari": "साइन",
+   "latin": "sign",
+   "train_count": 68,
+   "context_similarity": 0.307
+  },
+  {
+   "devanagari": "मेन्यू",
+   "latin": "menu",
+   "train_count": 68,
+   "context_similarity": 0.552
+  },
+  {
+   "devanagari": "उबंटु",
+   "latin": "ubuntu",
+   "train_count": 67,
+   "context_similarity": 0.557
+  },
+  {
+   "devanagari": "सिंगल",
+   "latin": "single",
+   "train_count": 66,
+   "context_similarity": 0.284
+  },
+  {
+   "devanagari": "फॉर्मेट",
+   "latin": "format",
+   "train_count": 65,
+   "context_similarity": 0.635
+  },
+  {
+   "devanagari": "कंपाइल",
+   "latin": "compile",
+   "train_count": 65,
+   "context_similarity": 0.629
+  },
+  {
+   "devanagari": "स्क्रीन",
+   "latin": "screen",
+   "train_count": 64,
+   "context_similarity": 0.916
+  },
+  {
+   "devanagari": "टेबल",
+   "latin": "table",
+   "train_count": 62,
+   "context_similarity": 0.597
+  },
+  {
+   "devanagari": "एडिटर",
+   "latin": "editor",
+   "train_count": 61,
+   "context_similarity": 0.76
+  },
+  {
+   "devanagari": "टीम",
+   "latin": "team",
+   "train_count": 60,
+   "context_similarity": 0.807
+  },
+  {
+   "devanagari": "लॉगिन",
+   "latin": "login",
+   "train_count": 60,
+   "context_similarity": 0.531
+  },
+  {
+   "devanagari": "टाइम",
+   "latin": "time",
+   "train_count": 59,
+   "context_similarity": 0.335
+  },
+  {
+   "devanagari": "सेशन",
+   "latin": "session",
+   "train_count": 59,
+   "context_similarity": 0.232
+  },
+  {
+   "devanagari": "सेमीकोलन",
+   "latin": "semicolon",
+   "train_count": 59,
+   "context_similarity": 0.259
+  },
+  {
+   "devanagari": "चेक",
+   "latin": "check",
+   "train_count": 57,
+   "context_similarity": 0.552
+  },
+  {
+   "devanagari": "वेब",
+   "latin": "web",
+   "train_count": 57,
+   "context_similarity": 0.879
+  },
+  {
+   "devanagari": "ऑनलाइन",
+   "latin": "online",
+   "train_count": 57,
+   "context_similarity": 0.484
+  },
+  {
+   "devanagari": "टेस्ट",
+   "latin": "test",
+   "train_count": 56,
+   "context_similarity": 0.606
+  },
+  {
+   "devanagari": "कॉलम",
+   "latin": "column",
+   "train_count": 56,
+   "context_similarity": 0.741
+  },
+  {
+   "devanagari": "अलाइन",
+   "latin": "align",
+   "train_count": 56,
+   "context_similarity": 0.138
+  },
+  {
+   "devanagari": "ऑपरेटर",
+   "latin": "operator",
+   "train_count": 56,
+   "context_similarity": 0.554
+  },
+  {
+   "devanagari": "टाइटल",
+   "latin": "title",
+   "train_count": 55,
+   "context_similarity": 0.469
+  },
+  {
+   "devanagari": "रिटर्न",
+   "latin": "return",
+   "train_count": 55,
+   "context_similarity": 0.463
+  },
+  {
+   "devanagari": "कोट्स",
+   "latin": "quotes",
+   "train_count": 54,
+   "context_similarity": 0.864
+  },
+  {
+   "devanagari": "मेथड्स",
+   "latin": "methods",
+   "train_count": 54,
+   "context_similarity": 0.423
+  },
+  {
+   "devanagari": "असाइन",
+   "latin": "assign",
+   "train_count": 54,
+   "context_similarity": 0.096
+  },
+  {
+   "devanagari": "पैनल",
+   "latin": "panel",
+   "train_count": 53,
+   "context_similarity": 0.77
+  },
+  {
+   "devanagari": "टूल",
+   "latin": "tool",
+   "train_count": 51,
+   "context_similarity": 0.498
+  },
+  {
+   "devanagari": "सेक्शन",
+   "latin": "section",
+   "train_count": 50,
+   "context_similarity": 0.81
+  },
+  {
+   "devanagari": "लेयर",
+   "latin": "layer",
+   "train_count": 50,
+   "context_similarity": 0.485
+  },
+  {
+   "devanagari": "ड्रापडाउन",
+   "latin": "dropdown",
+   "train_count": 50,
+   "context_similarity": 0.764
+  },
+  {
+   "devanagari": "डिजाइन",
+   "latin": "design",
+   "train_count": 50,
+   "context_similarity": 0.406
+  },
+  {
+   "devanagari": "कर्ली",
+   "latin": "curly",
+   "train_count": 49,
+   "context_similarity": 0.524
+  },
+  {
+   "devanagari": "यूजरनेम",
+   "latin": "username",
+   "train_count": 49,
+   "context_similarity": 0.727
+  },
+  {
+   "devanagari": "कॉपी",
+   "latin": "copy",
+   "train_count": 48,
+   "context_similarity": 0.776
+  },
+  {
+   "devanagari": "कीबोर्ड",
+   "latin": "keyboard",
+   "train_count": 48,
+   "context_similarity": 0.875
+  },
+  {
+   "devanagari": "प्रीव्यू",
+   "latin": "preview",
+   "train_count": 47,
+   "context_similarity": 0.422
+  },
+  {
+   "devanagari": "फंक्शन्स",
+   "latin": "functions",
+   "train_count": 47,
+   "context_similarity": 0.538
+  },
+  {
+   "devanagari": "एडिट",
+   "latin": "edit",
+   "train_count": 46,
+   "context_similarity": 0.616
+  },
+  {
+   "devanagari": "दैन",
+   "latin": "than",
+   "train_count": 46,
+   "context_similarity": 0.431
+  },
+  {
+   "devanagari": "डिस्प्ले",
+   "latin": "display",
+   "train_count": 45,
+   "context_similarity": 0.329
+  },
+  {
+   "devanagari": "रो",
+   "latin": "row",
+   "train_count": 43,
+   "context_similarity": 0.543
+  },
+  {
+   "devanagari": "डिफ़ॉल्ट",
+   "latin": "default",
+   "train_count": 43,
+   "context_similarity": 0.873
+  },
+  {
+   "devanagari": "एक्सेस",
+   "latin": "access",
+   "train_count": 42,
+   "context_similarity": 0.816
+  },
+  {
+   "devanagari": "फाइल्स",
+   "latin": "files",
+   "train_count": 42,
+   "context_similarity": 0.411
+  },
+  {
+   "devanagari": "डॉलर",
+   "latin": "dollar",
+   "train_count": 42,
+   "context_similarity": 0.274
+  },
+  {
+   "devanagari": "डाइरेक्टरी",
+   "latin": "directory",
+   "train_count": 42,
+   "context_similarity": 0.588
+  },
+  {
+   "devanagari": "पोस्ट",
+   "latin": "post",
+   "train_count": 41,
+   "context_similarity": 0.908
+  },
+  {
+   "devanagari": "कंप्यूटर",
+   "latin": "computer",
+   "train_count": 41,
+   "context_similarity": 0.649
+  },
+  {
+   "devanagari": "राइटक्लिक",
+   "latin": "rightclick",
+   "train_count": 40,
+   "context_similarity": 0.941
+  },
+  {
+   "devanagari": "कंडिशन",
+   "latin": "condition",
+   "train_count": 40,
+   "context_similarity": 0.695
+  },
+  {
+   "devanagari": "ऑर्बिटल्स",
+   "latin": "orbitals",
+   "train_count": 40,
+   "context_similarity": 0.388
+  },
+  {
+   "devanagari": "उबंटू",
+   "latin": "ubuntu",
+   "train_count": 38,
+   "context_similarity": 0.444
+  },
+  {
+   "devanagari": "अपलोड",
+   "latin": "upload",
+   "train_count": 38,
+   "context_similarity": 0.353
+  },
+  {
+   "devanagari": "सेल",
+   "latin": "cell",
+   "train_count": 38,
+   "context_similarity": 0.412
+  },
+  {
+   "devanagari": "केस",
+   "latin": "case",
+   "train_count": 37,
+   "context_similarity": 0.587
+  },
+  {
+   "devanagari": "ब्राउज़र",
+   "latin": "browser",
+   "train_count": 37,
+   "context_similarity": 0.812
+  },
+  {
+   "devanagari": "प्लॉट्स",
+   "latin": "plots",
+   "train_count": 37,
+   "context_similarity": 0.172
+  },
+  {
+   "devanagari": "ब्राउजर",
+   "latin": "browser",
+   "train_count": 37,
+   "context_similarity": 0.798
+  },
+  {
+   "devanagari": "कंडीशन",
+   "latin": "condition",
+   "train_count": 36,
+   "context_similarity": 0.508
+  },
+  {
+   "devanagari": "लेबल",
+   "latin": "label",
+   "train_count": 36,
+   "context_similarity": 0.478
+  },
+  {
+   "devanagari": "स्लैश",
+   "latin": "slash",
+   "train_count": 36,
+   "context_similarity": 0.162
+  },
+  {
+   "devanagari": "एनीमेशन",
+   "latin": "animation",
+   "train_count": 36,
+   "context_similarity": 0.355
+  },
+  {
+   "devanagari": "डिज़ाइन",
+   "latin": "design",
+   "train_count": 36,
+   "context_similarity": 0.321
+  },
+  {
+   "devanagari": "डिफॉल्ट",
+   "latin": "default",
+   "train_count": 35,
+   "context_similarity": 0.889
+  },
+  {
+   "devanagari": "प्रेस",
+   "latin": "press",
+   "train_count": 35,
+   "context_similarity": 0.775
+  },
+  {
+   "devanagari": "डाउनलोड़",
+   "latin": "download",
+   "train_count": 34,
+   "context_similarity": 0.155
+  },
+  {
+   "devanagari": "रिकॉर्ड",
+   "latin": "record",
+   "train_count": 34,
+   "context_similarity": 0.961
+  },
+  {
+   "devanagari": "लोड",
+   "latin": "load",
+   "train_count": 34,
+   "context_similarity": 0.365
+  },
+  {
+   "devanagari": "डाउन",
+   "latin": "down",
+   "train_count": 34,
+   "context_similarity": 0.358
+  },
+  {
+   "devanagari": "ऑप्शन्स",
+   "latin": "options",
+   "train_count": 33,
+   "context_similarity": 0.462
+  },
+  {
+   "devanagari": "प्रिव्यू",
+   "latin": "preview",
+   "train_count": 33,
+   "context_similarity": 0.303
+  },
+  {
+   "devanagari": "मॉडल",
+   "latin": "model",
+   "train_count": 33,
+   "context_similarity": 0.598
+  },
+  {
+   "devanagari": "मैसेज",
+   "latin": "message",
+   "train_count": 32,
+   "context_similarity": 0.552
+  },
+  {
+   "devanagari": "पेस्ट",
+   "latin": "paste",
+   "train_count": 32,
+   "context_similarity": 0.723
+  },
+  {
+   "devanagari": "साइट",
+   "latin": "site",
+   "train_count": 32,
+   "context_similarity": 0.561
+  },
+  {
+   "devanagari": "वेक्टर",
+   "latin": "vector",
+   "train_count": 32,
+   "context_similarity": 0.18
+  },
+  {
+   "devanagari": "स्ट्रक्चर",
+   "latin": "structure",
+   "train_count": 31,
+   "context_similarity": 0.469
+  },
+  {
+   "devanagari": "डबलक्लिक",
+   "latin": "doubleclick",
+   "train_count": 30,
+   "context_similarity": 0.964
+  },
+  {
+   "devanagari": "लॉगआउट",
+   "latin": "logout",
+   "train_count": 30,
+   "context_similarity": 0.424
+  },
+  {
+   "devanagari": "स्क्रोल",
+   "latin": "scroll",
+   "train_count": 29,
+   "context_similarity": 0.912
+  },
+  {
+   "devanagari": "सर्वर",
+   "latin": "server",
+   "train_count": 29,
+   "context_similarity": 0.279
+  },
+  {
+   "devanagari": "ब्रेक",
+   "latin": "break",
+   "train_count": 29,
+   "context_similarity": 0.175
+  },
+  {
+   "devanagari": "ड्रैग",
+   "latin": "drag",
+   "train_count": 29,
+   "context_similarity": 0.742
+  },
+  {
+   "devanagari": "फोरम",
+   "latin": "forum",
+   "train_count": 28,
+   "context_similarity": 0.871
+  },
+  {
+   "devanagari": "वीडियो",
+   "latin": "video",
+   "train_count": 28,
+   "context_similarity": 0.818
+  },
+  {
+   "devanagari": "माउस",
+   "latin": "mouse",
+   "train_count": 28,
+   "context_similarity": 0.709
+  },
+  {
+   "devanagari": "उबन्टु",
+   "latin": "ubuntu",
+   "train_count": 28,
+   "context_similarity": 0.484
+  },
+  {
+   "devanagari": "सेमीकॉलन",
+   "latin": "semicolon",
+   "train_count": 28,
+   "context_similarity": 0.169
+  },
+  {
+   "devanagari": "स्लाइड्स",
+   "latin": "slides",
+   "train_count": 27,
+   "context_similarity": 0.728
+  },
+  {
+   "devanagari": "क्लियर",
+   "latin": "clear",
+   "train_count": 27,
+   "context_similarity": 0.418
+  },
+  {
+   "devanagari": "फिल्ड",
+   "latin": "field",
+   "train_count": 27,
+   "context_similarity": 0.749
+  },
+  {
+   "devanagari": "नम्बर",
+   "latin": "number",
+   "train_count": 27,
+   "context_similarity": 0.403
+  },
+  {
+   "devanagari": "फील्ड",
+   "latin": "field",
+   "train_count": 27,
+   "context_similarity": 0.701
+  },
+  {
+   "devanagari": "कैपिटल",
+   "latin": "capital",
+   "train_count": 27,
+   "context_similarity": 0.226
+  },
+  {
+   "devanagari": "ट्रू",
+   "latin": "true",
+   "train_count": 25,
+   "context_similarity": 0.565
+  },
+  {
+   "devanagari": "मैथड्स",
+   "latin": "methods",
+   "train_count": 25,
+   "context_similarity": 0.456
+  },
+  {
+   "devanagari": "कार्ड",
+   "latin": "card",
+   "train_count": 25,
+   "context_similarity": 0.414
+  },
+  {
+   "devanagari": "एक्स्ट्रैक्ट",
+   "latin": "extract",
+   "train_count": 24,
+   "context_similarity": 0.772
+  },
+  {
+   "devanagari": "राइट",
+   "latin": "right",
+   "train_count": 24,
+   "context_similarity": 0.971
+  },
+  {
+   "devanagari": "कवर",
+   "latin": "cover",
+   "train_count": 24,
+   "context_similarity": 0.495
+  },
+  {
+   "devanagari": "मैन्यू",
+   "latin": "menu",
+   "train_count": 23,
+   "context_similarity": 0.564
+  },
+  {
+   "devanagari": "ऐक्सेस",
+   "latin": "access",
+   "train_count": 23,
+   "context_similarity": 0.505
+  },
+  {
+   "devanagari": "फील्ड्स",
+   "latin": "fields",
+   "train_count": 23,
+   "context_similarity": 0.408
+  },
+  {
+   "devanagari": "स्लाइड",
+   "latin": "slide",
+   "train_count": 23,
+   "context_similarity": 0.502
+  },
+  {
+   "devanagari": "अनडू",
+   "latin": "undo",
+   "train_count": 23,
+   "context_similarity": 0.653
+  },
+  {
+   "devanagari": "सेलडिज़ाइनर",
+   "latin": "celldesigner",
+   "train_count": 23,
+   "context_similarity": 0.522
+  },
+  {
+   "devanagari": "वैल्यूज",
+   "latin": "values",
+   "train_count": 22,
+   "context_similarity": 0.554
+  },
+  {
+   "devanagari": "एरो",
+   "latin": "arrow",
+   "train_count": 22,
+   "context_similarity": 0.686
+  },
+  {
+   "devanagari": "डिरेक्टरी",
+   "latin": "directory",
+   "train_count": 22,
+   "context_similarity": 0.474
+  },
+  {
+   "devanagari": "इफ़ेक्ट",
+   "latin": "effect",
+   "train_count": 22,
+   "context_similarity": 0.165
+  },
+  {
+   "devanagari": "कर्सर",
+   "latin": "cursor",
+   "train_count": 22,
+   "context_similarity": 0.74
+  },
+  {
+   "devanagari": "लीनियर",
+   "latin": "linear",
+   "train_count": 22,
+   "context_similarity": 0.085
+  },
+  {
+   "devanagari": "प्रोडक्ट",
+   "latin": "product",
+   "train_count": 22,
+   "context_similarity": 0.171
+  },
+  {
+   "devanagari": "वर्ज़न",
+   "latin": "version",
+   "train_count": 21,
+   "context_similarity": 0.43
+  },
+  {
+   "devanagari": "इंटरफेस",
+   "latin": "interface",
+   "train_count": 21,
+   "context_similarity": 0.49
+  },
+  {
+   "devanagari": "डेस्कटॉप",
+   "latin": "desktop",
+   "train_count": 21,
+   "context_similarity": 0.855
+  },
+  {
+   "devanagari": "लोकल",
+   "latin": "local",
+   "train_count": 20,
+   "context_similarity": 0.392
+  },
+  {
+   "devanagari": "ब्लॉक्स",
+   "latin": "blocks",
+   "train_count": 20,
+   "context_similarity": 0.297
+  },
+  {
+   "devanagari": "डॉक्युमेंट",
+   "latin": "document",
+   "train_count": 20,
+   "context_similarity": 0.508
+  },
+  {
+   "devanagari": "इनीशिलाइज",
+   "latin": "initialize",
+   "train_count": 19,
+   "context_similarity": 0.205
+  },
+  {
+   "devanagari": "ऊबंटु",
+   "latin": "ubuntu",
+   "train_count": 19,
+   "context_similarity": 0.487
+  },
+  {
+   "devanagari": "टिक",
+   "latin": "tick",
+   "train_count": 19,
+   "context_similarity": 0.365
+  },
+  {
+   "devanagari": "ग्रेटर",
+   "latin": "greater",
+   "train_count": 19,
+   "context_similarity": 0.823
+  },
+  {
+   "devanagari": "स्टोर",
+   "latin": "store",
+   "train_count": 19,
+   "context_similarity": 0.108
+  },
+  {
+   "devanagari": "अपरकेस",
+   "latin": "uppercase",
+   "train_count": 19,
+   "context_similarity": 0.3
+  },
+  {
+   "devanagari": "मेन्यु",
+   "latin": "menu",
+   "train_count": 19,
+   "context_similarity": 0.58
+  },
+  {
+   "devanagari": "कनेक्शन",
+   "latin": "connection",
+   "train_count": 18,
+   "context_similarity": 0.57
+  },
+  {
+   "devanagari": "टैक्स्ट",
+   "latin": "text",
+   "train_count": 18,
+   "context_similarity": 0.428
+  },
+  {
+   "devanagari": "सर्च",
+   "latin": "search",
+   "train_count": 18,
+   "context_similarity": 0.365
+  },
+  {
+   "devanagari": "मोड",
+   "latin": "mode",
+   "train_count": 18,
+   "context_similarity": 0.554
+  },
+  {
+   "devanagari": "कलर",
+   "latin": "colour",
+   "train_count": 18,
+   "context_similarity": 0.211
+  },
+  {
+   "devanagari": "रिवीजन",
+   "latin": "revision",
+   "train_count": 18,
+   "context_similarity": 0.08
+  },
+  {
+   "devanagari": "स्क्वेर",
+   "latin": "square",
+   "train_count": 18,
+   "context_similarity": 0.611
+  },
+  {
+   "devanagari": "शार्प",
+   "latin": "sharp",
+   "train_count": 18,
+   "context_similarity": 0.12
+  },
+  {
+   "devanagari": "चार्ट",
+   "latin": "chart",
+   "train_count": 17,
+   "context_similarity": 0.317
+  },
+  {
+   "devanagari": "इंटरनेट",
+   "latin": "internet",
+   "train_count": 17,
+   "context_similarity": 0.513
+  },
+  {
+   "devanagari": "मिनट",
+   "latin": "minute",
+   "train_count": 17,
+   "context_similarity": 0.642
+  },
+  {
+   "devanagari": "प्रॉम्प्ट",
+   "latin": "prompt",
+   "train_count": 17,
+   "context_similarity": 0.651
+  },
+  {
+   "devanagari": "ड्राप",
+   "latin": "drop",
+   "train_count": 17,
+   "context_similarity": 0.822
+  },
+  {
+   "devanagari": "ऑर्डर",
+   "latin": "order",
+   "train_count": 17,
+   "context_similarity": 0.306
+  },
+  {
+   "devanagari": "सीडी",
+   "latin": "cd",
+   "train_count": 16,
+   "context_similarity": 0.365
+  },
+  {
+   "devanagari": "सेकंड",
+   "latin": "second",
+   "train_count": 16,
+   "context_similarity": 0.512
+  },
+  {
+   "devanagari": "ऑब्जेक्ट",
+   "latin": "object",
+   "train_count": 16,
+   "context_similarity": 0.429
+  },
+  {
+   "devanagari": "आइकॉन",
+   "latin": "icon",
+   "train_count": 15,
+   "context_similarity": 0.762
+  },
+  {
+   "devanagari": "इंटरफ़ेस",
+   "latin": "interface",
+   "train_count": 15,
+   "context_similarity": 0.588
+  },
+  {
+   "devanagari": "ब्रश",
+   "latin": "brush",
+   "train_count": 15,
+   "context_similarity": 0.241
+  },
+  {
+   "devanagari": "इन्टरनेट",
+   "latin": "internet",
+   "train_count": 15,
+   "context_similarity": 0.579
+  },
+  {
+   "devanagari": "ईमेल",
+   "latin": "email",
+   "train_count": 15,
+   "context_similarity": 0.143
+  },
+  {
+   "devanagari": "कन्वर्जन",
+   "latin": "conversion",
+   "train_count": 15,
+   "context_similarity": 0.187
+  },
+  {
+   "devanagari": "एक्सिस",
+   "latin": "axis",
+   "train_count": 15,
+   "context_similarity": 0.352
+  },
+  {
+   "devanagari": "लोकेशन",
+   "latin": "location",
+   "train_count": 14,
+   "context_similarity": 0.35
+  },
+  {
+   "devanagari": "ऐरो",
+   "latin": "arrow",
+   "train_count": 14,
+   "context_similarity": 0.847
+  },
+  {
+   "devanagari": "ग्रुप",
+   "latin": "group",
+   "train_count": 14,
+   "context_similarity": 0.269
+  },
+  {
+   "devanagari": "साइज",
+   "latin": "size",
+   "train_count": 14,
+   "context_similarity": 0.551
+  },
+  {
+   "devanagari": "ड्रॉप",
+   "latin": "drop",
+   "train_count": 14,
+   "context_similarity": 0.843
+  },
+  {
+   "devanagari": "फेज़",
+   "latin": "phase",
+   "train_count": 14,
+   "context_similarity": 0.675
+  },
+  {
+   "devanagari": "हाईलाइट",
+   "latin": "highlight",
+   "train_count": 14,
+   "context_similarity": 0.145
+  },
+  {
+   "devanagari": "मर्ज",
+   "latin": "merge",
+   "train_count": 14,
+   "context_similarity": 0.594
+  },
+  {
+   "devanagari": "एड्रेस",
+   "latin": "address",
+   "train_count": 14,
+   "context_similarity": 0.434
+  },
+  {
+   "devanagari": "मशीन",
+   "latin": "machine",
+   "train_count": 13,
+   "context_similarity": 0.76
+  },
+  {
+   "devanagari": "सब्ट्रैक्शन",
+   "latin": "subtraction",
+   "train_count": 13,
+   "context_similarity": 0.333
+  },
+  {
+   "devanagari": "डेमो",
+   "latin": "demo",
+   "train_count": 13,
+   "context_similarity": 0.32
+  },
+  {
+   "devanagari": "सैम्पल",
+   "latin": "sample",
+   "train_count": 13,
+   "context_similarity": 0.238
+  },
+  {
+   "devanagari": "ज़ूम",
+   "latin": "zoom",
+   "train_count": 13,
+   "context_similarity": 0.404
+  },
+  {
+   "devanagari": "मेसेज",
+   "latin": "message",
+   "train_count": 13,
+   "context_similarity": 0.418
+  },
+  {
+   "devanagari": "कट",
+   "latin": "cut",
+   "train_count": 13,
+   "context_similarity": 0.452
+  },
+  {
+   "devanagari": "लैस",
+   "latin": "less",
+   "train_count": 13,
+   "context_similarity": 0.834
+  },
+  {
+   "devanagari": "इनिशीलाइज",
+   "latin": "initialize",
+   "train_count": 13,
+   "context_similarity": 0.277
+  },
+  {
+   "devanagari": "कैनवास",
+   "latin": "canvas",
+   "train_count": 12,
+   "context_similarity": 0.855
+  },
+  {
+   "devanagari": "केमिकल",
+   "latin": "chemical",
+   "train_count": 12,
+   "context_similarity": 0.47
+  },
+  {
+   "devanagari": "लेस",
+   "latin": "less",
+   "train_count": 12,
+   "context_similarity": 0.69
+  },
+  {
+   "devanagari": "विड्थ",
+   "latin": "width",
+   "train_count": 12,
+   "context_similarity": 0.203
+  },
+  {
+   "devanagari": "स्टेप्स",
+   "latin": "steps",
+   "train_count": 12,
+   "context_similarity": 0.415
+  },
+  {
+   "devanagari": "लूप्स",
+   "latin": "loops",
+   "train_count": 12,
+   "context_similarity": 0.328
+  },
+  {
+   "devanagari": "ग्रुप्स",
+   "latin": "groups",
+   "train_count": 12,
+   "context_similarity": 0.116
+  },
+  {
+   "devanagari": "प्रोम्प्ट",
+   "latin": "prompt",
+   "train_count": 11,
+   "context_similarity": 0.795
+  },
+  {
+   "devanagari": "एप्लिकेशन",
+   "latin": "application",
+   "train_count": 11,
+   "context_similarity": 0.293
+  },
+  {
+   "devanagari": "सलेक्ट",
+   "latin": "select",
+   "train_count": 11,
+   "context_similarity": 0.125
+  },
+  {
+   "devanagari": "लेवल",
+   "latin": "level",
+   "train_count": 11,
+   "context_similarity": 0.355
+  },
+  {
+   "devanagari": "वेल्यूज",
+   "latin": "values",
+   "train_count": 11,
+   "context_similarity": 0.316
+  },
+  {
+   "devanagari": "व्यू",
+   "latin": "view",
+   "train_count": 11,
+   "context_similarity": 0.366
+  },
+  {
+   "devanagari": "इरेज़र",
+   "latin": "eraser",
+   "train_count": 11,
+   "context_similarity": 0.493
+  },
+  {
+   "devanagari": "एप्लीकेशन",
+   "latin": "application",
+   "train_count": 11,
+   "context_similarity": 0.393
+  },
+  {
+   "devanagari": "एरिया",
+   "latin": "area",
+   "train_count": 11,
+   "context_similarity": 0.395
+  },
+  {
+   "devanagari": "फॉन्ट",
+   "latin": "font",
+   "train_count": 11,
+   "context_similarity": 0.435
+  },
+  {
+   "devanagari": "सबफिल्ड",
+   "latin": "subfield",
+   "train_count": 11,
+   "context_similarity": 0.341
+  },
+  {
+   "devanagari": "लाइब्रेरी",
+   "latin": "library",
+   "train_count": 11,
+   "context_similarity": 0.413
+  },
+  {
+   "devanagari": "मूव",
+   "latin": "move",
+   "train_count": 11,
+   "context_similarity": 0.372
+  },
+  {
+   "devanagari": "टूलबार",
+   "latin": "toolbar",
+   "train_count": 11,
+   "context_similarity": 0.683
+  },
+  {
+   "devanagari": "शीबैंग",
+   "latin": "shebang",
+   "train_count": 10,
+   "context_similarity": 0.919
+  },
+  {
+   "devanagari": "ग्लोबल",
+   "latin": "global",
+   "train_count": 10,
+   "context_similarity": 0.45
+  },
+  {
+   "devanagari": "ब्लाक",
+   "latin": "block",
+   "train_count": 10,
+   "context_similarity": 0.342
+  },
+  {
+   "devanagari": "विन्डोज़",
+   "latin": "windows",
+   "train_count": 10,
+   "context_similarity": 0.155
+  },
+  {
+   "devanagari": "ज़ीरोज़",
+   "latin": "zeros",
+   "train_count": 10,
+   "context_similarity": 0.156
+  },
+  {
+   "devanagari": "इन्फॉर्मेशन",
+   "latin": "information",
+   "train_count": 10,
+   "context_similarity": 0.238
+  },
+  {
+   "devanagari": "मिनिमाइज़",
+   "latin": "minimize",
+   "train_count": 10,
+   "context_similarity": 0.578
+  },
+  {
+   "devanagari": "इम्पोर्ट",
+   "latin": "import",
+   "train_count": 10,
+   "context_similarity": 0.453
+  },
+  {
+   "devanagari": "चेन",
+   "latin": "chain",
+   "train_count": 10,
+   "context_similarity": 0.152
+  },
+  {
+   "devanagari": "इनिशिलाइज",
+   "latin": "initialize",
+   "train_count": 10,
+   "context_similarity": 0.165
+  },
+  {
+   "devanagari": "केट",
+   "latin": "cat",
+   "train_count": 10,
+   "context_similarity": 0.637
+  },
+  {
+   "devanagari": "हिस्ट्री",
+   "latin": "history",
+   "train_count": 10,
+   "context_similarity": 0.095
+  },
+  {
+   "devanagari": "क्वेशन",
+   "latin": "question",
+   "train_count": 9,
+   "context_similarity": 0.089
+  },
+  {
+   "devanagari": "टीचर",
+   "latin": "teacher",
+   "train_count": 9,
+   "context_similarity": 0.567
+  },
+  {
+   "devanagari": "फॉरवर्ड",
+   "latin": "forward",
+   "train_count": 9,
+   "context_similarity": 0.5
+  },
+  {
+   "devanagari": "सॉर्ट",
+   "latin": "sort",
+   "train_count": 9,
+   "context_similarity": 0.429
+  },
+  {
+   "devanagari": "डिग्री",
+   "latin": "degree",
+   "train_count": 9,
+   "context_similarity": 0.179
+  },
+  {
+   "devanagari": "डिस्क्रीट",
+   "latin": "discrete",
+   "train_count": 9,
+   "context_similarity": 0.297
+  },
+  {
+   "devanagari": "डिवाइड",
+   "latin": "divide",
+   "train_count": 9,
+   "context_similarity": 0.121
+  },
+  {
+   "devanagari": "ऑब्जेक्ट्स",
+   "latin": "objects",
+   "train_count": 9,
+   "context_similarity": 0.535
+  },
+  {
+   "devanagari": "बैकस्लैश",
+   "latin": "backslash",
+   "train_count": 9,
+   "context_similarity": 0.095
+  },
+  {
+   "devanagari": "स्पीशीज़",
+   "latin": "species",
+   "train_count": 9,
+   "context_similarity": 0.213
+  },
+  {
+   "devanagari": "ऐट्रिब्यूट्स",
+   "latin": "attributes",
+   "train_count": 9,
+   "context_similarity": 0.167
+  },
+  {
+   "devanagari": "बैंडविड्थ",
+   "latin": "bandwidth",
+   "train_count": 8,
+   "context_similarity": 0.986
+  },
+  {
+   "devanagari": "टॉक",
+   "latin": "talk",
+   "train_count": 8,
+   "context_similarity": 0.376
+  },
+  {
+   "devanagari": "फ़ॉर्मेट",
+   "latin": "format",
+   "train_count": 8,
+   "context_similarity": 0.218
+  },
+  {
+   "devanagari": "ब्राउज़",
+   "latin": "browse",
+   "train_count": 8,
+   "context_similarity": 0.582
+  },
+  {
+   "devanagari": "कॉन्टैक्स्ट",
+   "latin": "context",
+   "train_count": 8,
+   "context_similarity": 0.772
+  },
+  {
+   "devanagari": "डिज़ाइनर",
+   "latin": "designer",
+   "train_count": 8,
+   "context_similarity": 0.23
+  },
+  {
+   "devanagari": "राइटर",
+   "latin": "writer",
+   "train_count": 8,
+   "context_similarity": 0.518
+  },
+  {
+   "devanagari": "कमिट",
+   "latin": "commit",
+   "train_count": 8,
+   "context_similarity": 0.181
+  },
+  {
+   "devanagari": "फ़ोल्डर",
+   "latin": "folder",
+   "train_count": 8,
+   "context_similarity": 0.522
+  },
+  {
+   "devanagari": "फ़ॉर्मैट",
+   "latin": "format",
+   "train_count": 8,
+   "context_similarity": 0.421
+  },
+  {
+   "devanagari": "मल्टिपल",
+   "latin": "multiple",
+   "train_count": 8,
+   "context_similarity": 0.242
+  },
+  {
+   "devanagari": "फिट",
+   "latin": "fit",
+   "train_count": 8,
+   "context_similarity": 0.557
+  },
+  {
+   "devanagari": "कर्व",
+   "latin": "curve",
+   "train_count": 8,
+   "context_similarity": 0.176
+  },
+  {
+   "devanagari": "स्कोप",
+   "latin": "scope",
+   "train_count": 7,
+   "context_similarity": 0.201
+  },
+  {
+   "devanagari": "सबमेन्यू",
+   "latin": "submenu",
+   "train_count": 7,
+   "context_similarity": 0.591
+  },
+  {
+   "devanagari": "मल्टी",
+   "latin": "multi",
+   "train_count": 7,
+   "context_similarity": 0.118
+  },
+  {
+   "devanagari": "सबमिट",
+   "latin": "submit",
+   "train_count": 7,
+   "context_similarity": 0.288
+  },
+  {
+   "devanagari": "फाइलनेम",
+   "latin": "filename",
+   "train_count": 7,
+   "context_similarity": 0.173
+  },
+  {
+   "devanagari": "यूनिक",
+   "latin": "unique",
+   "train_count": 7,
+   "context_similarity": 0.09
+  },
+  {
+   "devanagari": "टेब",
+   "latin": "tab",
+   "train_count": 7,
+   "context_similarity": 0.365
+  },
+  {
+   "devanagari": "स्विच",
+   "latin": "switch",
+   "train_count": 7,
+   "context_similarity": 0.237
+  },
+  {
+   "devanagari": "सिग्नल",
+   "latin": "signal",
+   "train_count": 7,
+   "context_similarity": 0.165
+  },
+  {
+   "devanagari": "इंटरफैस",
+   "latin": "interface",
+   "train_count": 7,
+   "context_similarity": 0.408
+  },
+  {
+   "devanagari": "मेम्बर",
+   "latin": "member",
+   "train_count": 7,
+   "context_similarity": 0.305
+  },
+  {
+   "devanagari": "सेलेक्ट",
+   "latin": "select",
+   "train_count": 7,
+   "context_similarity": 0.675
+  },
+  {
+   "devanagari": "कम्पाइल",
+   "latin": "compile",
+   "train_count": 7,
+   "context_similarity": 0.438
+  },
+  {
+   "devanagari": "ट्रेन",
+   "latin": "train",
+   "train_count": 7,
+   "context_similarity": 0.149
+  },
+  {
+   "devanagari": "कैप्चर",
+   "latin": "capture",
+   "train_count": 7,
+   "context_similarity": 0.298
+  },
+  {
+   "devanagari": "क्वोट्स",
+   "latin": "quotes",
+   "train_count": 7,
+   "context_similarity": 0.627
+  },
+  {
+   "devanagari": "शीट",
+   "latin": "sheet",
+   "train_count": 7,
+   "context_similarity": 0.241
+  },
+  {
+   "devanagari": "प्रोटीन",
+   "latin": "protein",
+   "train_count": 7,
+   "context_similarity": 0.355
+  },
+  {
+   "devanagari": "प्लाट",
+   "latin": "plot",
+   "train_count": 7,
+   "context_similarity": 0.537
+  },
+  {
+   "devanagari": "ऑक्सीजन",
+   "latin": "oxygen",
+   "train_count": 7,
+   "context_similarity": 0.211
+  },
+  {
+   "devanagari": "हेडर",
+   "latin": "header",
+   "train_count": 6,
+   "context_similarity": 0.187
+  },
+  {
+   "devanagari": "प्रॉजेक्ट",
+   "latin": "project",
+   "train_count": 6,
+   "context_similarity": 0.91
+  },
+  {
+   "devanagari": "रेज़ोल्यूशन",
+   "latin": "resolution",
+   "train_count": 6,
+   "context_similarity": 0.56
+  },
+  {
+   "devanagari": "सीरियल",
+   "latin": "serial",
+   "train_count": 6,
+   "context_similarity": 0.088
+  },
+  {
+   "devanagari": "शॉर्टकट",
+   "latin": "shortcut",
+   "train_count": 6,
+   "context_similarity": 0.233
+  },
+  {
+   "devanagari": "बेसिक",
+   "latin": "basic",
+   "train_count": 6,
+   "context_similarity": 0.14
+  },
+  {
+   "devanagari": "एक्सट्रैक्ट",
+   "latin": "extract",
+   "train_count": 6,
+   "context_similarity": 0.299
+  },
+  {
+   "devanagari": "ड्राईवर",
+   "latin": "driver",
+   "train_count": 6,
+   "context_similarity": 0.245
+  },
+  {
+   "devanagari": "सबमेनू",
+   "latin": "submenu",
+   "train_count": 6,
+   "context_similarity": 0.675
+  },
+  {
+   "devanagari": "कम्प्यूटर",
+   "latin": "computer",
+   "train_count": 6,
+   "context_similarity": 0.383
+  },
+  {
+   "devanagari": "होमपेज",
+   "latin": "homepage",
+   "train_count": 6,
+   "context_similarity": 0.586
+  },
+  {
+   "devanagari": "एट्रीब्यूट्स",
+   "latin": "attributes",
+   "train_count": 6,
+   "context_similarity": 0.182
+  },
+  {
+   "devanagari": "रिपीट",
+   "latin": "repeat",
+   "train_count": 6,
+   "context_similarity": 0.761
+  },
+  {
+   "devanagari": "वैज",
+   "latin": "wedge",
+   "train_count": 6,
+   "context_similarity": 0.139
+  },
+  {
+   "devanagari": "पैराव्यू",
+   "latin": "paraview",
+   "train_count": 6,
+   "context_similarity": 0.546
+  },
+  {
+   "devanagari": "गेट",
+   "latin": "get",
+   "train_count": 6,
+   "context_similarity": 0.378
+  },
+  {
+   "devanagari": "इन्टिजर",
+   "latin": "integer",
+   "train_count": 5,
+   "context_similarity": 0.46
+  },
+  {
+   "devanagari": "पाई",
+   "latin": "pie",
+   "train_count": 5,
+   "context_similarity": 0.392
+  },
+  {
+   "devanagari": "कॉपीपेस्ट",
+   "latin": "copypaste",
+   "train_count": 5,
+   "context_similarity": 0.39
+  },
+  {
+   "devanagari": "वर्टिकल",
+   "latin": "vertical",
+   "train_count": 5,
+   "context_similarity": 0.172
+  },
+  {
+   "devanagari": "रोटेशन",
+   "latin": "rotation",
+   "train_count": 5,
+   "context_similarity": 0.16
+  },
+  {
+   "devanagari": "फ़ोरम",
+   "latin": "forum",
+   "train_count": 5,
+   "context_similarity": 0.618
+  },
+  {
+   "devanagari": "राईट",
+   "latin": "right",
+   "train_count": 5,
+   "context_similarity": 0.545
+  },
+  {
+   "devanagari": "पैटर्न",
+   "latin": "pattern",
+   "train_count": 5,
+   "context_similarity": 0.334
+  },
+  {
+   "devanagari": "वेबपेज",
+   "latin": "webpage",
+   "train_count": 5,
+   "context_similarity": 0.541
+  },
+  {
+   "devanagari": "अनसेट",
+   "latin": "unset",
+   "train_count": 5,
+   "context_similarity": 0.114
+  },
+  {
+   "devanagari": "ओर्बिटल्स",
+   "latin": "orbitals",
+   "train_count": 5,
+   "context_similarity": 0.392
+  },
+  {
+   "devanagari": "फ़िल्ड",
+   "latin": "field",
+   "train_count": 5,
+   "context_similarity": 0.171
+  },
+  {
+   "devanagari": "होल्ड",
+   "latin": "hold",
+   "train_count": 5,
+   "context_similarity": 0.573
+  },
+  {
+   "devanagari": "सबमैन्यू",
+   "latin": "submenu",
+   "train_count": 5,
+   "context_similarity": 0.526
+  },
+  {
+   "devanagari": "रिपोर्ट",
+   "latin": "report",
+   "train_count": 5,
+   "context_similarity": 0.187
+  },
+  {
+   "devanagari": "नेविगेट",
+   "latin": "navigate",
+   "train_count": 5,
+   "context_similarity": 0.384
+  },
+  {
+   "devanagari": "कोडिंग",
+   "latin": "coding",
+   "train_count": 5,
+   "context_similarity": 0.651
+  },
+  {
+   "devanagari": "टिकट",
+   "latin": "ticket",
+   "train_count": 5,
+   "context_similarity": 0.21
+  },
+  {
+   "devanagari": "डॉक्यूमेंट",
+   "latin": "document",
+   "train_count": 5,
+   "context_similarity": 0.406
+  },
+  {
+   "devanagari": "कॉमन",
+   "latin": "common",
+   "train_count": 5,
+   "context_similarity": 0.098
+  },
+  {
+   "devanagari": "मल्टीपल",
+   "latin": "multiple",
+   "train_count": 5,
+   "context_similarity": 0.226
+  },
+  {
+   "devanagari": "मेन",
+   "latin": "main",
+   "train_count": 5,
+   "context_similarity": 0.637
+  },
+  {
+   "devanagari": "फर्स्ट",
+   "latin": "first",
+   "train_count": 5,
+   "context_similarity": 0.134
+  },
+  {
+   "devanagari": "नोड",
+   "latin": "node",
+   "train_count": 5,
+   "context_similarity": 0.51
+  },
+  {
+   "devanagari": "सरनेम",
+   "latin": "surname",
+   "train_count": 5,
+   "context_similarity": 0.098
+  },
+  {
+   "devanagari": "ओवरव्यू",
+   "latin": "overview",
+   "train_count": 5,
+   "context_similarity": 0.097
+  },
+  {
+   "devanagari": "सॉल्वर",
+   "latin": "solver",
+   "train_count": 5,
+   "context_similarity": 0.088
+  },
+  {
+   "devanagari": "सबप्लॉट",
+   "latin": "subplot",
+   "train_count": 5,
+   "context_similarity": 0.298
+  },
+  {
+   "devanagari": "डिवीज़न",
+   "latin": "division",
+   "train_count": 5,
+   "context_similarity": 0.092
+  },
+  {
+   "devanagari": "मल्टिप्लिकेशन",
+   "latin": "multiplication",
+   "train_count": 5,
+   "context_similarity": 0.214
+  },
+  {
+   "devanagari": "अपर",
+   "latin": "upper",
+   "train_count": 4,
+   "context_similarity": 0.181
+  },
+  {
+   "devanagari": "टाइप्स",
+   "latin": "types",
+   "train_count": 4,
+   "context_similarity": 0.176
+  },
+  {
+   "devanagari": "डिस्क्रिप्टर",
+   "latin": "descriptor",
+   "train_count": 4,
+   "context_similarity": 0.456
+  },
+  {
+   "devanagari": "फीडबैक",
+   "latin": "feedback",
+   "train_count": 4,
+   "context_similarity": 0.124
+  },
+  {
+   "devanagari": "प्लेयर",
+   "latin": "player",
+   "train_count": 4,
+   "context_similarity": 0.198
+  },
+  {
+   "devanagari": "स्लाइडर",
+   "latin": "slider",
+   "train_count": 4,
+   "context_similarity": 0.707
+  },
+  {
+   "devanagari": "सर्किट",
+   "latin": "circuit",
+   "train_count": 4,
+   "context_similarity": 0.464
+  },
+  {
+   "devanagari": "सेल्सियस",
+   "latin": "celsius",
+   "train_count": 4,
+   "context_similarity": 0.438
+  },
+  {
+   "devanagari": "अपडेट्स",
+   "latin": "updates",
+   "train_count": 4,
+   "context_similarity": 0.123
+  },
+  {
+   "devanagari": "अलाइन्मन्ट",
+   "latin": "alignment",
+   "train_count": 4,
+   "context_similarity": 0.408
+  },
+  {
+   "devanagari": "कनेक्ट",
+   "latin": "connect",
+   "train_count": 4,
+   "context_similarity": 0.095
+  },
+  {
+   "devanagari": "फॉर्मेट्स",
+   "latin": "formats",
+   "train_count": 4,
+   "context_similarity": 0.453
+  },
+  {
+   "devanagari": "स्कूल",
+   "latin": "school",
+   "train_count": 4,
+   "context_similarity": 0.238
+  },
+  {
+   "devanagari": "प्रोपर्टिज",
+   "latin": "properties",
+   "train_count": 4,
+   "context_similarity": 0.087
+  },
+  {
+   "devanagari": "रिप्लेस",
+   "latin": "replace",
+   "train_count": 4,
+   "context_similarity": 0.1
+  },
+  {
+   "devanagari": "फोर्मेट",
+   "latin": "format",
+   "train_count": 4,
+   "context_similarity": 0.097
+  },
+  {
+   "devanagari": "सिमुलेट",
+   "latin": "simulate",
+   "train_count": 4,
+   "context_similarity": 0.514
+  },
+  {
+   "devanagari": "मीथेन",
+   "latin": "methane",
+   "train_count": 4,
+   "context_similarity": 0.499
+  },
+  {
+   "devanagari": "शार्टकट",
+   "latin": "shortcut",
+   "train_count": 4,
+   "context_similarity": 0.613
+  },
+  {
+   "devanagari": "बॉर्डर",
+   "latin": "border",
+   "train_count": 4,
+   "context_similarity": 0.144
+  },
+  {
+   "devanagari": "जेनरेटर",
+   "latin": "generator",
+   "train_count": 4,
+   "context_similarity": 0.72
+  },
+  {
+   "devanagari": "कम्युनिकेशन",
+   "latin": "communication",
+   "train_count": 4,
+   "context_similarity": 0.134
+  },
+  {
+   "devanagari": "डोमेन",
+   "latin": "domain",
+   "train_count": 4,
+   "context_similarity": 0.144
+  },
+  {
+   "devanagari": "आउटलाइन",
+   "latin": "outline",
+   "train_count": 4,
+   "context_similarity": 0.362
+  },
+  {
+   "devanagari": "रोटेट",
+   "latin": "rotate",
+   "train_count": 4,
+   "context_similarity": 0.376
+  },
+  {
+   "devanagari": "सेंटर",
+   "latin": "center",
+   "train_count": 4,
+   "context_similarity": 0.595
+  },
+  {
+   "devanagari": "होम",
+   "latin": "home",
+   "train_count": 4,
+   "context_similarity": 0.389
+  },
+  {
+   "devanagari": "लॉन्च",
+   "latin": "launch",
+   "train_count": 4,
+   "context_similarity": 0.166
+  },
+  {
+   "devanagari": "लाजिकल",
+   "latin": "logical",
+   "train_count": 4,
+   "context_similarity": 0.094
+  },
+  {
+   "devanagari": "स्टेटस",
+   "latin": "status",
+   "train_count": 4,
+   "context_similarity": 0.117
+  },
+  {
+   "devanagari": "हाइफन",
+   "latin": "hyphen",
+   "train_count": 4,
+   "context_similarity": 0.131
+  },
+  {
+   "devanagari": "वेल्यु",
+   "latin": "value",
+   "train_count": 4,
+   "context_similarity": 0.298
+  },
+  {
+   "devanagari": "कम्यूनिकेशन",
+   "latin": "communication",
+   "train_count": 4,
+   "context_similarity": 0.148
+  },
+  {
+   "devanagari": "ऑर्बिटल",
+   "latin": "orbital",
+   "train_count": 4,
+   "context_similarity": 0.109
+  },
+  {
+   "devanagari": "फुलनेम",
+   "latin": "fullname",
+   "train_count": 4,
+   "context_similarity": 0.185
+  },
+  {
+   "devanagari": "प्रोपेन",
+   "latin": "propane",
+   "train_count": 4,
+   "context_similarity": 0.211
+  },
+  {
+   "devanagari": "एररलोग",
+   "latin": "errorlog",
+   "train_count": 4,
+   "context_similarity": 0.177
+  },
+  {
+   "devanagari": "एक्सपोर्ट",
+   "latin": "export",
+   "train_count": 4,
+   "context_similarity": 0.134
+  },
+  {
+   "devanagari": "मेमरी",
+   "latin": "memory",
+   "train_count": 4,
+   "context_similarity": 0.473
+  },
+  {
+   "devanagari": "इमेल",
+   "latin": "email",
+   "train_count": 4,
+   "context_similarity": 0.262
+  },
+  {
+   "devanagari": "डाक्यूमेन्ट",
+   "latin": "document",
+   "train_count": 4,
+   "context_similarity": 0.347
+  },
+  {
+   "devanagari": "आप्शन",
+   "latin": "option",
+   "train_count": 4,
+   "context_similarity": 0.273
+  },
+  {
+   "devanagari": "मीडियम",
+   "latin": "medium",
+   "train_count": 4,
+   "context_similarity": 0.142
+  },
+  {
+   "devanagari": "टायटल",
+   "latin": "title",
+   "train_count": 4,
+   "context_similarity": 0.182
+  },
+  {
+   "devanagari": "रेडियो",
+   "latin": "radio",
+   "train_count": 3,
+   "context_similarity": 0.732
+  },
+  {
+   "devanagari": "टयूटोरियल",
+   "latin": "tutorial",
+   "train_count": 3,
+   "context_similarity": 0.473
+  },
+  {
+   "devanagari": "क्वोट",
+   "latin": "quote",
+   "train_count": 3,
+   "context_similarity": 0.266
+  },
+  {
+   "devanagari": "वेबसाईट",
+   "latin": "website",
+   "train_count": 3,
+   "context_similarity": 0.534
+  },
+  {
+   "devanagari": "फंक्शऩ",
+   "latin": "function",
+   "train_count": 3,
+   "context_similarity": 0.138
+  },
+  {
+   "devanagari": "मैक्रोमॉलिक्यूल्स",
+   "latin": "macromolecules",
+   "train_count": 3,
+   "context_similarity": 0.717
+  },
+  {
+   "devanagari": "रेक्टेंगल",
+   "latin": "rectangle",
+   "train_count": 3,
+   "context_similarity": 0.343
+  },
+  {
+   "devanagari": "फ़ील्ड",
+   "latin": "field",
+   "train_count": 3,
+   "context_similarity": 0.408
+  },
+  {
+   "devanagari": "बैन्ड्विड्थ",
+   "latin": "bandwidth",
+   "train_count": 3,
+   "context_similarity": 0.594
+  },
+  {
+   "devanagari": "चैक",
+   "latin": "check",
+   "train_count": 3,
+   "context_similarity": 0.239
+  },
+  {
+   "devanagari": "गूगल",
+   "latin": "google",
+   "train_count": 3,
+   "context_similarity": 0.211
+  },
+  {
+   "devanagari": "ओवरले",
+   "latin": "overlay",
+   "train_count": 3,
+   "context_similarity": 0.196
+  },
+  {
+   "devanagari": "प्रोप्रटीज",
+   "latin": "properties",
+   "train_count": 3,
+   "context_similarity": 0.221
+  },
+  {
+   "devanagari": "केमिस्ट्री",
+   "latin": "chemistry",
+   "train_count": 3,
+   "context_similarity": 0.458
+  },
+  {
+   "devanagari": "प्राइमरी",
+   "latin": "primary",
+   "train_count": 3,
+   "context_similarity": 0.556
+  },
+  {
+   "devanagari": "ट्यूटोरिययल",
+   "latin": "tutorial",
+   "train_count": 3,
+   "context_similarity": 0.56
+  },
+  {
+   "devanagari": "स्पीड",
+   "latin": "speed",
+   "train_count": 3,
+   "context_similarity": 0.583
+  },
+  {
+   "devanagari": "रिकॉल",
+   "latin": "recall",
+   "train_count": 3,
+   "context_similarity": 0.6
+  },
+  {
+   "devanagari": "सर्कल",
+   "latin": "circle",
+   "train_count": 3,
+   "context_similarity": 0.173
+  },
+  {
+   "devanagari": "कस्टमाइज",
+   "latin": "customize",
+   "train_count": 3,
+   "context_similarity": 0.65
+  },
+  {
+   "devanagari": "कॉन्टेक्स्ट",
+   "latin": "context",
+   "train_count": 3,
+   "context_similarity": 0.611
+  },
+  {
+   "devanagari": "फ़ंक्शन",
+   "latin": "function",
+   "train_count": 3,
+   "context_similarity": 0.207
+  },
+  {
+   "devanagari": "पॉज़िटिव",
+   "latin": "positive",
+   "train_count": 3,
+   "context_similarity": 0.287
+  },
+  {
+   "devanagari": "कनेक्टर",
+   "latin": "connector",
+   "train_count": 3,
+   "context_similarity": 0.104
+  },
+  {
+   "devanagari": "कनेक्टिविटी",
+   "latin": "connectivity",
+   "train_count": 3,
+   "context_similarity": 0.662
+  },
+  {
+   "devanagari": "वीडीयो",
+   "latin": "video",
+   "train_count": 3,
+   "context_similarity": 0.54
+  },
+  {
+   "devanagari": "रेकॉर्ड",
+   "latin": "record",
+   "train_count": 3,
+   "context_similarity": 0.445
+  },
+  {
+   "devanagari": "वेल्यूज़",
+   "latin": "values",
+   "train_count": 3,
+   "context_similarity": 0.208
+  },
+  {
+   "devanagari": "स्कीम्स",
+   "latin": "schemes",
+   "train_count": 3,
+   "context_similarity": 0.589
+  },
+  {
+   "devanagari": "ऑप्शनल",
+   "latin": "optional",
+   "train_count": 3,
+   "context_similarity": 0.123
+  },
+  {
+   "devanagari": "शार्पन",
+   "latin": "sharpen",
+   "train_count": 3,
+   "context_similarity": 0.138
+  },
+  {
+   "devanagari": "स्टिक्स",
+   "latin": "sticks",
+   "train_count": 3,
+   "context_similarity": 0.535
+  },
+  {
+   "devanagari": "एक्टिवेट",
+   "latin": "activate",
+   "train_count": 3,
+   "context_similarity": 0.09
+  },
+  {
+   "devanagari": "रिटर्न्स",
+   "latin": "returns",
+   "train_count": 3,
+   "context_similarity": 0.801
+  },
+  {
+   "devanagari": "डेटाबैस",
+   "latin": "database",
+   "train_count": 3,
+   "context_similarity": 0.19
+  },
+  {
+   "devanagari": "डोमैन",
+   "latin": "domain",
+   "train_count": 3,
+   "context_similarity": 0.197
+  },
+  {
+   "devanagari": "सेंसिटिव",
+   "latin": "sensitive",
+   "train_count": 2,
+   "context_similarity": 0.699
+  },
+  {
+   "devanagari": "फ्लोट",
+   "latin": "float",
+   "train_count": 2,
+   "context_similarity": 0.292
+  },
+  {
+   "devanagari": "बिट",
+   "latin": "bit",
+   "train_count": 2,
+   "context_similarity": 0.333
+  },
+  {
+   "devanagari": "वैल्य",
+   "latin": "value",
+   "train_count": 2,
+   "context_similarity": 0.431
+  },
+  {
+   "devanagari": "ओवरराइड",
+   "latin": "override",
+   "train_count": 2,
+   "context_similarity": 0.264
+  },
+  {
+   "devanagari": "प्रेज़न्टैशन",
+   "latin": "presentation",
+   "train_count": 2,
+   "context_similarity": 0.102
+  },
+  {
+   "devanagari": "एट्रिब्यूट",
+   "latin": "attribute",
+   "train_count": 2,
+   "context_similarity": 0.32
+  },
+  {
+   "devanagari": "शेल",
+   "latin": "shell",
+   "train_count": 2,
+   "context_similarity": 0.156
+  },
+  {
+   "devanagari": "इक्स्लामेशन",
+   "latin": "exclamation",
+   "train_count": 2,
+   "context_similarity": 0.428
+  },
+  {
+   "devanagari": "यूटीलीटीज़",
+   "latin": "utilities",
+   "train_count": 2,
+   "context_similarity": 0.354
+  },
+  {
+   "devanagari": "इफेक्ट्स",
+   "latin": "effects",
+   "train_count": 2,
+   "context_similarity": 0.115
+  },
+  {
+   "devanagari": "रिमोट",
+   "latin": "remote",
+   "train_count": 2,
+   "context_similarity": 0.085
+  },
+  {
+   "devanagari": "पिक्चर",
+   "latin": "picture",
+   "train_count": 2,
+   "context_similarity": 0.105
+  },
+  {
+   "devanagari": "वर्कस्पेस",
+   "latin": "workspace",
+   "train_count": 2,
+   "context_similarity": 0.346
+  },
+  {
+   "devanagari": "कनैक्शन",
+   "latin": "connection",
+   "train_count": 2,
+   "context_similarity": 0.172
+  },
+  {
+   "devanagari": "हाई",
+   "latin": "high",
+   "train_count": 2,
+   "context_similarity": 0.625
+  },
+  {
+   "devanagari": "मल्टि",
+   "latin": "multi",
+   "train_count": 2,
+   "context_similarity": 0.165
+  },
+  {
+   "devanagari": "मल्टिलाइन",
+   "latin": "multiline",
+   "train_count": 2,
+   "context_similarity": 0.218
+  },
+  {
+   "devanagari": "ब्राइट",
+   "latin": "bright",
+   "train_count": 2,
+   "context_similarity": 0.145
+  },
+  {
+   "devanagari": "सब्स्टिट्यूशन",
+   "latin": "substitution",
+   "train_count": 2,
+   "context_similarity": 0.472
+  },
+  {
+   "devanagari": "चैकमार्क",
+   "latin": "checkmark",
+   "train_count": 2,
+   "context_similarity": 0.442
+  },
+  {
+   "devanagari": "टिकिट",
+   "latin": "ticket",
+   "train_count": 2,
+   "context_similarity": 0.301
+  },
+  {
+   "devanagari": "ऐम्पर्सैन्ड",
+   "latin": "ampersand",
+   "train_count": 2,
+   "context_similarity": 0.266
+  },
+  {
+   "devanagari": "ब्राउज",
+   "latin": "browse",
+   "train_count": 2,
+   "context_similarity": 0.562
+  },
+  {
+   "devanagari": "बैन्डविड्थ",
+   "latin": "bandwidth",
+   "train_count": 2,
+   "context_similarity": 0.594
+  },
+  {
+   "devanagari": "क्रेडिट",
+   "latin": "credit",
+   "train_count": 2,
+   "context_similarity": 0.234
+  },
+  {
+   "devanagari": "शिफ़्ट",
+   "latin": "shift",
+   "train_count": 2,
+   "context_similarity": 0.2
+  },
+  {
+   "devanagari": "शॉर्ट",
+   "latin": "short",
+   "train_count": 2,
+   "context_similarity": 0.13
+  },
+  {
+   "devanagari": "आउटपुट्स",
+   "latin": "outputs",
+   "train_count": 2,
+   "context_similarity": 0.121
+  },
+  {
+   "devanagari": "इंप्रेस",
+   "latin": "impress",
+   "train_count": 2,
+   "context_similarity": 0.663
+  },
+  {
+   "devanagari": "सिम्पल",
+   "latin": "simple",
+   "train_count": 2,
+   "context_similarity": 0.17
+  },
+  {
+   "devanagari": "स्क्वैर",
+   "latin": "square",
+   "train_count": 2,
+   "context_similarity": 0.206
+  },
+  {
+   "devanagari": "लैपटॉप",
+   "latin": "laptop",
+   "train_count": 2,
+   "context_similarity": 0.2
+  },
+  {
+   "devanagari": "सिम्युलेट",
+   "latin": "simulate",
+   "train_count": 2,
+   "context_similarity": 0.679
+  },
+  {
+   "devanagari": "रेसिड्यूज़",
+   "latin": "residues",
+   "train_count": 2,
+   "context_similarity": 0.457
+  },
+  {
+   "devanagari": "रिजन",
+   "latin": "region",
+   "train_count": 2,
+   "context_similarity": 0.251
+  },
+  {
+   "devanagari": "फ़्रेम",
+   "latin": "frame",
+   "train_count": 2,
+   "context_similarity": 0.161
+  },
+  {
+   "devanagari": "टीचर्स",
+   "latin": "teachers",
+   "train_count": 2,
+   "context_similarity": 0.759
+  },
+  {
+   "devanagari": "पैन",
+   "latin": "pane",
+   "train_count": 2,
+   "context_similarity": 0.455
+  },
+  {
+   "devanagari": "शिफ्ट",
+   "latin": "shift",
+   "train_count": 2,
+   "context_similarity": 0.102
+  },
+  {
+   "devanagari": "एक्टिवेशन",
+   "latin": "activation",
+   "train_count": 2,
+   "context_similarity": 0.098
+  },
+  {
+   "devanagari": "एडमिन",
+   "latin": "admin",
+   "train_count": 2,
+   "context_similarity": 0.289
+  },
+  {
+   "devanagari": "फैरन्हाइट",
+   "latin": "fahrenheit",
+   "train_count": 2,
+   "context_similarity": 0.124
+  },
+  {
+   "devanagari": "मैथड़",
+   "latin": "method",
+   "train_count": 2,
+   "context_similarity": 0.162
+  },
+  {
+   "devanagari": "ओवरलोड",
+   "latin": "overload",
+   "train_count": 2,
+   "context_similarity": 0.375
+  },
+  {
+   "devanagari": "टॉगल",
+   "latin": "toggle",
+   "train_count": 2,
+   "context_similarity": 0.195
+  },
+  {
+   "devanagari": "स्प्रेडशीट",
+   "latin": "spreadsheet",
+   "train_count": 2,
+   "context_similarity": 0.553
+  },
+  {
+   "devanagari": "पेरन्ट",
+   "latin": "parent",
+   "train_count": 2,
+   "context_similarity": 0.231
+  },
+  {
+   "devanagari": "सुपरसॉनिक",
+   "latin": "supersonic",
+   "train_count": 2,
+   "context_similarity": 0.134
+  },
+  {
+   "devanagari": "डिस्क्रीप्टर",
+   "latin": "descriptor",
+   "train_count": 2,
+   "context_similarity": 0.601
+  },
+  {
+   "devanagari": "रीनेम",
+   "latin": "rename",
+   "train_count": 2,
+   "context_similarity": 0.114
+  },
+  {
+   "devanagari": "सिलेक्शन",
+   "latin": "selection",
+   "train_count": 2,
+   "context_similarity": 0.139
+  },
+  {
+   "devanagari": "ऐड्रेस",
+   "latin": "address",
+   "train_count": 2,
+   "context_similarity": 0.111
+  },
+  {
+   "devanagari": "मल्टीप्लीकेशन",
+   "latin": "multiplication",
+   "train_count": 2,
+   "context_similarity": 0.348
+  },
+  {
+   "devanagari": "डिजिट",
+   "latin": "digit",
+   "train_count": 2,
+   "context_similarity": 0.284
+  },
+  {
+   "devanagari": "डिनोमिनेटर",
+   "latin": "denominator",
+   "train_count": 2,
+   "context_similarity": 0.218
+  },
+  {
+   "devanagari": "फिजिकल",
+   "latin": "physical",
+   "train_count": 2,
+   "context_similarity": 0.113
+  },
+  {
+   "devanagari": "स्टैटिक",
+   "latin": "static",
+   "train_count": 2,
+   "context_similarity": 0.214
+  },
+  {
+   "devanagari": "कांटेक्स्ट",
+   "latin": "context",
+   "train_count": 2,
+   "context_similarity": 0.491
+  },
+  {
+   "devanagari": "यूजरनैम",
+   "latin": "username",
+   "train_count": 2,
+   "context_similarity": 0.08
+  },
+  {
+   "devanagari": "रिस्टोर",
+   "latin": "restore",
+   "train_count": 2,
+   "context_similarity": 0.283
+  },
+  {
+   "devanagari": "टुटोरिअल",
+   "latin": "tutorial",
+   "train_count": 1,
+   "context_similarity": 0.577
+  },
+  {
+   "devanagari": "इंस्टॉलर",
+   "latin": "installer",
+   "train_count": 1,
+   "context_similarity": 0.484
+  },
+  {
+   "devanagari": "क्लिक्क",
+   "latin": "click",
+   "train_count": 1,
+   "context_similarity": 0.431
+  },
+  {
+   "devanagari": "रेट्रोसिन्थेटिक",
+   "latin": "retrosynthetic",
+   "train_count": 1,
+   "context_similarity": 0.364
+  },
+  {
+   "devanagari": "डायरेक्ट्री",
+   "latin": "directory",
+   "train_count": 1,
+   "context_similarity": 0.407
+  },
+  {
+   "devanagari": "डिजाइनर",
+   "latin": "designer",
+   "train_count": 1,
+   "context_similarity": 0.126
+  },
+  {
+   "devanagari": "एन्क्रिप्शन",
+   "latin": "encryption",
+   "train_count": 1,
+   "context_similarity": 0.24
+  },
+  {
+   "devanagari": "स्पोकेन",
+   "latin": "spoken",
+   "train_count": 1,
+   "context_similarity": 0.456
+  },
+  {
+   "devanagari": "सपोर्ट",
+   "latin": "support",
+   "train_count": 1,
+   "context_similarity": 0.096
+  },
+  {
+   "devanagari": "वाइल",
+   "latin": "while",
+   "train_count": 1,
+   "context_similarity": 0.6
+  },
+  {
+   "devanagari": "यूजरनाम",
+   "latin": "username",
+   "train_count": 1,
+   "context_similarity": 0.58
+  },
+  {
+   "devanagari": "ट्यूटोरियम",
+   "latin": "tutorial",
+   "train_count": 1,
+   "context_similarity": 0.524
+  },
+  {
+   "devanagari": "सलेक्शन",
+   "latin": "selection",
+   "train_count": 1,
+   "context_similarity": 0.131
+  },
+  {
+   "devanagari": "बुक्स",
+   "latin": "books",
+   "train_count": 1,
+   "context_similarity": 0.544
+  },
+  {
+   "devanagari": "रिलेशनशिप्स",
+   "latin": "relationships",
+   "train_count": 1,
+   "context_similarity": 0.259
+  },
+  {
+   "devanagari": "सेन्सिटिव",
+   "latin": "sensitive",
+   "train_count": 1,
+   "context_similarity": 0.42
+  },
+  {
+   "devanagari": "आर्टिकल",
+   "latin": "article",
+   "train_count": 1,
+   "context_similarity": 0.128
+  },
+  {
+   "devanagari": "फॉर्वर्ड",
+   "latin": "forward",
+   "train_count": 1,
+   "context_similarity": 0.419
+  },
+  {
+   "devanagari": "बाम्बे",
+   "latin": "bombay",
+   "train_count": 1,
+   "context_similarity": 0.109
+  },
+  {
+   "devanagari": "पेकैज",
+   "latin": "package",
+   "train_count": 1,
+   "context_similarity": 0.834
+  },
+  {
+   "devanagari": "लैसर",
+   "latin": "lesser",
+   "train_count": 1,
+   "context_similarity": 0.32
+  },
+  {
+   "devanagari": "परेन्थसीज़",
+   "latin": "parentheses",
+   "train_count": 1,
+   "context_similarity": 0.431
+  },
+  {
+   "devanagari": "कस्टमाइज़",
+   "latin": "customize",
+   "train_count": 1,
+   "context_similarity": 0.472
+  },
+  {
+   "devanagari": "वेल्यज",
+   "latin": "value",
+   "train_count": 1,
+   "context_similarity": 0.429
+  },
+  {
+   "devanagari": "एंकर",
+   "latin": "anchor",
+   "train_count": 1,
+   "context_similarity": 0.196
+  },
+  {
+   "devanagari": "डेटबेस",
+   "latin": "database",
+   "train_count": 1,
+   "context_similarity": 0.139
+  },
+  {
+   "devanagari": "स्टेट्स",
+   "latin": "status",
+   "train_count": 1,
+   "context_similarity": 0.101
+  },
+  {
+   "devanagari": "बेसिक्स",
+   "latin": "basics",
+   "train_count": 1,
+   "context_similarity": 0.324
+  },
+  {
+   "devanagari": "सिंक्रनाइज़",
+   "latin": "synchronize",
+   "train_count": 1,
+   "context_similarity": 0.448
+  },
+  {
+   "devanagari": "एक्स्प्लोर",
+   "latin": "explore",
+   "train_count": 1,
+   "context_similarity": 0.722
+  },
+  {
+   "devanagari": "मैक्रोमॉलिक्युल्स",
+   "latin": "macromolecules",
+   "train_count": 1,
+   "context_similarity": 0.671
+  },
+  {
+   "devanagari": "इन्स्टॉल्ड",
+   "latin": "installed",
+   "train_count": 1,
+   "context_similarity": 0.224
+  },
+  {
+   "devanagari": "फाउन्ड",
+   "latin": "found",
+   "train_count": 1,
+   "context_similarity": 0.371
+  },
+  {
+   "devanagari": "डाक्यूमेन्टेशन",
+   "latin": "documentation",
+   "train_count": 1,
+   "context_similarity": 0.098
+  },
+  {
+   "devanagari": "साईट",
+   "latin": "site",
+   "train_count": 1,
+   "context_similarity": 0.449
+  },
+  {
+   "devanagari": "फ़िट",
+   "latin": "fit",
+   "train_count": 1,
+   "context_similarity": 0.42
+  },
+  {
+   "devanagari": "बैकस्पेस",
+   "latin": "backspace",
+   "train_count": 1,
+   "context_similarity": 0.331
+  },
+  {
+   "devanagari": "क्ल्लिक",
+   "latin": "click",
+   "train_count": 1,
+   "context_similarity": 0.808
+  },
+  {
+   "devanagari": "डिजिट्स",
+   "latin": "digits",
+   "train_count": 1,
+   "context_similarity": 0.088
+  },
+  {
+   "devanagari": "प्रोजेक्टर",
+   "latin": "projector",
+   "train_count": 1,
+   "context_similarity": 0.408
+  },
+  {
+   "devanagari": "मॉनिटर",
+   "latin": "monitor",
+   "train_count": 1,
+   "context_similarity": 0.632
+  },
+  {
+   "devanagari": "कम्यूनकेशन",
+   "latin": "communication",
+   "train_count": 1,
+   "context_similarity": 0.309
+  },
+  {
+   "devanagari": "कम्पैरिसन",
+   "latin": "comparison",
+   "train_count": 1,
+   "context_similarity": 0.327
+  },
+  {
+   "devanagari": "मिनिमाइज",
+   "latin": "minimize",
+   "train_count": 1,
+   "context_similarity": 0.246
+  },
+  {
+   "devanagari": "कॉन्सोल",
+   "latin": "console",
+   "train_count": 1,
+   "context_similarity": 0.537
+  },
+  {
+   "devanagari": "ब्लाक्स",
+   "latin": "blocks",
+   "train_count": 1,
+   "context_similarity": 0.156
+  },
+  {
+   "devanagari": "रुलर",
+   "latin": "ruler",
+   "train_count": 1,
+   "context_similarity": 0.304
+  },
+  {
+   "devanagari": "फ़ीडबैक",
+   "latin": "feedback",
+   "train_count": 1,
+   "context_similarity": 0.17
+  },
+  {
+   "devanagari": "रिक़ॉल",
+   "latin": "recall",
+   "train_count": 1,
+   "context_similarity": 0.645
+  },
+  {
+   "devanagari": "ऑथेन्टकैशन",
+   "latin": "authentication",
+   "train_count": 1,
+   "context_similarity": 0.318
+  },
+  {
+   "devanagari": "सबमेन्यु",
+   "latin": "submenu",
+   "train_count": 1,
+   "context_similarity": 0.411
+  },
+  {
+   "devanagari": "फोकस",
+   "latin": "focus",
+   "train_count": 1,
+   "context_similarity": 0.218
+  },
+  {
+   "devanagari": "ऑप्टिमाइज़",
+   "latin": "optimize",
+   "train_count": 1,
+   "context_similarity": 0.337
+  },
+  {
+   "devanagari": "डायल़ॉग",
+   "latin": "dialog",
+   "train_count": 1,
+   "context_similarity": 0.092
+  },
+  {
+   "devanagari": "डायरेक्ट",
+   "latin": "direct",
+   "train_count": 1,
+   "context_similarity": 0.202
+  },
+  {
+   "devanagari": "डिवीजन",
+   "latin": "division",
+   "train_count": 1,
+   "context_similarity": 0.126
+  },
+  {
+   "devanagari": "प्रूफ",
+   "latin": "proof",
+   "train_count": 1,
+   "context_similarity": 0.15
+  },
+  {
+   "devanagari": "कम्पाइलर",
+   "latin": "compiler",
+   "train_count": 1,
+   "context_similarity": 0.981
+  },
+  {
+   "devanagari": "ड्राइव्ड",
+   "latin": "derived",
+   "train_count": 1,
+   "context_similarity": 0.464
+  },
+  {
+   "devanagari": "प्रॉपर्टीज",
+   "latin": "properties",
+   "train_count": 1,
+   "context_similarity": 0.099
+  },
+  {
+   "devanagari": "ओपनफोम",
+   "latin": "openfoam",
+   "train_count": 1,
+   "context_similarity": 0.297
+  },
+  {
+   "devanagari": "ऑनलइन",
+   "latin": "online",
+   "train_count": 1,
+   "context_similarity": 0.502
+  },
+  {
+   "devanagari": "हाइड्रोक्साइड",
+   "latin": "hydroxide",
+   "train_count": 1,
+   "context_similarity": 0.596
+  },
+  {
+   "devanagari": "श्रिंक",
+   "latin": "shrink",
+   "train_count": 1,
+   "context_similarity": 0.272
+  },
+  {
+   "devanagari": "यूटीलिटी",
+   "latin": "utility",
+   "train_count": 1,
+   "context_similarity": 0.185
+  },
+  {
+   "devanagari": "थर्ड",
+   "latin": "third",
+   "train_count": 1,
+   "context_similarity": 0.158
+  },
+  {
+   "devanagari": "एड्रैस",
+   "latin": "address",
+   "train_count": 1,
+   "context_similarity": 0.146
+  },
+  {
+   "devanagari": "पोजिटिव",
+   "latin": "positive",
+   "train_count": 1,
+   "context_similarity": 0.123
+  },
+  {
+   "devanagari": "बैंगलोर",
+   "latin": "bangalore",
+   "train_count": 1,
+   "context_similarity": 0.157
+  },
+  {
+   "devanagari": "टिचर्स",
+   "latin": "teachers",
+   "train_count": 1,
+   "context_similarity": 0.893
+  },
+  {
+   "devanagari": "स्किप्ट",
+   "latin": "script",
+   "train_count": 1,
+   "context_similarity": 0.583
+  },
+  {
+   "devanagari": "मॅजेन्टा",
+   "latin": "magenta",
+   "train_count": 1,
+   "context_similarity": 0.534
+  },
+  {
+   "devanagari": "कन्फॉरमर्स",
+   "latin": "conformers",
+   "train_count": 1,
+   "context_similarity": 0.504
+  },
+  {
+   "devanagari": "इग्ज़ैम्पल",
+   "latin": "example",
+   "train_count": 1,
+   "context_similarity": 0.147
+  },
+  {
+   "devanagari": "साइकिल",
+   "latin": "cycle",
+   "train_count": 1,
+   "context_similarity": 0.387
+  },
+  {
+   "devanagari": "स्पिशीज़",
+   "latin": "species",
+   "train_count": 1,
+   "context_similarity": 0.263
+  },
+  {
+   "devanagari": "जोसेफ",
+   "latin": "joseph",
+   "train_count": 1,
+   "context_similarity": 0.522
+  },
+  {
+   "devanagari": "रिपोर्ट्स",
+   "latin": "reports",
+   "train_count": 1,
+   "context_similarity": 0.089
+  },
+  {
+   "devanagari": "सब्जेक्ट",
+   "latin": "subject",
+   "train_count": 1,
+   "context_similarity": 0.165
+  },
+  {
+   "devanagari": "ऑथेन्टिकैशन",
+   "latin": "authentication",
+   "train_count": 1,
+   "context_similarity": 0.293
+  },
+  {
+   "devanagari": "इम्प्रेस",
+   "latin": "impress",
+   "train_count": 1,
+   "context_similarity": 0.258
+  },
+  {
+   "devanagari": "प्रोम्पट",
+   "latin": "prompt",
+   "train_count": 1,
+   "context_similarity": 0.081
+  }
+ ]
+}

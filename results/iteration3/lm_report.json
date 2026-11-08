@@ -1,0 +1,30 @@
+{
+  "builder": "built-in interpolated Kneser-Ney",
+  "ngrams_per_order": [
+    16421,
+    151755,
+    298426,
+    364159,
+    375488
+  ],
+  "discounts": [
+    0.6171,
+    0.7405,
+    0.8453,
+    0.9,
+    0.8161
+  ],
+  "source": "train.jsonl only",
+  "normalisation": "the text field of manifests_latin/train.jsonl, which already includes its normalisation (for manifests_latin, src.data.script_normalisation)",
+  "tokenisation": "whitespace-separated words",
+  "order": 5,
+  "pruning": "none; with about 600 k words, every observed n-gram is kept",
+  "sentences": 50509,
+  "tokens": 604999,
+  "vocabulary": 16418,
+  "arpa_megabytes": 65.64,
+  "binary_megabytes": 26.96,
+  "arpa": "train_5gram.arpa",
+  "binary": "train_5gram.klm",
+  "manifest_dir": "manifests_latin"
+}
