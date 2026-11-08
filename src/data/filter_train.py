@@ -121,14 +121,20 @@ def main() -> None:
         raise ValueError("only training rows can be filtered")
     with data_path(args.scores).open(encoding="utf-8") as handle:
         scores = {row["id"]: row for row in map(json.loads, handle)}
-    missing = [row["id"] for row in train if row["id"] not in scores]
-    if missing or len(scores) != len(train):
-        raise ValueError(f"{len(missing)} training utterances have no score, and "
-                         f"{len(scores) - len(train) + len(missing)} scores are not in train")
+    train_ids = {row["id"] for row in train}
+    if not set(scores) <= train_ids:
+        raise ValueError(f"{len(set(scores) - train_ids)} scored utterances are not in this training split")
+    # The training loader skips the few utterances whose labels outrun their frames,
+    # so they were never scored; they are kept here and skipped by the loader again.
+    unscored = sorted(train_ids - set(scores))
+    if len(unscored) > 0.001 * len(train):
+        raise ValueError(f"{len(unscored)} training utterances have no score")
 
     skeleton = Skeleton(load_cmudict(data_path(args.cmudict)))
     rows = []
     for row in train:
+        if row["id"] not in scores:
+            continue
         reference = row.get("text_unnormalised", row["text"])
         hypothesis = scores[row["id"]]["hypothesis"]
         as_written, one_script = error_rates(reference, hypothesis, skeleton)
@@ -145,7 +151,7 @@ def main() -> None:
     for split in ("val", "test", "blind"):
         shutil.copy2(source / f"{split}.jsonl", output / f"{split}.jsonl")
 
-    total = sum(row["duration"] for row in rows)
+    total = sum(row["duration"] for row in train)
     removed = sum(row["duration"] for row in rows if row["drop"])
     filter_cer = [min(row["cer"], row["cer_one_script"]) for row in rows]
     sample = random.Random(0)
@@ -159,13 +165,15 @@ def main() -> None:
         "manifests": args.manifest_dir,
         "output": args.output_dir,
         "max_cer": args.max_cer,
-        "train_utterances": len(rows),
+        "train_utterances": len(train),
+        "scored_utterances": len(rows),
         "train_hours": round(total / 3600, 2),
         "dropped_utterances": len(dropped),
-        "dropped_percent": round(100 * len(dropped) / len(rows), 2),
+        "dropped_percent": round(100 * len(dropped) / len(train), 2),
         "dropped_hours": round(removed / 3600, 2),
         "dropped_audio_percent": round(100 * removed / total, 2),
-        "kept_utterances": len(rows) - len(dropped),
+        "kept_utterances": len(train) - len(dropped),
+        "unscored_kept": unscored,
         "percentiles": {"cer": percentiles([row["cer"] for row in rows]),
                         "cer_one_script": percentiles([row["cer_one_script"] for row in rows]),
                         "filter_cer": percentiles(filter_cer)},
