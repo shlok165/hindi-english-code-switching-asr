@@ -6,6 +6,7 @@ A baseline for recognising Hindi–English code-switched speech: wav2vec 2.0 wit
 
 - [Stage 1A report](docs/stage_1a_report.md): dataset statistics, model, tokenizer and GPU requirements
 - [Stage 1B report](docs/stage_1b_report.md): training, evaluation, error analysis and the Stage 2 handoff
+- [Improvement iterations](docs/iterations.md): changes made after the baseline, one at a time, with results as they finish
 
 ## Results
 
