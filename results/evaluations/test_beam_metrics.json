@@ -1,0 +1,24 @@
+{
+  "split": "test",
+  "decoder": "beam",
+  "alignment": "UnA",
+  "checkpoint": "checkpoints/baseline_rtx3050/best",
+  "utterances": 3136,
+  "settings": {
+    "alpha": 0.35,
+    "beta": 1.0,
+    "unk_score_offset": -5.0,
+    "beam_width": 500,
+    "beam_prune_logp": -10.0,
+    "token_min_logp": -5.0
+  },
+  "wer": 31.294036319161947,
+  "cer": 25.810930268836774,
+  "wer_cleaned": 30.93496475595159,
+  "cer_cleaned": 25.75823009402105,
+  "reference_words": 37611,
+  "scored_utterances": 3136,
+  "empty_references": 0,
+  "empty_hypotheses": 0,
+  "twer_approximate": 28.247055382733773
+}

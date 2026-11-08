@@ -2,10 +2,33 @@
 
 A baseline for recognising Hindi–English code-switched speech: wav2vec 2.0 with a CTC head, greedy decoding and KenLM beam search, on MUCS 2021 Subtask-2. It follows the approach of Chadha et al. (2022), Approach C2. The encoder may not be the paper's exact checkpoint, so this reproduces the method, not their number.
 
-**Status: Stage 1A is complete. Stage 1B training is in progress, so there are no accuracy results yet.**
+**Status: Stage 1B is complete (iteration 1, git tag `iteration1`).** On the MUCS blind test, with KenLM beam search: **WER 21.54, T-WER 20.22**, confirmed with the organisers' own scoring script.
 
 - [Stage 1A report](docs/stage_1a_report.md): dataset statistics, model, tokenizer and GPU requirements
-- [Stage 1B report](docs/stage_1b_report.md): training, evaluation and error analysis
+- [Stage 1B report](docs/stage_1b_report.md): training, evaluation, error analysis and the Stage 2 handoff
+
+## Results
+
+Measured here, from one training run (seed 42):
+
+| Split | Decoder | WER | CER | T-WER |
+|---|---|---|---|---|
+| Validation (the tuning set) | Greedy | 24.07 | 15.82 | – |
+| Validation (the tuning set) | KenLM | 20.08 | 15.24 | – |
+| Test | Greedy | 35.64 | 26.78 | 33.02 (approximate) |
+| Test | KenLM | 31.29 | 25.81 | 28.25 (approximate) |
+| Blind test | Greedy | 24.96 | 14.04 | 23.99 |
+| **Blind test** | **KenLM** | **21.54** | **13.65** | **20.22** |
+
+Published blind-test results, for reference only:
+
+| System | WER | T-WER |
+|---|---|---|
+| Official MUCS baseline | 25.53 | 23.80 |
+| Chadha et al. (2022), Approach C2 | 21.77 | 20.75 |
+| Best leaderboard entry (JHU-CLSP/GoVivace) | 16.43 | 15.51 |
+
+Decoder settings were tuned on validation data only and frozen before test or blind were decoded. Test segments line up poorly with their transcripts, so test and blind numbers are not comparable; the Stage 1B report explains why.
 
 ## Reproducing the results
 
@@ -47,7 +70,7 @@ MUCS 2021 is CC BY-SA 4.0 and is never committed here. This downloads about 8.8 
 .venv\Scripts\python -m src.training.train --config configs/train_baseline.yaml --resume auto
 ```
 
-This takes about 11 hours on an RTX 3050. The same command resumes after an interruption. Output goes to `data/checkpoints/baseline_rtx3050/`: `best/` is the best checkpoint by validation WER, and `train_log.csv` and `epoch_log.csv` hold the curves. Test and blind data are refused by the training code.
+This took 8 h 52 min on an RTX 3050 6 GB. The same command resumes after an interruption. Output goes to `data/checkpoints/baseline_rtx3050/`: `best/` is the best checkpoint by validation WER, and `train_log.csv` and `epoch_log.csv` hold the curves. Test and blind data are refused by the training code.
 
 ### 4. Loading a checkpoint
 
@@ -96,7 +119,7 @@ On blind data, WER and T-WER follow the organisers' rules, and each run is confi
 With a trained checkpoint in place, this rebuilds the language model, tunes on validation data, evaluates every split with both decoders, and redraws the figures in `results/figures/`:
 
 ```powershell
-bash scripts/evaluate_baseline.sh
+bash scripts/evaluate_baseline.sh data/checkpoints/baseline_rtx3050/best
 ```
 
 # Research Dossier

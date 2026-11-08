@@ -1,0 +1,21 @@
+{
+  "split": "blind",
+  "decoder": "greedy",
+  "alignment": "UnA",
+  "checkpoint": "checkpoints/baseline_rtx3050/best",
+  "utterances": 4034,
+  "settings": null,
+  "wer": 24.96022108701114,
+  "cer": 14.03969999957936,
+  "wer_cleaned": 24.70106919167422,
+  "cer_cleaned": 14.06218359770503,
+  "reference_words": 47764,
+  "scored_utterances": 4026,
+  "empty_references": 8,
+  "empty_hypotheses": 2,
+  "twer": 23.990871786282558,
+  "official_script": {
+    "wer": 24.96,
+    "twer": 23.99
+  }
+}

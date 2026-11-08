@@ -1,0 +1,40 @@
+{
+"val_beam": {
+  "edge_deletions": 219,
+  "edge_insertions": 413,
+  "deletions": 1371,
+  "insertions": 834,
+  "substitutions": 3513,
+  "reference_words": 28471,
+  "edge_share_of_deletions_percent": 16.0,
+  "edge_share_of_insertions_percent": 49.5,
+  "edge_errors_percent_of_reference_words": 2.22,
+  "wer": 20.08
+}
+,
+"test_beam": {
+  "edge_deletions": 912,
+  "edge_insertions": 572,
+  "deletions": 3859,
+  "insertions": 1199,
+  "substitutions": 6712,
+  "reference_words": 37611,
+  "edge_share_of_deletions_percent": 23.6,
+  "edge_share_of_insertions_percent": 47.7,
+  "edge_errors_percent_of_reference_words": 3.95,
+  "wer": 31.29
+}
+,
+"blind_beam": {
+  "edge_deletions": 1075,
+  "edge_insertions": 523,
+  "deletions": 3911,
+  "insertions": 1019,
+  "substitutions": 5358,
+  "reference_words": 47764,
+  "edge_share_of_deletions_percent": 27.5,
+  "edge_share_of_insertions_percent": 51.3,
+  "edge_errors_percent_of_reference_words": 3.35,
+  "wer": 21.54
+}
+}

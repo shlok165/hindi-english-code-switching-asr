@@ -1,3 +1,5 @@
+> **Completed.** This was the plan handed from Stage 1A to Stage 1B. The results are in [stage_1b_report.md](stage_1b_report.md), and that report's section F is the handoff to Stage 2.
+
 # Stage 1B Handoff
 
 **Goal:** a complete, experimentally validated baseline: full training, greedy and KenLM decoding, official scoring and error analysis.

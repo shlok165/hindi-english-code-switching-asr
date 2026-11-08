@@ -1,3 +1,5 @@
+> **Superseded.** This progress note was written before anything had been trained or evaluated. The measured Stage 1B results, and the fixes made to this code since, are in [stage_1b_report.md](stage_1b_report.md).
+
 # Stage 1B Progress Report
 
 **Branch:** `stage-1b-baseline`, created from `origin/stage-1a-pipeline`.
