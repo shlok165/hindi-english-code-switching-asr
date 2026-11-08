@@ -1,5 +1,5 @@
 # Tuned on validation data by src.tune_lm, with test and blind untouched.
-# WER on the tuning utterances of val: 18.171. Every grid result is in results/lm_tuning.csv.
+# WER on the tuning utterances of val: 18.171. Every grid result is in results/iteration2/lm_tuning.csv.
 decoder:
   kenlm_model: data/language_model/train_5gram.klm
   beam_width: 500

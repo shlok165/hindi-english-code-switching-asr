@@ -33,7 +33,7 @@ REFINE_BETA_STEPS = (-0.5, 0.5)
 WIDTH_TOLERANCE = 0.05  # WER points a wider beam must gain to justify its cost
 
 CONFIG_TEMPLATE = """# Tuned on validation data by src.tune_lm, with test and blind untouched.
-# WER on the tuning utterances of val: {wer:.3f}. Every grid result is in results/lm_tuning.csv.
+# WER on the tuning utterances of val: {wer:.3f}. Every grid result is in {results}.
 decoder:
   kenlm_model: {kenlm}
   beam_width: {beam_width}
@@ -117,7 +117,7 @@ def main() -> None:
                 best, best_wer = replace(best, beam_width=width), wer
 
     if args.write_config:
-        text = CONFIG_TEMPLATE.format(wer=best_wer, kenlm=args.kenlm, **asdict(best))
+        text = CONFIG_TEMPLATE.format(wer=best_wer, kenlm=args.kenlm, results=args.results, **asdict(best))
         (ROOT / args.config_out).write_text(text, encoding="utf-8", newline="\n")
     print(json.dumps({"best": asdict(best), "subset_val_wer": round(best_wer, 3)}, indent=2))
 
