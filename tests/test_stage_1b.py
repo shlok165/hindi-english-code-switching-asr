@@ -255,3 +255,23 @@ def test_edge_errors_separate_segment_edges_from_the_middle():
     inside = edge_errors("a b c d e".split(), "a b d e".split())
     assert inside["deletions"] == 1 and inside["edge_deletions"] == 0   # c is inside
     assert edge_errors("a b c".split(), "b c".split())["edge_deletions"] == 1
+
+
+def test_misalignment_filter_ignores_script_and_spelling_differences():
+    from src.data.filter_train import Skeleton, misaligned
+
+    skeleton = Skeleton({
+        "console": [["K", "AA1", "N", "S", "OW0", "L"]],
+        "window": [["W", "IH1", "N", "D", "OW0"]],
+        "type": [["T", "AY1", "P"]],
+        "acetate": [["AE1", "S", "AH0", "T", "EY2", "T"]],
+    })
+    assert skeleton("कंसोल विंडो पर टाइप करें") == skeleton("console window पर type करें")
+    # Same words, different script: kept.
+    assert not misaligned("कंसोल विंडो पर टाइप करें", "console window पर type करें", skeleton)
+    # A spelling CMUdict lacks: the skeletons differ, but as written it is close, so kept.
+    assert not misaligned("molar flow mixture ethyl acetate", "molar flow mixture athyl acitate", skeleton)
+    # A different sentence: dropped.
+    assert misaligned("हम method को class से access कर सकते हैं", "यो के कारण पूरा होता है", skeleton)
+    # Most of the transcript missing from the audio: dropped.
+    assert misaligned("और यह हमारा return statement है", "अ और हैं", skeleton)
