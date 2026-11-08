@@ -59,9 +59,16 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--split", required=True, choices=("val", "test", "blind"))
     parser.add_argument("--checkpoint", required=True, type=Path)
+    parser.add_argument("--skip-existing", action="store_true",
+                        help="leave the split alone if its cache was already written in full")
     args = parser.parse_args()
     checkpoint = data_path(args.checkpoint)
-    build_cache(args.split, checkpoint, cache_directory(checkpoint))
+    output = cache_directory(checkpoint)
+    # The index is written after the array, so both files mean the cache is complete.
+    if args.skip_existing and (output / f"{args.split}.npy").exists() and (output / f"{args.split}.json").exists():
+        print(f"{args.split}: cache already in {output}, skipped", flush=True)
+        return
+    build_cache(args.split, checkpoint, output)
 
 
 if __name__ == "__main__":

@@ -19,9 +19,10 @@ PY=.venv/Scripts/python
 OUT=results/$NAME
 DECODE=configs/decode_$NAME.yaml
 
-# Log-probabilities only; no references are read here.
+# Log-probabilities only; no references are read here. Caches already written
+# (for example before the GPU was handed to the next training run) are kept.
 for split in val test blind; do
-  "$PY" -m src.logit_cache --split "$split" --checkpoint "$CHECKPOINT"
+  "$PY" -m src.logit_cache --split "$split" --checkpoint "$CHECKPOINT" --skip-existing
 done
 
 "$PY" -m src.tune_lm --checkpoint "$CHECKPOINT" --kenlm "$LM_DIR/train_5gram.klm" --manifest-dir "$MANIFESTS" \
