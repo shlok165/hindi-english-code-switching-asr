@@ -219,3 +219,39 @@ def test_checkpoint_average_is_the_mean_and_keeps_integer_tensors():
     assert averaged["n"].tolist() == [3]
     with pytest.raises(ValueError):
         average_state_dicts([first, {"w": first["w"]}])
+
+
+def test_cmudict_spellings_reach_common_transcriptions():
+    from src.data.script_normalisation import fold, spellings
+
+    cases = {
+        "क्लिक": ["K", "L", "IH1", "K"],
+        "फाइल": ["F", "AY1", "L"],
+        "प्रोजेक्ट": ["P", "R", "AA1", "JH", "EH0", "K", "T"],
+        "टर्मिनल": ["T", "ER1", "M", "AH0", "N", "AH0", "L"],
+        "वीडियो": ["V", "IH1", "D", "IY0", "OW2"],
+    }
+    for devanagari, phones in cases.items():
+        assert fold(devanagari) in {fold(s) for s in spellings(phones)}, devanagari
+
+
+def test_short_words_need_strong_context_and_plurals_must_agree():
+    from src.data.script_normalisation import accepted, keeps_plural, normalise
+
+    assert not accepted("key", 0.0, 0.11)       # की, the Hindi "of"
+    assert accepted("click", 0.0, 0.97)
+    assert accepted("update", 0.0, 0.11)        # long words need less context evidence
+    assert not accepted("monitor", 0.14, 0.19)  # मानचित्र: close spelling, weak context
+    assert not keeps_plural("सिस्टम्स", "system")
+    assert keeps_plural("मैसेज", "message")
+    assert normalise("इस फाइल को सेव करें", {"फाइल": "file"}) == "इस file को सेव करें"
+
+
+def test_edge_errors_separate_segment_edges_from_the_middle():
+    from src.analysis.boundary_errors import edge_errors
+
+    result = edge_errors("a b c d".split(), "x a b c d e".split())
+    assert result["insertions"] == 2 and result["edge_insertions"] == 2  # x at the start, e at the end
+    inside = edge_errors("a b c d e".split(), "a b d e".split())
+    assert inside["deletions"] == 1 and inside["edge_deletions"] == 0   # c is inside
+    assert edge_errors("a b c".split(), "b c".split())["edge_deletions"] == 1
