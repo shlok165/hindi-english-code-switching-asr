@@ -1,0 +1,15 @@
+# Iteration 4: misalignment filter. Exactly iteration 2's recipe (same warm start
+# from iteration 1, schedule, batching and seed), except that the 3,550 training
+# utterances whose transcript does not match their audio are left out, as found by
+# src.data.filter_train (results/train_filter_report.json). Val is unchanged, so
+# iteration 4 against iteration 2 measures the effect of the filter alone.
+# Iteration 2 is the base because it beat iteration 3 on script-folded val WER,
+# 16.54 against 16.75. The number of updates is unchanged, so with 6.6 % less
+# audio each kept utterance is seen about 7 % more often (about 8.5 epochs, not 8).
+includes:
+  - configs/train_iteration2.yaml
+
+run_name: iteration4
+
+data:
+  manifest_dir: data/processed/manifests_clean  # 46,959 of 50,509 training utterances; val, test and blind unchanged
