@@ -1,0 +1,17 @@
+{
+  "split": "val",
+  "decoder": "greedy",
+  "alignment": "UnA",
+  "checkpoint": "checkpoints/iteration2/best",
+  "references": "data/processed/manifests",
+  "utterances": 2316,
+  "settings": null,
+  "wer": 21.730884057461978,
+  "cer": 14.51031568481233,
+  "wer_cleaned": 21.331975130844075,
+  "cer_cleaned": 14.331705227669966,
+  "reference_words": 28471,
+  "scored_utterances": 2316,
+  "empty_references": 0,
+  "empty_hypotheses": 0
+}

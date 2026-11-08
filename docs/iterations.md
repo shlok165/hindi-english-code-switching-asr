@@ -85,3 +85,40 @@ Every result uses KenLM beam search with that iteration's own val-tuned settings
 | Iteration | Val WER | Val WER, script-folded | Test WER | Test T-WER (approx.) | Blind WER | Blind T-WER | Blind CER |
 |---|---|---|---|---|---|---|---|
 | 1 | 20.08 | 17.75 | 31.29 | 28.25 | 21.54 | 20.22 | 13.65 |
+| 2 | 18.65 | 16.54 | 30.19 | 27.22 | 21.01 | 19.74 | 13.43 |
+
+Blind WER and T-WER are confirmed with the organisers' `compute_wer.py` for every iteration.
+
+### Iteration 2: more training
+
+**Training.** Iteration 2 started from iteration 1's best weights, with a fresh optimiser and schedule. It ran 44,000 updates in 6 h 59 min. The schedule had a 5 % warm-up and a 35 % hold at half iteration 1's peak learning rate, then a cosine decay to zero.
+
+During training, greedy val WER (the same check both runs use) improved as follows:
+
+| Point in iteration 2 | Greedy val WER |
+|---|---|
+| Start (iteration 1's best, from update 37,872) | 23.77 |
+| Warm-up peak | 24.93 |
+| Best, update 42,000 | **21.34** |
+
+It was still improving slightly when the schedule ended. Val loss rose from 0.76 to 0.86 over the same stretch: the model became more confident, so its remaining mistakes cost more.
+
+**Decoder.** Tuned on val, as before. The settings were α 0.4, β 1.0, unknown-word offset −5 and beam width 500 (iteration 1 used α 0.35), and they were committed before test or blind was decoded. The settings are in `configs/decode_iteration2.yaml`.
+
+**Results.** Every split improves with both decoders:
+
+| Measure | Iteration 1 | Iteration 2 | Change |
+|---|---|---|---|
+| Val WER, script-folded (KenLM) | 17.75 | 16.54 | −1.21 |
+| Blind WER (KenLM) | 21.54 | 21.01 | −0.53 |
+| Blind T-WER (KenLM) | 20.22 | 19.74 | −0.48 |
+| Val WER (greedy) | 24.07 | 21.73 | −2.34 |
+| Blind WER (greedy) | 24.96 | 23.80 | −1.16 |
+
+The blind gain is within single-seed noise. It is consistent across splits and decoders, though.
+
+Greedy decoding gains more than KenLM, because the language model now has less to correct. On val, the LM's contribution falls from 3.99 to 3.08 WER points.
+
+**Where the gain comes from.** The gain is spread across error types, not one fix. On blind, the error rate falls for both Hindi words (12.01 % → 11.55 %) and English words (31.04 % → 30.08 %). Substitutions drop by 251 and deletions by 82, while insertions rise by 80.
+
+The full breakdowns are in `results/iteration2/error_analysis/`.

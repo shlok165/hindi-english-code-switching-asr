@@ -30,5 +30,37 @@
       "cer": 13.65,
       "twer": 20.22
     }
+  },
+  "iteration2": {
+    "val_greedy": {
+      "wer": 21.73,
+      "cer": 14.51,
+      "wer_folded": 19.89
+    },
+    "val_beam": {
+      "wer": 18.65,
+      "cer": 14.06,
+      "wer_folded": 16.54
+    },
+    "test_greedy": {
+      "wer": 34.04,
+      "cer": 25.83,
+      "twer_approximate": 31.35
+    },
+    "test_beam": {
+      "wer": 30.19,
+      "cer": 24.94,
+      "twer_approximate": 27.22
+    },
+    "blind_greedy": {
+      "wer": 23.8,
+      "cer": 13.75,
+      "twer": 22.73
+    },
+    "blind_beam": {
+      "wer": 21.01,
+      "cer": 13.43,
+      "twer": 19.74
+    }
   }
 }

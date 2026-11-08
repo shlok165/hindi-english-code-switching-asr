@@ -1,0 +1,29 @@
+{
+  "split": "blind",
+  "decoder": "beam",
+  "alignment": "UnA",
+  "checkpoint": "checkpoints/iteration2/best",
+  "references": "data/processed/manifests",
+  "utterances": 4034,
+  "settings": {
+    "alpha": 0.4,
+    "beta": 1.0,
+    "unk_score_offset": -5.0,
+    "beam_width": 500,
+    "beam_prune_logp": -10.0,
+    "token_min_logp": -5.0
+  },
+  "wer": 21.009546939117328,
+  "cer": 13.43481973474444,
+  "wer_cleaned": 20.795461734747676,
+  "cer_cleaned": 13.569439757003037,
+  "reference_words": 47764,
+  "scored_utterances": 4026,
+  "empty_references": 8,
+  "empty_hypotheses": 0,
+  "twer": 19.73871535047316,
+  "official_script": {
+    "wer": 21.01,
+    "twer": 19.74
+  }
+}

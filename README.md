@@ -31,6 +31,17 @@ Published blind-test results, for reference only:
 
 Decoder settings were tuned on validation data only and frozen before test or blind were decoded. Test segments line up poorly with their transcripts, so test and blind numbers are not comparable; the Stage 1B report explains why.
 
+### Improvement iterations
+
+Each iteration after the baseline changes one thing, and iterations are compared on validation data only. The script-folded val WER maps English words written in Devanagari to Latin on both sides before scoring, so iterations that change the script of their targets are judged fairly. All results use KenLM:
+
+| Iteration | Change | Val WER, script-folded | Blind WER | Blind T-WER |
+|---|---|---|---|---|
+| 1 | Stage 1B baseline | 17.75 | 21.54 | 20.22 |
+| 2 | More training, from iteration 1's weights | 16.54 | 21.01 | 19.74 |
+
+Details, and the iterations still running, are in [docs/iterations.md](docs/iterations.md).
+
 ## Reproducing the results
 
 Tested on Windows 11 with Python 3.14 and an RTX 3050 6 GB. The Colab notebook, `notebooks/colab_stage1b_baseline.ipynb`, has not yet been run on Colab. Commands are for PowerShell from the repository root.

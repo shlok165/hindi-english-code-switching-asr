@@ -1,0 +1,1386 @@
+{
+  "utterances": 4026,
+  "reference_words": 47764,
+  "total_errors": 11366,
+  "wer": 23.8,
+  "error_types": {
+    "substitution": 6537,
+    "other_substitution": 5376,
+    "deletion": 3729,
+    "insertion": 1100,
+    "script_only": 492,
+    "homophone_confusion": 357,
+    "incorrect_transliteration": 312
+  },
+  "by_language": {
+    "hi": {
+      "words": 31413,
+      "errors": 4115,
+      "error_rate": 13.1,
+      "share_of_word_errors": 40.08
+    },
+    "en": {
+      "words": 15301,
+      "errors": 5404,
+      "error_rate": 35.32,
+      "share_of_word_errors": 52.64
+    },
+    "other": {
+      "words": 1050,
+      "errors": 747,
+      "error_rate": 71.14,
+      "share_of_word_errors": 7.28
+    }
+  },
+  "by_switch": {
+    "hi_to_en": {
+      "words": 12727,
+      "errors": 3234,
+      "error_rate": 25.41
+    },
+    "en_to_hi": {
+      "words": 12241,
+      "errors": 2065,
+      "error_rate": 16.87
+    }
+  },
+  "by_duration": {
+    "under 5 s": {
+      "words": 11939,
+      "errors": 3173,
+      "wer": 26.58
+    },
+    "5-10 s": {
+      "words": 29276,
+      "errors": 6438,
+      "wer": 21.99
+    },
+    "10-20 s": {
+      "words": 6240,
+      "errors": 1629,
+      "wer": 26.11
+    },
+    "over 20 s": {
+      "words": 309,
+      "errors": 126,
+      "wer": 40.78
+    }
+  },
+  "top_confusions": [
+    [
+      "page",
+      "पेज",
+      89
+    ],
+    [
+      "save",
+      "सेव",
+      59
+    ],
+    [
+      "है",
+      "हैं",
+      52
+    ],
+    [
+      "click",
+      "क्लिक",
+      44
+    ],
+    [
+      "user",
+      "यूजर",
+      39
+    ],
+    [
+      "tab",
+      "टैब",
+      38
+    ],
+    [
+      "नाम",
+      "name",
+      32
+    ],
+    [
+      "करे",
+      "करें",
+      30
+    ],
+    [
+      "i",
+      "आई",
+      28
+    ],
+    [
+      "हैं",
+      "है",
+      22
+    ],
+    [
+      "type",
+      "टाइप",
+      21
+    ],
+    [
+      "run",
+      "रन",
+      21
+    ],
+    [
+      "fasta",
+      "faster",
+      19
+    ],
+    [
+      "dna",
+      "dns",
+      18
+    ],
+    [
+      "software",
+      "सॉफ्टवेयर",
+      18
+    ],
+    [
+      "mhrd",
+      "एमएचआरडी",
+      17
+    ],
+    [
+      "up",
+      "markup",
+      17
+    ],
+    [
+      "timeline",
+      "line",
+      17
+    ],
+    [
+      "file",
+      "फाइल",
+      15
+    ],
+    [
+      "a",
+      "talktoa",
+      15
+    ],
+    [
+      "bombay",
+      "बॉम्बे",
+      15
+    ],
+    [
+      "दबाएं",
+      "दबाएँ",
+      15
+    ],
+    [
+      "users",
+      "यूजर्स",
+      14
+    ],
+    [
+      "projects",
+      "project",
+      14
+    ],
+    [
+      "के",
+      "कि",
+      14
+    ],
+    [
+      "याने",
+      "यानि",
+      14
+    ],
+    [
+      "first",
+      "myfirst",
+      13
+    ],
+    [
+      "यानी",
+      "यानि",
+      13
+    ],
+    [
+      "ict",
+      "आईसीटी",
+      13
+    ],
+    [
+      "formulae",
+      "formula",
+      13
+    ],
+    [
+      "username",
+      "यूजरनेम",
+      13
+    ],
+    [
+      "t",
+      "टी",
+      13
+    ],
+    [
+      "equation",
+      "इक्वेशन",
+      13
+    ],
+    [
+      "drive",
+      "mydrive",
+      13
+    ],
+    [
+      "mail",
+      "मेल",
+      13
+    ],
+    [
+      "movie",
+      "movi",
+      13
+    ],
+    [
+      "नामक",
+      "named",
+      12
+    ],
+    [
+      "delete",
+      "डिलीट",
+      12
+    ],
+    [
+      "यहां",
+      "यहाँ",
+      12
+    ],
+    [
+      "ज़रुरत",
+      "जरुरत",
+      11
+    ]
+  ],
+  "top_deletions": [
+    [
+      ".",
+      173
+    ],
+    [
+      "है",
+      139
+    ],
+    [
+      "हैं",
+      94
+    ],
+    [
+      "यह",
+      61
+    ],
+    [
+      "tutorial",
+      55
+    ],
+    [
+      "करें",
+      53
+    ],
+    [
+      "इस",
+      49
+    ],
+    [
+      "अब",
+      49
+    ],
+    [
+      "के",
+      47
+    ],
+    [
+      "को",
+      43
+    ],
+    [
+      "पर",
+      43
+    ],
+    [
+      "और",
+      41
+    ],
+    [
+      "हम",
+      39
+    ],
+    [
+      "spoken",
+      37
+    ],
+    [
+      "में",
+      35
+    ],
+    [
+      "my",
+      34
+    ],
+    [
+      "to",
+      32
+    ],
+    [
+      "/",
+      30
+    ],
+    [
+      "click",
+      29
+    ],
+    [
+      "-",
+      29
+    ],
+    [
+      "mark",
+      28
+    ],
+    [
+      "1",
+      27
+    ],
+    [
+      "की",
+      26
+    ],
+    [
+      "आप",
+      25
+    ],
+    [
+      "कर",
+      25
+    ]
+  ],
+  "top_insertions": [
+    [
+      "अ",
+      43
+    ],
+    [
+      "यह",
+      41
+    ],
+    [
+      "इस",
+      31
+    ],
+    [
+      "है",
+      31
+    ],
+    [
+      "अब",
+      30
+    ],
+    [
+      "य",
+      26
+    ],
+    [
+      "ते",
+      17
+    ],
+    [
+      "time",
+      17
+    ],
+    [
+      "ा",
+      15
+    ],
+    [
+      "हैं",
+      15
+    ],
+    [
+      "कते",
+      14
+    ],
+    [
+      "s",
+      12
+    ],
+    [
+      "त",
+      12
+    ],
+    [
+      "क",
+      11
+    ],
+    [
+      "do",
+      11
+    ],
+    [
+      "या",
+      10
+    ],
+    [
+      "करता",
+      9
+    ],
+    [
+      "web",
+      9
+    ],
+    [
+      "add",
+      9
+    ],
+    [
+      "करें",
+      8
+    ],
+    [
+      "े",
+      8
+    ],
+    [
+      "जो",
+      7
+    ],
+    [
+      "ता",
+      7
+    ],
+    [
+      "so",
+      7
+    ],
+    [
+      "स",
+      6
+    ]
+  ],
+  "examples": {
+    "deletion": [
+      {
+        "id": "135893_9lNAZMRfDfuCN6XC_0000",
+        "duration": 1.0,
+        "reference": "par parsing",
+        "hypothesis": "",
+        "reference_word": "par",
+        "hypothesis_word": null
+      },
+      {
+        "id": "135893_9lNAZMRfDfuCN6XC_0000",
+        "duration": 1.0,
+        "reference": "par parsing",
+        "hypothesis": "",
+        "reference_word": "parsing",
+        "hypothesis_word": null
+      },
+      {
+        "id": "135893_9lNAZMRfDfuCN6XC_0001",
+        "duration": 4.0,
+        "reference": "data पर इस tutorial में आपका स्वागत है इस",
+        "hypothesis": "स data पर इस tutorial में आपका स्वागत है",
+        "reference_word": "इस",
+        "hypothesis_word": null
+      },
+      {
+        "id": "135893_9lNAZMRfDfuCN6XC_0002",
+        "duration": 8.0,
+        "reference": "tutorial में हम सीखेंगे ncbi database website से fasta और genbank files download करना और",
+        "hypothesis": "इस tutorial में हम सीखेंगे ncbi database website से faster और jenbing files download करना",
+        "reference_word": "और",
+        "hypothesis_word": null
+      },
+      {
+        "id": "135893_9lNAZMRfDfuCN6XC_0003",
+        "duration": 5.0,
+        "reference": "sequence input / output module में functions उपयोग करके data files parse करना",
+        "hypothesis": "f sequence input output module में functions उपयोग करके data files pars करेरें",
+        "reference_word": "/",
+        "hypothesis_word": null
+      },
+      {
+        "id": "135893_9lNAZMRfDfuCN6XC_0006",
+        "duration": 4.0,
+        "reference": "link पर python tutorials देखें इस",
+        "hypothesis": "ने link पर python tutorials देखें",
+        "reference_word": "इस",
+        "hypothesis_word": null
+      },
+      {
+        "id": "135893_9lNAZMRfDfuCN6XC_0007",
+        "duration": 6.0,
+        "reference": "tutorial को record करने के लिए मैं उपयोग कर रही हूँ ubuntu os version 14 . 10",
+        "hypothesis": "इस torial को record करने के लिए मैं उपयोग कर रही हूँ ubuntuos versन 1410",
+        "reference_word": "ubuntu",
+        "hypothesis_word": null
+      },
+      {
+        "id": "135893_9lNAZMRfDfuCN6XC_0007",
+        "duration": 6.0,
+        "reference": "tutorial को record करने के लिए मैं उपयोग कर रही हूँ ubuntu os version 14 . 10",
+        "hypothesis": "इस torial को record करने के लिए मैं उपयोग कर रही हूँ ubuntuos versन 1410",
+        "reference_word": "os",
+        "hypothesis_word": null
+      },
+      {
+        "id": "135893_9lNAZMRfDfuCN6XC_0007",
+        "duration": 6.0,
+        "reference": "tutorial को record करने के लिए मैं उपयोग कर रही हूँ ubuntu os version 14 . 10",
+        "hypothesis": "इस torial को record करने के लिए मैं उपयोग कर रही हूँ ubuntuos versन 1410",
+        "reference_word": "version",
+        "hypothesis_word": null
+      },
+      {
+        "id": "135893_9lNAZMRfDfuCN6XC_0008",
+        "duration": 4.0,
+        "reference": "python version 2 . 7 . 8",
+        "hypothesis": "python version 278",
+        "reference_word": "2",
+        "hypothesis_word": null
+      }
+    ],
+    "en_to_hi": [
+      {
+        "id": "135893_9lNAZMRfDfuCN6XC_0003",
+        "duration": 5.0,
+        "reference": "sequence input / output module में functions उपयोग करके data files parse करना",
+        "hypothesis": "f sequence input output module में functions उपयोग करके data files pars करेरें",
+        "reference_word": "parse",
+        "hypothesis_word": "pars"
+      },
+      {
+        "id": "135893_9lNAZMRfDfuCN6XC_0003",
+        "duration": 5.0,
+        "reference": "sequence input / output module में functions उपयोग करके data files parse करना",
+        "hypothesis": "f sequence input output module में functions उपयोग करके data files pars करेरें",
+        "reference_word": "करना",
+        "hypothesis_word": "करेरें"
+      },
+      {
+        "id": "135893_9lNAZMRfDfuCN6XC_0004",
+        "duration": 7.0,
+        "reference": "इस tutorial के अनुसरण के लिए आपको स्नातक स्तर की biochemistry या bioinformatics और कोई",
+        "hypothesis": "इस tutorial के अनुसरण के लिए आपको स्नातक स्तर की biochemistry या byanfhormetics औऔर ब ा है",
+        "reference_word": "और",
+        "hypothesis_word": "ा"
+      },
+      {
+        "id": "135893_9lNAZMRfDfuCN6XC_0005",
+        "duration": 4.0,
+        "reference": "और बुनियादी python programming से परिचित होना चाहिए",
+        "hypothesis": "अु या दि python p्रोग्ामिंग से परिचित होना चाहिए",
+        "reference_word": "programming",
+        "hypothesis_word": "p्रोग्ामिंग"
+      },
+      {
+        "id": "135893_9lNAZMRfDfuCN6XC_0007",
+        "duration": 6.0,
+        "reference": "tutorial को record करने के लिए मैं उपयोग कर रही हूँ ubuntu os version 14 . 10",
+        "hypothesis": "इस torial को record करने के लिए मैं उपयोग कर रही हूँ ubuntuos versन 1410",
+        "reference_word": "tutorial",
+        "hypothesis_word": "torial"
+      },
+      {
+        "id": "135893_9lNAZMRfDfuCN6XC_0011",
+        "duration": 11.0,
+        "reference": "biology में वैज्ञानिक data सामान्यतः text files जैसे fasta genbank embl swiss port आदि में संचित किया जाता है da",
+        "hypothesis": "paology में वैज्ञानिक data सामान्यतः text file जैसे firsta jhin bank embl switchport आदि में संचित किया जाता है",
+        "reference_word": "biology",
+        "hypothesis_word": "paology"
+      },
+      {
+        "id": "135893_9lNAZMRfDfuCN6XC_0011",
+        "duration": 11.0,
+        "reference": "biology में वैज्ञानिक data सामान्यतः text files जैसे fasta genbank embl swiss port आदि में संचित किया जाता है da",
+        "hypothesis": "paology में वैज्ञानिक data सामान्यतः text file जैसे firsta jhin bank embl switchport आदि में संचित किया जाता है",
+        "reference_word": "files",
+        "hypothesis_word": "file"
+      },
+      {
+        "id": "135893_9lNAZMRfDfuCN6XC_0011",
+        "duration": 11.0,
+        "reference": "biology में वैज्ञानिक data सामान्यतः text files जैसे fasta genbank embl swiss port आदि में संचित किया जाता है da",
+        "hypothesis": "paology में वैज्ञानिक data सामान्यतः text file जैसे firsta jhin bank embl switchport आदि में संचित किया जाता है",
+        "reference_word": "port",
+        "hypothesis_word": "switchport"
+      },
+      {
+        "id": "135893_9lNAZMRfDfuCN6XC_0012",
+        "duration": 5.0,
+        "reference": "files database websites से download की जा सकती हैं किसी",
+        "hypothesis": "data files database website से downloaded की जा सकती हैं",
+        "reference_word": "websites",
+        "hypothesis_word": "website"
+      },
+      {
+        "id": "135893_9lNAZMRfDfuCN6XC_0014",
+        "duration": 2.0,
+        "reference": "एक web page खुलता है हम अब",
+        "hypothesis": "web pेज खुलता है",
+        "reference_word": "page",
+        "hypothesis_word": "pेज"
+      }
+    ],
+    "en_word": [
+      {
+        "id": "135893_9lNAZMRfDfuCN6XC_0000",
+        "duration": 1.0,
+        "reference": "par parsing",
+        "hypothesis": "",
+        "reference_word": "par",
+        "hypothesis_word": null
+      },
+      {
+        "id": "135893_9lNAZMRfDfuCN6XC_0000",
+        "duration": 1.0,
+        "reference": "par parsing",
+        "hypothesis": "",
+        "reference_word": "parsing",
+        "hypothesis_word": null
+      },
+      {
+        "id": "135893_9lNAZMRfDfuCN6XC_0002",
+        "duration": 8.0,
+        "reference": "tutorial में हम सीखेंगे ncbi database website से fasta और genbank files download करना और",
+        "hypothesis": "इस tutorial में हम सीखेंगे ncbi database website से faster और jenbing files download करना",
+        "reference_word": "fasta",
+        "hypothesis_word": "faster"
+      },
+      {
+        "id": "135893_9lNAZMRfDfuCN6XC_0002",
+        "duration": 8.0,
+        "reference": "tutorial में हम सीखेंगे ncbi database website से fasta और genbank files download करना और",
+        "hypothesis": "इस tutorial में हम सीखेंगे ncbi database website से faster और jenbing files download करना",
+        "reference_word": "genbank",
+        "hypothesis_word": "jenbing"
+      },
+      {
+        "id": "135893_9lNAZMRfDfuCN6XC_0003",
+        "duration": 5.0,
+        "reference": "sequence input / output module में functions उपयोग करके data files parse करना",
+        "hypothesis": "f sequence input output module में functions उपयोग करके data files pars करेरें",
+        "reference_word": "parse",
+        "hypothesis_word": "pars"
+      },
+      {
+        "id": "135893_9lNAZMRfDfuCN6XC_0004",
+        "duration": 7.0,
+        "reference": "इस tutorial के अनुसरण के लिए आपको स्नातक स्तर की biochemistry या bioinformatics और कोई",
+        "hypothesis": "इस tutorial के अनुसरण के लिए आपको स्नातक स्तर की biochemistry या byanfhormetics औऔर ब ा है",
+        "reference_word": "bioinformatics",
+        "hypothesis_word": "ब"
+      },
+      {
+        "id": "135893_9lNAZMRfDfuCN6XC_0005",
+        "duration": 4.0,
+        "reference": "और बुनियादी python programming से परिचित होना चाहिए",
+        "hypothesis": "अु या दि python p्रोग्ामिंग से परिचित होना चाहिए",
+        "reference_word": "programming",
+        "hypothesis_word": "p्रोग्ामिंग"
+      },
+      {
+        "id": "135893_9lNAZMRfDfuCN6XC_0007",
+        "duration": 6.0,
+        "reference": "tutorial को record करने के लिए मैं उपयोग कर रही हूँ ubuntu os version 14 . 10",
+        "hypothesis": "इस torial को record करने के लिए मैं उपयोग कर रही हूँ ubuntuos versन 1410",
+        "reference_word": "tutorial",
+        "hypothesis_word": "torial"
+      },
+      {
+        "id": "135893_9lNAZMRfDfuCN6XC_0007",
+        "duration": 6.0,
+        "reference": "tutorial को record करने के लिए मैं उपयोग कर रही हूँ ubuntu os version 14 . 10",
+        "hypothesis": "इस torial को record करने के लिए मैं उपयोग कर रही हूँ ubuntuos versन 1410",
+        "reference_word": "ubuntu",
+        "hypothesis_word": null
+      },
+      {
+        "id": "135893_9lNAZMRfDfuCN6XC_0007",
+        "duration": 6.0,
+        "reference": "tutorial को record करने के लिए मैं उपयोग कर रही हूँ ubuntu os version 14 . 10",
+        "hypothesis": "इस torial को record करने के लिए मैं उपयोग कर रही हूँ ubuntuos versन 1410",
+        "reference_word": "os",
+        "hypothesis_word": null
+      }
+    ],
+    "hi_to_en": [
+      {
+        "id": "135893_9lNAZMRfDfuCN6XC_0002",
+        "duration": 8.0,
+        "reference": "tutorial में हम सीखेंगे ncbi database website से fasta और genbank files download करना और",
+        "hypothesis": "इस tutorial में हम सीखेंगे ncbi database website से faster और jenbing files download करना",
+        "reference_word": "fasta",
+        "hypothesis_word": "faster"
+      },
+      {
+        "id": "135893_9lNAZMRfDfuCN6XC_0002",
+        "duration": 8.0,
+        "reference": "tutorial में हम सीखेंगे ncbi database website से fasta और genbank files download करना और",
+        "hypothesis": "इस tutorial में हम सीखेंगे ncbi database website से faster और jenbing files download करना",
+        "reference_word": "genbank",
+        "hypothesis_word": "jenbing"
+      },
+      {
+        "id": "135893_9lNAZMRfDfuCN6XC_0004",
+        "duration": 7.0,
+        "reference": "इस tutorial के अनुसरण के लिए आपको स्नातक स्तर की biochemistry या bioinformatics और कोई",
+        "hypothesis": "इस tutorial के अनुसरण के लिए आपको स्नातक स्तर की biochemistry या byanfhormetics औऔर ब ा है",
+        "reference_word": "bioinformatics",
+        "hypothesis_word": "ब"
+      },
+      {
+        "id": "135893_9lNAZMRfDfuCN6XC_0005",
+        "duration": 4.0,
+        "reference": "और बुनियादी python programming से परिचित होना चाहिए",
+        "hypothesis": "अु या दि python p्रोग्ामिंग से परिचित होना चाहिए",
+        "reference_word": "बुनियादी",
+        "hypothesis_word": "दि"
+      },
+      {
+        "id": "135893_9lNAZMRfDfuCN6XC_0007",
+        "duration": 6.0,
+        "reference": "tutorial को record करने के लिए मैं उपयोग कर रही हूँ ubuntu os version 14 . 10",
+        "hypothesis": "इस torial को record करने के लिए मैं उपयोग कर रही हूँ ubuntuos versन 1410",
+        "reference_word": "ubuntu",
+        "hypothesis_word": null
+      },
+      {
+        "id": "135893_9lNAZMRfDfuCN6XC_0010",
+        "duration": 8.0,
+        "reference": "python version 1 . 64 और mozilla firefox browser 35 . 0",
+        "hypothesis": "popython versin 164 और mozila firefox browser 350",
+        "reference_word": "mozilla",
+        "hypothesis_word": "mozila"
+      },
+      {
+        "id": "135893_9lNAZMRfDfuCN6XC_0011",
+        "duration": 11.0,
+        "reference": "biology में वैज्ञानिक data सामान्यतः text files जैसे fasta genbank embl swiss port आदि में संचित किया जाता है da",
+        "hypothesis": "paology में वैज्ञानिक data सामान्यतः text file जैसे firsta jhin bank embl switchport आदि में संचित किया जाता है",
+        "reference_word": "fasta",
+        "hypothesis_word": "firsta"
+      },
+      {
+        "id": "135893_9lNAZMRfDfuCN6XC_0011",
+        "duration": 11.0,
+        "reference": "biology में वैज्ञानिक data सामान्यतः text files जैसे fasta genbank embl swiss port आदि में संचित किया जाता है da",
+        "hypothesis": "paology में वैज्ञानिक data सामान्यतः text file जैसे firsta jhin bank embl switchport आदि में संचित किया जाता है",
+        "reference_word": "da",
+        "hypothesis_word": null
+      },
+      {
+        "id": "135893_9lNAZMRfDfuCN6XC_0012",
+        "duration": 5.0,
+        "reference": "files database websites से download की जा सकती हैं किसी",
+        "hypothesis": "data files database website से downloaded की जा सकती हैं",
+        "reference_word": "download",
+        "hypothesis_word": "downloaded"
+      },
+      {
+        "id": "135893_9lNAZMRfDfuCN6XC_0014",
+        "duration": 2.0,
+        "reference": "एक web page खुलता है हम अब",
+        "hypothesis": "web pेज खुलता है",
+        "reference_word": "एक",
+        "hypothesis_word": null
+      }
+    ],
+    "hi_word": [
+      {
+        "id": "135893_9lNAZMRfDfuCN6XC_0001",
+        "duration": 4.0,
+        "reference": "data पर इस tutorial में आपका स्वागत है इस",
+        "hypothesis": "स data पर इस tutorial में आपका स्वागत है",
+        "reference_word": "इस",
+        "hypothesis_word": null
+      },
+      {
+        "id": "135893_9lNAZMRfDfuCN6XC_0002",
+        "duration": 8.0,
+        "reference": "tutorial में हम सीखेंगे ncbi database website से fasta और genbank files download करना और",
+        "hypothesis": "इस tutorial में हम सीखेंगे ncbi database website से faster और jenbing files download करना",
+        "reference_word": "और",
+        "hypothesis_word": null
+      },
+      {
+        "id": "135893_9lNAZMRfDfuCN6XC_0003",
+        "duration": 5.0,
+        "reference": "sequence input / output module में functions उपयोग करके data files parse करना",
+        "hypothesis": "f sequence input output module में functions उपयोग करके data files pars करेरें",
+        "reference_word": "करना",
+        "hypothesis_word": "करेरें"
+      },
+      {
+        "id": "135893_9lNAZMRfDfuCN6XC_0004",
+        "duration": 7.0,
+        "reference": "इस tutorial के अनुसरण के लिए आपको स्नातक स्तर की biochemistry या bioinformatics और कोई",
+        "hypothesis": "इस tutorial के अनुसरण के लिए आपको स्नातक स्तर की biochemistry या byanfhormetics औऔर ब ा है",
+        "reference_word": "और",
+        "hypothesis_word": "ा"
+      },
+      {
+        "id": "135893_9lNAZMRfDfuCN6XC_0004",
+        "duration": 7.0,
+        "reference": "इस tutorial के अनुसरण के लिए आपको स्नातक स्तर की biochemistry या bioinformatics और कोई",
+        "hypothesis": "इस tutorial के अनुसरण के लिए आपको स्नातक स्तर की biochemistry या byanfhormetics औऔर ब ा है",
+        "reference_word": "कोई",
+        "hypothesis_word": "है"
+      },
+      {
+        "id": "135893_9lNAZMRfDfuCN6XC_0005",
+        "duration": 4.0,
+        "reference": "और बुनियादी python programming से परिचित होना चाहिए",
+        "hypothesis": "अु या दि python p्रोग्ामिंग से परिचित होना चाहिए",
+        "reference_word": "और",
+        "hypothesis_word": "या"
+      },
+      {
+        "id": "135893_9lNAZMRfDfuCN6XC_0005",
+        "duration": 4.0,
+        "reference": "और बुनियादी python programming से परिचित होना चाहिए",
+        "hypothesis": "अु या दि python p्रोग्ामिंग से परिचित होना चाहिए",
+        "reference_word": "बुनियादी",
+        "hypothesis_word": "दि"
+      },
+      {
+        "id": "135893_9lNAZMRfDfuCN6XC_0006",
+        "duration": 4.0,
+        "reference": "link पर python tutorials देखें इस",
+        "hypothesis": "ने link पर python tutorials देखें",
+        "reference_word": "इस",
+        "hypothesis_word": null
+      },
+      {
+        "id": "135893_9lNAZMRfDfuCN6XC_0012",
+        "duration": 5.0,
+        "reference": "files database websites से download की जा सकती हैं किसी",
+        "hypothesis": "data files database website से downloaded की जा सकती हैं",
+        "reference_word": "किसी",
+        "hypothesis_word": null
+      },
+      {
+        "id": "135893_9lNAZMRfDfuCN6XC_0014",
+        "duration": 2.0,
+        "reference": "एक web page खुलता है हम अब",
+        "hypothesis": "web pेज खुलता है",
+        "reference_word": "एक",
+        "hypothesis_word": null
+      }
+    ],
+    "homophone_confusion": [
+      {
+        "id": "135893_9lNAZMRfDfuCN6XC_0045",
+        "duration": 4.0,
+        "reference": "home folder में file save करने के लिए पहले दिखाई गयी समान steps का अनुसरण करें",
+        "hypothesis": "hme folder में file सेव करने के लिए पहले दिखाई गई समान steps का अनुक हं",
+        "reference_word": "गयी",
+        "hypothesis_word": "गई"
+      },
+      {
+        "id": "135893_9lNAZMRfDfuCN6XC_0098",
+        "duration": 6.0,
+        "reference": "file से nucleotide sequences को load करने के लिये parse function उपयोग करें",
+        "hypothesis": "sastor file से निपलोटाide sequences को denload करने के लिए parse function उपयोग करें",
+        "reference_word": "लिये",
+        "hypothesis_word": "लिए"
+      },
+      {
+        "id": "141425_wYQaKVNl7bh28u3u_0012",
+        "duration": 4.0,
+        "reference": "अब हमें library management system की ज़रुरत क्यों है ऐसे",
+        "hypothesis": "अब हमें library management system की जरुरत क्यों है",
+        "reference_word": "ज़रुरत",
+        "hypothesis_word": "जरुरत"
+      },
+      {
+        "id": "141425_wYQaKVNl7bh28u3u_0029",
+        "duration": 7.0,
+        "reference": "अतः अब हम एक member की तरह login करते हैं यानी एक user की तरह जो पहले से ही registered हो चुका है",
+        "hypothesis": "अतः अब हम एक member की तरह login करते हैं यानि एक यूज़r की तरह जो पहले से ही register हो चुका है",
+        "reference_word": "यानी",
+        "hypothesis_word": "यानि"
+      },
+      {
+        "id": "141425_wYQaKVNl7bh28u3u_0030",
+        "duration": 7.0,
+        "reference": "मैं mdhusein से login करुँगा और password दें और enter करें",
+        "hypothesis": "मैं mdhosen से login करूँगा और password दें और एंटर करें",
+        "reference_word": "करुँगा",
+        "hypothesis_word": "करूँगा"
+      },
+      {
+        "id": "141425_wYQaKVNl7bh28u3u_0034",
+        "duration": 5.0,
+        "reference": "ये हम एक librarian की तरह login करेंगे यानी admin की तरह",
+        "hypothesis": "आगे हम एक librarian की तरह login करेंगे यानि admin की तरह",
+        "reference_word": "यानी",
+        "hypothesis_word": "यानि"
+      },
+      {
+        "id": "141425_wYQaKVNl7bh28u3u_0051",
+        "duration": 4.0,
+        "reference": "नए यूज़र को register करने के लिए यह एक registration form है",
+        "hypothesis": "नए यूजर को register करने के लिए यह एक registration form है",
+        "reference_word": "यूज़र",
+        "hypothesis_word": "यूजर"
+      },
+      {
+        "id": "141425_wYQaKVNl7bh28u3u_0064",
+        "duration": 3.0,
+        "reference": "spoken tutorials का उपयोग करके कार्यशालाएं भी चलाती",
+        "hypothesis": "spoken tutorials का उपयोग करके कार्यशालाएँ भी चलती है",
+        "reference_word": "कार्यशालाएं",
+        "hypothesis_word": "कार्यशालाएँ"
+      },
+      {
+        "id": "141425_wYQaKVNl7bh28u3u_0070",
+        "duration": 9.0,
+        "reference": "library management system अग्रणी software mnc के corporate social responsibility कार्यक्रम के अंतर्गत योगदान दिया गया है",
+        "hypothesis": "library management system अग्रणि सॉफ्टवेयर mnc के corporate soucial responsibility कार्यक्रम के अंतर्गत योगदान दिया गया है",
+        "reference_word": "अग्रणी",
+        "hypothesis_word": "अग्रणि"
+      },
+      {
+        "id": "145704_5CY9t6duxwVCK5NI_0009",
+        "duration": 9.0,
+        "reference": "लेकिन formula को तेज़ी से लिखने का एक तरीका यह है कि formula editor में सीधे mark up language लिखना क्यों कि formula के लिए mark up",
+        "hypothesis": "ब formula को तेजी से लिखने का एक तरीका यह है कि formula editor में सीधे markup language लिखनाक्योंकिormu",
+        "reference_word": "तेज़ी",
+        "hypothesis_word": "तेजी"
+      }
+    ],
+    "incorrect_transliteration": [
+      {
+        "id": "135893_9lNAZMRfDfuCN6XC_0049",
+        "duration": 4.0,
+        "reference": "files से data extract करना parsing कहलाता है",
+        "hypothesis": "यह ा file से data extract करना पारसें कहलाता है",
+        "reference_word": "parsing",
+        "hypothesis_word": "पारसें"
+      },
+      {
+        "id": "135893_9lNAZMRfDfuCN6XC_0063",
+        "duration": 7.0,
+        "reference": "यह दो arguments स्वीकार कर सकता है पहला वाला data पढ़ने के लिए file name है दूसरा",
+        "hypothesis": "ददो आर्ग्युमेंट स्वीकार कर सकता है पहला वाला data पढ़ने के लिए file name है",
+        "reference_word": "arguments",
+        "hypothesis_word": "आर्ग्युमेंट"
+      },
+      {
+        "id": "135893_9lNAZMRfDfuCN6XC_0065",
+        "duration": 5.0,
+        "reference": "output के लिए enter key दो बार दबाएं",
+        "hypothesis": "output के लिए enter की दो बार दबाएं",
+        "reference_word": "key",
+        "hypothesis_word": "की"
+      },
+      {
+        "id": "135893_9lNAZMRfDfuCN6XC_0075",
+        "duration": 5.0,
+        "reference": "output प्राप्त करने के लिए दो बार enter key दबाएं यह",
+        "hypothesis": "output प्राप्त करने के लिए दो बार enter की दबाएं",
+        "reference_word": "key",
+        "hypothesis_word": "की"
+      },
+      {
+        "id": "135893_9lNAZMRfDfuCN6XC_0096",
+        "duration": 4.0,
+        "reference": "sequences की file को उनके reverse complements में बदलें आपका",
+        "hypothesis": "cences की फइल को उनके reverse complements में बदलें",
+        "reference_word": "file",
+        "hypothesis_word": "फइल"
+      },
+      {
+        "id": "135893_9lNAZMRfDfuCN6XC_0099",
+        "duration": 9.0,
+        "reference": "reverse complement method में बने sequence objects उपयोग करके reverse complement print करें",
+        "hypothesis": "इि reverse complement मैथड में बने sequence object उपयोग करके reverse complement print करें",
+        "reference_word": "method",
+        "hypothesis_word": "मैथड"
+      },
+      {
+        "id": "141425_wYQaKVNl7bh28u3u_0021",
+        "duration": 6.0,
+        "reference": "अब मैं my first project नामक project को run करता हूँ",
+        "hypothesis": "अब मैं myfirst project named project को रन करता हूँ",
+        "reference_word": "run",
+        "hypothesis_word": "रन"
+      },
+      {
+        "id": "141425_wYQaKVNl7bh28u3u_0033",
+        "duration": 3.0,
+        "reference": "अब logut करें",
+        "hypothesis": "अब लॉगआउट करें",
+        "reference_word": "logut",
+        "hypothesis_word": "लॉगआउट"
+      },
+      {
+        "id": "141425_wYQaKVNl7bh28u3u_0068",
+        "duration": 7.0,
+        "reference": "यह भारत सरकार के mhrd के ict के माध्यम से राष्ट्रीय साक्षरता mission द्वारा समर्थित है",
+        "hypothesis": "यह भारत सरकार के एमएचआरडी के आईसीटी के माध्यम से राष्ट्रीय साक्षरता mission द्वारा समर्थित है",
+        "reference_word": "mhrd",
+        "hypothesis_word": "एमएचआरडी"
+      },
+      {
+        "id": "145704_5CY9t6duxwVCK5NI_0000",
+        "duration": 4.0,
+        "reference": "libre office math के spoken tutorial में आपका स्वाग",
+        "hypothesis": "लिबर office math के spoken tutorial में आपका स्वागत है",
+        "reference_word": "libre",
+        "hypothesis_word": "लिबर"
+      }
+    ],
+    "insertion": [
+      {
+        "id": "135893_9lNAZMRfDfuCN6XC_0001",
+        "duration": 4.0,
+        "reference": "data पर इस tutorial में आपका स्वागत है इस",
+        "hypothesis": "स data पर इस tutorial में आपका स्वागत है",
+        "reference_word": null,
+        "hypothesis_word": "स"
+      },
+      {
+        "id": "135893_9lNAZMRfDfuCN6XC_0002",
+        "duration": 8.0,
+        "reference": "tutorial में हम सीखेंगे ncbi database website से fasta और genbank files download करना और",
+        "hypothesis": "इस tutorial में हम सीखेंगे ncbi database website से faster और jenbing files download करना",
+        "reference_word": null,
+        "hypothesis_word": "इस"
+      },
+      {
+        "id": "135893_9lNAZMRfDfuCN6XC_0003",
+        "duration": 5.0,
+        "reference": "sequence input / output module में functions उपयोग करके data files parse करना",
+        "hypothesis": "f sequence input output module में functions उपयोग करके data files pars करेरें",
+        "reference_word": null,
+        "hypothesis_word": "f"
+      },
+      {
+        "id": "135893_9lNAZMRfDfuCN6XC_0004",
+        "duration": 7.0,
+        "reference": "इस tutorial के अनुसरण के लिए आपको स्नातक स्तर की biochemistry या bioinformatics और कोई",
+        "hypothesis": "इस tutorial के अनुसरण के लिए आपको स्नातक स्तर की biochemistry या byanfhormetics औऔर ब ा है",
+        "reference_word": null,
+        "hypothesis_word": "byanfhormetics"
+      },
+      {
+        "id": "135893_9lNAZMRfDfuCN6XC_0004",
+        "duration": 7.0,
+        "reference": "इस tutorial के अनुसरण के लिए आपको स्नातक स्तर की biochemistry या bioinformatics और कोई",
+        "hypothesis": "इस tutorial के अनुसरण के लिए आपको स्नातक स्तर की biochemistry या byanfhormetics औऔर ब ा है",
+        "reference_word": null,
+        "hypothesis_word": "औऔर"
+      },
+      {
+        "id": "135893_9lNAZMRfDfuCN6XC_0005",
+        "duration": 4.0,
+        "reference": "और बुनियादी python programming से परिचित होना चाहिए",
+        "hypothesis": "अु या दि python p्रोग्ामिंग से परिचित होना चाहिए",
+        "reference_word": null,
+        "hypothesis_word": "अु"
+      },
+      {
+        "id": "135893_9lNAZMRfDfuCN6XC_0006",
+        "duration": 4.0,
+        "reference": "link पर python tutorials देखें इस",
+        "hypothesis": "ने link पर python tutorials देखें",
+        "reference_word": null,
+        "hypothesis_word": "ने"
+      },
+      {
+        "id": "135893_9lNAZMRfDfuCN6XC_0007",
+        "duration": 6.0,
+        "reference": "tutorial को record करने के लिए मैं उपयोग कर रही हूँ ubuntu os version 14 . 10",
+        "hypothesis": "इस torial को record करने के लिए मैं उपयोग कर रही हूँ ubuntuos versन 1410",
+        "reference_word": null,
+        "hypothesis_word": "इस"
+      },
+      {
+        "id": "135893_9lNAZMRfDfuCN6XC_0012",
+        "duration": 5.0,
+        "reference": "files database websites से download की जा सकती हैं किसी",
+        "hypothesis": "data files database website से downloaded की जा सकती हैं",
+        "reference_word": null,
+        "hypothesis_word": "data"
+      },
+      {
+        "id": "135893_9lNAZMRfDfuCN6XC_0013",
+        "duration": 5.0,
+        "reference": "web browser में नीचे दिया गया website link खोलें",
+        "hypothesis": "कृभी web browser में नीचे दिया गया website link खोलें",
+        "reference_word": null,
+        "hypothesis_word": "कृभी"
+      }
+    ],
+    "other_substitution": [
+      {
+        "id": "135893_9lNAZMRfDfuCN6XC_0002",
+        "duration": 8.0,
+        "reference": "tutorial में हम सीखेंगे ncbi database website से fasta और genbank files download करना और",
+        "hypothesis": "इस tutorial में हम सीखेंगे ncbi database website से faster और jenbing files download करना",
+        "reference_word": "fasta",
+        "hypothesis_word": "faster"
+      },
+      {
+        "id": "135893_9lNAZMRfDfuCN6XC_0002",
+        "duration": 8.0,
+        "reference": "tutorial में हम सीखेंगे ncbi database website से fasta और genbank files download करना और",
+        "hypothesis": "इस tutorial में हम सीखेंगे ncbi database website से faster और jenbing files download करना",
+        "reference_word": "genbank",
+        "hypothesis_word": "jenbing"
+      },
+      {
+        "id": "135893_9lNAZMRfDfuCN6XC_0003",
+        "duration": 5.0,
+        "reference": "sequence input / output module में functions उपयोग करके data files parse करना",
+        "hypothesis": "f sequence input output module में functions उपयोग करके data files pars करेरें",
+        "reference_word": "parse",
+        "hypothesis_word": "pars"
+      },
+      {
+        "id": "135893_9lNAZMRfDfuCN6XC_0003",
+        "duration": 5.0,
+        "reference": "sequence input / output module में functions उपयोग करके data files parse करना",
+        "hypothesis": "f sequence input output module में functions उपयोग करके data files pars करेरें",
+        "reference_word": "करना",
+        "hypothesis_word": "करेरें"
+      },
+      {
+        "id": "135893_9lNAZMRfDfuCN6XC_0004",
+        "duration": 7.0,
+        "reference": "इस tutorial के अनुसरण के लिए आपको स्नातक स्तर की biochemistry या bioinformatics और कोई",
+        "hypothesis": "इस tutorial के अनुसरण के लिए आपको स्नातक स्तर की biochemistry या byanfhormetics औऔर ब ा है",
+        "reference_word": "bioinformatics",
+        "hypothesis_word": "ब"
+      },
+      {
+        "id": "135893_9lNAZMRfDfuCN6XC_0004",
+        "duration": 7.0,
+        "reference": "इस tutorial के अनुसरण के लिए आपको स्नातक स्तर की biochemistry या bioinformatics और कोई",
+        "hypothesis": "इस tutorial के अनुसरण के लिए आपको स्नातक स्तर की biochemistry या byanfhormetics औऔर ब ा है",
+        "reference_word": "और",
+        "hypothesis_word": "ा"
+      },
+      {
+        "id": "135893_9lNAZMRfDfuCN6XC_0004",
+        "duration": 7.0,
+        "reference": "इस tutorial के अनुसरण के लिए आपको स्नातक स्तर की biochemistry या bioinformatics और कोई",
+        "hypothesis": "इस tutorial के अनुसरण के लिए आपको स्नातक स्तर की biochemistry या byanfhormetics औऔर ब ा है",
+        "reference_word": "कोई",
+        "hypothesis_word": "है"
+      },
+      {
+        "id": "135893_9lNAZMRfDfuCN6XC_0005",
+        "duration": 4.0,
+        "reference": "और बुनियादी python programming से परिचित होना चाहिए",
+        "hypothesis": "अु या दि python p्रोग्ामिंग से परिचित होना चाहिए",
+        "reference_word": "और",
+        "hypothesis_word": "या"
+      },
+      {
+        "id": "135893_9lNAZMRfDfuCN6XC_0005",
+        "duration": 4.0,
+        "reference": "और बुनियादी python programming से परिचित होना चाहिए",
+        "hypothesis": "अु या दि python p्रोग्ामिंग से परिचित होना चाहिए",
+        "reference_word": "बुनियादी",
+        "hypothesis_word": "दि"
+      },
+      {
+        "id": "135893_9lNAZMRfDfuCN6XC_0005",
+        "duration": 4.0,
+        "reference": "और बुनियादी python programming से परिचित होना चाहिए",
+        "hypothesis": "अु या दि python p्रोग्ामिंग से परिचित होना चाहिए",
+        "reference_word": "programming",
+        "hypothesis_word": "p्रोग्ामिंग"
+      }
+    ],
+    "other_word": [
+      {
+        "id": "135893_9lNAZMRfDfuCN6XC_0003",
+        "duration": 5.0,
+        "reference": "sequence input / output module में functions उपयोग करके data files parse करना",
+        "hypothesis": "f sequence input output module में functions उपयोग करके data files pars करेरें",
+        "reference_word": "/",
+        "hypothesis_word": null
+      },
+      {
+        "id": "135893_9lNAZMRfDfuCN6XC_0007",
+        "duration": 6.0,
+        "reference": "tutorial को record करने के लिए मैं उपयोग कर रही हूँ ubuntu os version 14 . 10",
+        "hypothesis": "इस torial को record करने के लिए मैं उपयोग कर रही हूँ ubuntuos versन 1410",
+        "reference_word": "14",
+        "hypothesis_word": "ubuntuos"
+      },
+      {
+        "id": "135893_9lNAZMRfDfuCN6XC_0007",
+        "duration": 6.0,
+        "reference": "tutorial को record करने के लिए मैं उपयोग कर रही हूँ ubuntu os version 14 . 10",
+        "hypothesis": "इस torial को record करने के लिए मैं उपयोग कर रही हूँ ubuntuos versन 1410",
+        "reference_word": ".",
+        "hypothesis_word": "versन"
+      },
+      {
+        "id": "135893_9lNAZMRfDfuCN6XC_0007",
+        "duration": 6.0,
+        "reference": "tutorial को record करने के लिए मैं उपयोग कर रही हूँ ubuntu os version 14 . 10",
+        "hypothesis": "इस torial को record करने के लिए मैं उपयोग कर रही हूँ ubuntuos versन 1410",
+        "reference_word": "10",
+        "hypothesis_word": "1410"
+      },
+      {
+        "id": "135893_9lNAZMRfDfuCN6XC_0008",
+        "duration": 4.0,
+        "reference": "python version 2 . 7 . 8",
+        "hypothesis": "python version 278",
+        "reference_word": "2",
+        "hypothesis_word": null
+      },
+      {
+        "id": "135893_9lNAZMRfDfuCN6XC_0008",
+        "duration": 4.0,
+        "reference": "python version 2 . 7 . 8",
+        "hypothesis": "python version 278",
+        "reference_word": ".",
+        "hypothesis_word": null
+      },
+      {
+        "id": "135893_9lNAZMRfDfuCN6XC_0008",
+        "duration": 4.0,
+        "reference": "python version 2 . 7 . 8",
+        "hypothesis": "python version 278",
+        "reference_word": "7",
+        "hypothesis_word": null
+      },
+      {
+        "id": "135893_9lNAZMRfDfuCN6XC_0008",
+        "duration": 4.0,
+        "reference": "python version 2 . 7 . 8",
+        "hypothesis": "python version 278",
+        "reference_word": ".",
+        "hypothesis_word": null
+      },
+      {
+        "id": "135893_9lNAZMRfDfuCN6XC_0008",
+        "duration": 4.0,
+        "reference": "python version 2 . 7 . 8",
+        "hypothesis": "python version 278",
+        "reference_word": "8",
+        "hypothesis_word": "278"
+      },
+      {
+        "id": "135893_9lNAZMRfDfuCN6XC_0009",
+        "duration": 4.0,
+        "reference": "python interpretor version 2 . 3 . 0 py",
+        "hypothesis": "sy than interprater version 230",
+        "reference_word": "2",
+        "hypothesis_word": null
+      }
+    ],
+    "script_only": [
+      {
+        "id": "135893_9lNAZMRfDfuCN6XC_0024",
+        "duration": 8.0,
+        "reference": "file को किसी भी file format में save कर सकते हैं जो format dropdown सूची box में सूचीबद्ध है",
+        "hypothesis": "इस file को किसी भी file format में सेव कर सकते हैं जो format dropdown सूची box में सूचीबद्ध है",
+        "reference_word": "save",
+        "hypothesis_word": "सेव"
+      },
+      {
+        "id": "135893_9lNAZMRfDfuCN6XC_0034",
+        "duration": 5.0,
+        "reference": "file को अपने home folder में sequence . fasta की तरह save करें text",
+        "hypothesis": "ile को अपने home folder में sequence faster की तरह सेव करें",
+        "reference_word": "save",
+        "hypothesis_word": "सेव"
+      },
+      {
+        "id": "135893_9lNAZMRfDfuCN6XC_0039",
+        "duration": 6.0,
+        "reference": "ध्यान दें कि genbank format में sequence file fasta file से ज़्यादा features रखती है",
+        "hypothesis": "ध्यान दें कि janbank format में sequence file faster file से ज़्यादा फीचर्स रखती है",
+        "reference_word": "features",
+        "hypothesis_word": "फीचर्स"
+      },
+      {
+        "id": "135893_9lNAZMRfDfuCN6XC_0040",
+        "duration": 7.0,
+        "reference": "अपने home folder में sequence . gb की तरह save करें text editor बंद करें प्रद",
+        "hypothesis": "तो अपने home folder में sequence gv की तरह सेव करें text editor बंद करें",
+        "reference_word": "save",
+        "hypothesis_word": "सेव"
+      },
+      {
+        "id": "135893_9lNAZMRfDfuCN6XC_0042",
+        "duration": 9.0,
+        "reference": "के लिए check boxes पर दोबारा click करके पिछले चयन को clear करें अब",
+        "hypothesis": "इसके लिए check boxes पर दोबारा क्लिक करके पिछले चयन को claar करें",
+        "reference_word": "click",
+        "hypothesis_word": "क्लिक"
+      },
+      {
+        "id": "135893_9lNAZMRfDfuCN6XC_0045",
+        "duration": 4.0,
+        "reference": "home folder में file save करने के लिए पहले दिखाई गयी समान steps का अनुसरण करें",
+        "hypothesis": "hme folder में file सेव करने के लिए पहले दिखाई गई समान steps का अनुक हं",
+        "reference_word": "save",
+        "hypothesis_word": "सेव"
+      },
+      {
+        "id": "135893_9lNAZMRfDfuCN6XC_0046",
+        "duration": 7.0,
+        "reference": "सरल करें file को insulin . fasta की तरह save करें",
+        "hypothesis": "file को insulin fasta की तरह सेव करें",
+        "reference_word": "save",
+        "hypothesis_word": "सेव"
+      },
+      {
+        "id": "135893_9lNAZMRfDfuCN6XC_0053",
+        "duration": 7.0,
+        "reference": "पर ipython type करके ipython शुरू करें enter दबाएं आगे",
+        "hypothesis": "se पर ipython टाइप करके ipeython शुरू करेंएंटer दबाएं",
+        "reference_word": "type",
+        "hypothesis_word": "टाइप"
+      },
+      {
+        "id": "135893_9lNAZMRfDfuCN6XC_0054",
+        "duration": 5.0,
+        "reference": "bio package से seqio module को import करें",
+        "hypothesis": "अ बायो package से seqi और module को import करें",
+        "reference_word": "bio",
+        "hypothesis_word": "बायो"
+      },
+      {
+        "id": "135893_9lNAZMRfDfuCN6XC_0059",
+        "duration": 8.0,
+        "reference": "यहाँ हम sequence fasta file की विषय वस्तु पढ़ने के लिए parse function उपयोग कर रहे हैं",
+        "hypothesis": "यहाँ हम sequence faster फाइल की विषय वस्तु पढ़ने के लिए parse फंcशन उपयोग कर रहे हैं",
+        "reference_word": "file",
+        "hypothesis_word": "फाइल"
+      }
+    ]
+  },
+  "limitations": [
+    "Language labels are derived from script and the word map, not gold annotations.",
+    "Switch rates count reference words next to a Hindi-English script boundary.",
+    "Rates exclude insertions unless stated, because an insertion has no reference word.",
+    "Transliteration and homophone labels are phonetic heuristics; sample them before relying on them."
+  ],
+  "word_map_used": true
+}
