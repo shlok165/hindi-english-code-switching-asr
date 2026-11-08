@@ -204,3 +204,18 @@ def test_analysis_ignores_empty_references_and_counts_insertions(tmp_path):
     assert report["error_types"]["script_only"] == 1
     assert report["by_duration"]["over 20 s"]["errors"] == 2
     assert report["wer"] == pytest.approx(66.67)
+
+
+def test_checkpoint_average_is_the_mean_and_keeps_integer_tensors():
+    import torch
+
+    from src.training.average_checkpoints import average_state_dicts
+
+    first = {"w": torch.tensor([1.0, 2.0], dtype=torch.float16), "n": torch.tensor([3])}
+    second = {"w": torch.tensor([3.0, 6.0], dtype=torch.float16), "n": torch.tensor([9])}
+    averaged = average_state_dicts([first, second])
+    assert averaged["w"].dtype == torch.float16
+    assert averaged["w"].tolist() == [2.0, 4.0]
+    assert averaged["n"].tolist() == [3]
+    with pytest.raises(ValueError):
+        average_state_dicts([first, {"w": first["w"]}])

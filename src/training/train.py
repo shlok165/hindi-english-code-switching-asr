@@ -235,6 +235,16 @@ def train(config: dict[str, Any], resume: str | None = None) -> dict[str, Any]:
                 "skipped": 0, "overflow": 0, "elapsed": 0.0, "epoch_loss": 0.0, "epoch_batches": 0}
 
     source = latest_checkpoint(run_dir) if resume == "auto" else Path(resume) if resume else None
+    if source is None and settings.get("init_from"):
+        # Warm start: weights from an earlier run, with a fresh optimiser and schedule.
+        # A resumed warm-started run skips this and loads its own checkpoint instead.
+        from safetensors.torch import load_file
+
+        init = data_path(settings["init_from"])
+        if json.loads((init / "vocab.json").read_text(encoding="utf-8")) != vocab:
+            raise ValueError(f"{init} was trained with a different vocabulary")
+        model.load_state_dict(load_file(init / "model.safetensors"))
+        print(f"initialised weights from {init}", flush=True)
     if source is not None:
         from safetensors.torch import load_file
 
