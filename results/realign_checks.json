@@ -1,0 +1,86 @@
+{
+ "checkpoint": "data/checkpoints/iteration4/best",
+ "windows": {
+  "stretches": 24,
+  "transcript_characters": 23754,
+  "segments alone": {
+   "characters_per_transcript_character": 0.933,
+   "lowest_stretch": 0.72,
+   "stretches_below_0.8": 3
+  },
+  "12 s windows every 8 s": {
+   "characters_per_transcript_character": 0.971,
+   "lowest_stretch": 0.84,
+   "stretches_below_0.8": 0
+  },
+  "16 s windows every 12 s": {
+   "characters_per_transcript_character": 0.965,
+   "lowest_stretch": 0.86,
+   "stretches_below_0.8": 0
+  },
+  "20 s windows every 16 s": {
+   "characters_per_transcript_character": 0.958,
+   "lowest_stretch": 0.84,
+   "stretches_below_0.8": 0
+  },
+  "30 s windows every 25 s": {
+   "characters_per_transcript_character": 0.928,
+   "lowest_stretch": 0.61,
+   "stretches_below_0.8": 4
+  }
+ },
+ "cuts": {
+  "recordings": 30,
+  "segments": 2688,
+  "segments_never_trained_on": 159,
+  "pad_seconds": 0.3,
+  "released": {
+   "median_cer": 1.4,
+   "mean_cer": 9.5,
+   "above_50": 150,
+   "audio_hours": 4.57,
+   "never_trained_on_median_cer": 73.8,
+   "never_trained_on_above_50": 146
+  },
+  "midpoint": {
+   "median_cer": 0.0,
+   "mean_cer": 5.4,
+   "above_50": 58,
+   "audio_hours": 4.57,
+   "never_trained_on_median_cer": 4.8,
+   "never_trained_on_above_50": 16
+  },
+  "0.15 s padding everywhere": {
+   "median_cer": 0.0,
+   "mean_cer": 4.2,
+   "above_50": 31,
+   "audio_hours": 3.76,
+   "never_trained_on_median_cer": 3.4,
+   "never_trained_on_above_50": 9
+  },
+  "0.3 s padding everywhere": {
+   "median_cer": 0.0,
+   "mean_cer": 4.1,
+   "above_50": 32,
+   "audio_hours": 3.93,
+   "never_trained_on_median_cer": 3.6,
+   "never_trained_on_above_50": 9
+  },
+  "0.5 s padding everywhere": {
+   "median_cer": 0.0,
+   "mean_cer": 4.1,
+   "above_50": 33,
+   "audio_hours": 4.11,
+   "never_trained_on_median_cer": 3.6,
+   "never_trained_on_above_50": 9
+  },
+  "0.3 s padding where a gap holds speech (used)": {
+   "median_cer": 0.0,
+   "mean_cer": 4.3,
+   "above_50": 36,
+   "audio_hours": 4.46,
+   "never_trained_on_median_cer": 3.6,
+   "never_trained_on_above_50": 10
+  }
+ }
+}

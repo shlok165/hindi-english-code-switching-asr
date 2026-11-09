@@ -20,6 +20,7 @@ These carry over from Stage 1B:
 | 2 | More training: warm start from iteration 1 for 44,000 updates at half the peak learning rate, with batches grouped by duration (1.74× faster, measured) | 1 | `configs/train_iteration2.yaml` |
 | 3 | Script normalisation: English words written in Devanagari mapped to Latin in train and val transcripts and in the LM, using a train-only map. Same recipe as iteration 2 | 1, compared with 2 | `configs/train_iteration3.yaml` |
 | 4 | Remove training utterances whose transcript does not match the audio (7.03 % of them), found by scoring train with iteration 1's model. Same recipe as iteration 2 | 2, the better of 2 and 3 on val | `configs/train_iteration4.yaml` |
+| 5 | Realign the training segments instead of dropping them: force-align each recording's transcripts to its audio, re-cut each segment where its transcript is, and drop only those that still do not match. Same recipe as iteration 4 | 4 | `configs/train_iteration5.yaml` |
 
 ### Why these changes
 
@@ -28,6 +29,7 @@ The iteration 1 error analysis and the literature point at the data rather than 
 - **Iteration 2:** val WER was still falling when iteration 1's schedule ended.
 - **Iteration 3:** words in the wrong script cost about 1.3 WER points on blind.
 - **Iteration 4:** misaligned segment edges cost about 0.9 points on blind. The top MUCS system reported its biggest gains from transcript cleanup.
+- **Iteration 5:** iteration 4 helped, and 99 % of the released cut points sit on whole seconds, so many of the dropped utterances may simply be cut in the wrong place.
 
 ## Script map (iteration 3)
 
@@ -77,6 +79,72 @@ The threshold was set by reading random training utterances, before any model wa
 - **40 to 50:** most of the 16 read still had a word or two of extra or missing speech at an edge, mixed with aligned speech the model simply got wrong (a URL read out as "dot" and "slash", chemistry terms). This band is kept.
 
 It is a data-quality filter, not a way to fit the GPU. No utterance is dropped for its length, and the language model still uses every training transcript, because the text is valid even where the audio is cut.
+
+## Realignment (iteration 5)
+
+MUCS cut its segments at whole seconds: 99 % of segments start and end on a whole second, in every split. Rounding alone can put a cut half a second off, and in some recordings the whole transcript track is several seconds out. Iteration 4 drops the worst segments. Realignment re-cuts them instead, in two steps, on the training split only:
+
+1. `python -m src.data.realign log-probs --checkpoint data/checkpoints/iteration4/best` scores every training recording with iteration 4's model, in 12 s windows every 8 s, so every frame has context on both sides. This took 40 minutes on the GPU.
+2. `python -m src.data.realign align --checkpoint data/checkpoints/iteration4/best` aligns each recording's transcripts to those frames, in order, with CTC. Each transcript is kept within 15 s of its released segment.
+
+   The cut then goes in the middle of the pause between two transcripts. Where that pause holds speech no transcript accounts for, the cut stays within 0.3 s of each transcript's own speech instead, and the untranscribed speech is left out.
+
+   Finally, iteration 4's misalignment filter runs on the new segments, scored from the same frames.
+
+Val, test and blind keep their released cuts. Val holds whole recordings, so a moved cut can never reach val audio.
+
+### What it changes
+
+| | Released cuts | Iteration 4 (filtered) | Iteration 5 (realigned) |
+|---|---|---|---|
+| Training segments | 50,509 | 46,959 | 48,805 |
+| Hours | 85.55 | 79.90 | 81.09 |
+
+- **Moved starts:** the median segment start moved 0.57 s. 26 % of starts moved more than 1 s, and 1.8 % more than 5 s.
+- **Left out:** 1.5 hours (1.8 %) of untranscribed speech, such as code read out character by character.
+- **The filter:** with iteration 4's model, 6,645 segments are above the filter's threshold at the released cuts, and 1,704 after realignment. Of the 3,550 utterances iteration 4 dropped, 3,032 are kept.
+
+The full report, with the dropped segments and examples, is in `results/train_realign_report.json`.
+
+### How the settings were chosen
+
+Both measurements use training recordings only, with iteration 4's model. They come from `python -m src.analysis.realign_checks`, and the results are in `results/realign_checks.json`.
+
+**Window length.** Over 24 two-minute stretches, this measures how many characters the model emits per transcript character. Too long a window makes the model stop transcribing partway through. Decoding each segment alone splits the words that cross a cut.
+
+| How the stretch is decoded | Characters per transcript character | Worst stretch |
+|---|---|---|
+| Each segment alone | 0.933 | 0.72 |
+| **12 s windows every 8 s** | **0.971** | **0.84** |
+| 16 s windows every 12 s | 0.965 | 0.86 |
+| 20 s windows every 16 s | 0.958 | 0.84 |
+| 30 s windows every 25 s | 0.928 | 0.61 |
+
+**Cut rule.** Over 30 recordings (2,688 segments), each segment is decoded alone, as training sees it. The model memorised the released cuts of the segments it trained on, which flatters them. The 159 segments iteration 4 dropped were never trained on, so they give the fair comparison.
+
+| Cuts | Mean CER | Above 50 | Never trained on: median CER | Never trained on: above 50 | Audio |
+|---|---|---|---|---|---|
+| Released | 9.5 | 150 | 73.8 | 146 | 4.57 h |
+| Realigned, cut in the middle of every pause | 5.4 | 58 | 4.8 | 16 | 4.57 h |
+| Realigned, 0.15 s padding everywhere | 4.2 | 31 | 3.4 | 9 | 3.76 h |
+| Realigned, 0.3 s padding everywhere | 4.1 | 32 | 3.6 | 9 | 3.93 h |
+| Realigned, 0.5 s padding everywhere | 4.1 | 33 | 3.6 | 9 | 4.11 h |
+| **Realigned, 0.3 s padding where a pause holds speech (used)** | **4.3** | **36** | **3.6** | **10** | **4.46 h** |
+
+The rule used gets nearly all of the gain while leaving out only untranscribed speech. Padding every pause would also remove ordinary silences, 14 % of the audio, and make training segments less like val, test and blind, which keep theirs. That would be a second change.
+
+### Two problems found on the way
+
+- **The model stopped transcribing in long windows.** The first version scored recordings in 30 s windows, and the model sometimes stopped transcribing partway through one. One stretch of continuous speech came out blank, leaving the alignment nothing to follow. This showed up because the report had the better model rejecting more segments than iteration 1's. The 12 s windows fix it.
+- **Midpoint cuts gave away untranscribed speech.** Cutting in the middle of every pause gave half of any untranscribed speech to the next segment. The 0.3 s rule fixes it.
+
+### Audit
+
+Examples on each side were read, as for the filter threshold:
+
+- **Rescued segments:** in nearly every case, the released cut held part of a neighbouring sentence and the new cut holds exactly the transcript.
+- **Newly dropped (125):** mostly segments next to untranscribed speech, where the alignment stretched a transcript's first character over that speech. The filter catches them when the mismatch is large, but milder cases probably remain in the training data.
+- **Largest moves:** recordings whose transcripts are offset by up to 24 s are re-cut correctly. Long silent gaps are now split between their neighbours, so a few segments grow (one from 10 s to 28.5 s) with their transcripts still matching.
 
 ## Results
 

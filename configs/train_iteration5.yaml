@@ -1,0 +1,17 @@
+# Iteration 5: realigned training segments. Exactly iteration 4's recipe (same warm
+# start from iteration 1, schedule, batching and seed), except for the audio each
+# training transcript is paired with. Instead of dropping the segments whose
+# transcript does not match their audio, the segments are re-cut where their
+# transcripts actually are, by a CTC forced alignment of each recording with
+# iteration 4's model (src.data.realign, results/train_realign_report.json). Only
+# those that still do not match are left out. Val is unchanged, so iteration 5
+# against iteration 4 measures realigning against dropping. The number of updates
+# is unchanged, so with 1.5 % more audio than iteration 4 the run covers slightly
+# fewer epochs.
+includes:
+  - configs/train_iteration4.yaml
+
+run_name: iteration5
+
+data:
+  manifest_dir: data/processed/manifests_realigned  # 48,805 of 50,509 training segments, 81.09 h; val, test and blind unchanged
