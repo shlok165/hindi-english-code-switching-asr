@@ -275,3 +275,56 @@ def test_misalignment_filter_ignores_script_and_spelling_differences():
     assert misaligned("हम method को class से access कर सकते हैं", "यो के कारण पूरा होता है", skeleton)
     # Most of the transcript missing from the audio: dropped.
     assert misaligned("और यह हमारा return statement है", "अ और हैं", skeleton)
+
+
+def conv_frames(samples):
+    """Frames out of the wav2vec 2.0 feature encoder for this many samples."""
+    for kernel, stride in zip((10, 3, 3, 3, 3, 2, 2), (5, 2, 2, 2, 2, 2, 2)):
+        samples = (samples - kernel) // stride + 1
+    return samples
+
+
+def test_realignment_windows_cover_every_frame_once():
+    from src.data.realign import HOP_SAMPLES, SAMPLES_PER_FRAME, stitch, window_starts, WINDOW_SAMPLES
+
+    for samples in (100_000, WINDOW_SAMPLES, WINDOW_SAMPLES + 1, 9_600_123, 34_272_000):
+        windows = [np.arange(conv_frames(min(samples, start + WINDOW_SAMPLES) - start)) + start // SAMPLES_PER_FRAME
+                   for start in window_starts(samples)]
+        assert all(start % SAMPLES_PER_FRAME == 0 for start in window_starts(samples))
+        assert np.array_equal(stitch(windows), np.arange(conv_frames(samples)))
+        assert samples - window_starts(samples)[-1] >= min(samples, WINDOW_SAMPLES - HOP_SAMPLES)
+
+
+def test_joining_delimiter_may_sit_with_either_neighbour():
+    from src.data.realign import ctc_states, state_bounds
+
+    states, owners = ctc_states([[5, 6], [7, 8]], blank=0, delimiter=4)
+    assert states.tolist() == [0, 5, 0, 6, 0, 4, 0, 7, 0, 8, 0]
+    assert owners.tolist() == [0, 0, -1, 1, 1]
+    lower, upper = state_bounds(owners, np.array([0, 10]), np.array([12, 30]), frames=40)
+    assert (lower[1], upper[1]) == (0, 12)      # first transcript's label
+    assert (lower[5], upper[5]) == (0, 30)      # the delimiter: either neighbour's range
+    assert (lower[7], upper[7]) == (10, 30)     # second transcript's label
+    assert (lower[-1], upper[-1]) == (10, 39)   # final blank runs to the last frame
+    assert np.all(np.diff(lower) >= 0) and np.all(np.diff(upper) >= 0)
+
+
+def test_realignment_moves_the_cut_into_the_pause():
+    from src.data.realign import FRAME_SECONDS, realign_recording
+
+    vocab = {"<pad>": 0, "<s>": 1, "</s>": 2, "<unk>": 3, "|": 4, "a": 5, "b": 6, "c": 7, "d": 8}
+    # Frames: "ab", a long pause (frames 6-21) with the joining "|" at 12, then "cd".
+    best = [0, 0, 0, 5, 0, 6] + [0] * 6 + [4] + [0] * 9 + [7, 7, 0, 8, 0, 0]
+    frames = np.full((len(best), len(vocab)), -8.0)
+    frames[np.arange(len(best)), best] = -0.01
+    # The released cut is at frame 4, between "a" and "b", so "b" sits in the wrong segment.
+    rows = [{"start": 0.0, "end": 4 * FRAME_SECONDS, "text": "ab"},
+            {"start": 4 * FRAME_SECONDS, "end": len(best) * FRAME_SECONDS, "text": "cd"}]
+    new = realign_recording(rows, frames, vocab, margin=1.0)
+    cut = (5 + 1 + 22) / 2 * FRAME_SECONDS    # middle of the pause between "b" and "c"
+    assert new == [(0.0, round(cut, 3)), (round(cut, 3), round(len(best) * FRAME_SECONDS, 3))]
+    # With no margin, four letters cannot fit in a segment three frames long.
+    short = [{"start": 0.0, "end": 2 * FRAME_SECONDS, "text": "abab"},
+             {"start": 2 * FRAME_SECONDS, "end": len(best) * FRAME_SECONDS, "text": "cd"}]
+    assert realign_recording(short, frames, vocab, margin=0.0) is None
+    assert realign_recording(short, frames, vocab, margin=1.0) is not None
