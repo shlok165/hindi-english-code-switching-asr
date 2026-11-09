@@ -4,7 +4,7 @@ A baseline for recognising Hindi–English code-switched speech: wav2vec 2.0 wit
 
 **Status: Stage 1B is complete (iteration 1, git tag `iteration1`).** On the MUCS blind test, with KenLM beam search: **WER 21.54, T-WER 20.22**, confirmed with the organisers' own scoring script.
 
-The best improvement iteration so far, chosen on validation data only, is iteration 4 (git tag `iteration4`): **blind WER 20.44, T-WER 19.20**, also confirmed with the organisers' script. See [Improvement iterations](#improvement-iterations).
+The improvement iterations are finished. The final model, chosen on validation data only, is iteration 4 (git tag `iteration4`): **blind WER 20.44, T-WER 19.20**, also confirmed with the organisers' script. See [Improvement iterations](#improvement-iterations).
 
 - [Stage 1A report](docs/stage_1a_report.md): dataset statistics, model, tokenizer and GPU requirements
 - [Stage 1B report](docs/stage_1b_report.md): training, evaluation, error analysis and the Stage 2 handoff
@@ -43,10 +43,13 @@ Each iteration after the baseline changes one thing, and iterations are compared
 | 2 | More training, from iteration 1's weights | 16.54 | 21.01 | 19.74 |
 | 3 | As 2, with English words in the training transcripts written in Latin script | 16.75 | 19.36 | 18.82 |
 | 4 | As 2, without the training utterances whose transcript does not match their audio | **16.36** | 20.44 | 19.20 |
+| 5 | As 4, with the training segments re-cut where their transcripts are, instead of dropped | 17.81 | 19.56 | 18.15 |
 
-Iteration 3's blind gain comes mostly from matching the blind references, which write English in Latin script. On the val measure used to choose, it ties with iteration 2, so iteration 4 builds on iteration 2. Iteration 4 is the best so far on val and improves on iteration 2 on every split.
+Iteration 3's blind gain comes mostly from matching the blind references, which write English in Latin script. On the val measure used to choose, it ties with iteration 2, so iteration 4 builds on iteration 2. Iteration 4 improves on iteration 2 on every split and is the best on val, so it is the final model.
 
-Details, and the iterations still running, are in [docs/iterations.md](docs/iterations.md).
+Iteration 5 is better at correctly cut speech, but val and test keep the released cuts. Their references often hold whole words that the cut has partly removed, and iteration 4, trained on the same kind of cuts, learned to complete them. So iteration 5 scores worse on val and test. It scores better on blind, whose references appear to stop where the audio does. As with iteration 3, blind played no part in the choice.
+
+Details are in [docs/iterations.md](docs/iterations.md).
 
 ## Reproducing the results
 
@@ -139,6 +142,19 @@ With a trained checkpoint in place, this rebuilds the language model, tunes on v
 ```powershell
 bash scripts/evaluate_baseline.sh data/checkpoints/baseline_rtx3050/best
 ```
+
+### 10. The final model (iteration 4)
+
+Iteration 4 starts from the baseline's best checkpoint and uses its language model, so steps 3 and 7 come first. It scores every training utterance with the baseline model and drops those whose transcript does not match the audio. Then it trains for 44,000 more updates and evaluates:
+
+```powershell
+.venv\Scripts\python -m src.analysis.score_train --config configs/train_baseline.yaml --checkpoint data/checkpoints/baseline_rtx3050/best
+.venv\Scripts\python -m src.data.filter_train --manifest-dir data/processed/manifests --output-dir data/processed/manifests_clean
+.venv\Scripts\python -m src.training.train --config configs/train_iteration4.yaml --resume auto
+bash scripts/evaluate_iteration.sh iteration4 data/checkpoints/iteration4/best
+```
+
+Training took 7 h 2 min on the RTX 3050. The evaluation script tunes the decoder on val and commits the settings to git before it decodes test and blind. The other iterations' configs and data steps are in [docs/iterations.md](docs/iterations.md).
 
 # Research Dossier
 

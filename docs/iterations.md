@@ -156,6 +156,7 @@ Every result uses KenLM beam search with that iteration's own val-tuned settings
 | 2 | 18.65 | 16.54 | 30.19 | 27.22 | 21.01 | 19.74 | 13.43 |
 | 3 | 16.75 | 16.75 | 30.73 | 27.55 | 19.36 | 18.82 | 11.71 |
 | 4 | 18.43 | 16.36 | 29.98 | 27.06 | 20.44 | 19.20 | 13.17 |
+| 5 | 19.77 | 17.81 | 33.04 | 30.06 | 19.56 | 18.15 | 12.33 |
 
 Blind WER and T-WER are confirmed with the organisers' `compute_wer.py` for every iteration. Iteration 3's plain val WER is measured against its own script-normalised references, so only its script-folded val WER is comparable with the other rows.
 
@@ -282,3 +283,85 @@ With KenLM, blind insertions fall from 1,099 to 955. That fall comes mostly from
 **Checkpoint averaging, checked and not pursued.** Averaging iteration 4's last four checkpoints (updates 40,000 to 44,000) gives 20.92 greedy val WER, against 20.89 for the best single checkpoint. The learning rate had decayed almost to zero over those updates, so the checkpoints barely differ.
 
 The full breakdowns are in `results/iteration4/error_analysis/`.
+
+### Iteration 5: realignment
+
+**Training.** Iteration 5 used iteration 4's recipe exactly, on the 48,805 realigned training segments. It ran 44,000 updates in 6 h 52 min. An epoch is 5,374 updates, so the run covered about 8.2 epochs.
+
+Greedy val WER was higher than iteration 4's at 19 of the 22 checks, by 0.66 points on average. Iteration 5's best checkpoint, at update 38,000, scored **21.85**; iteration 4's best scored 20.89.
+
+Training loss ended far lower, at 0.22 against 0.37, because the realigned transcripts match their audio. Val loss ended higher, at 1.04 against 0.91.
+
+**Decoder.** Tuned on val with the same language model as iterations 2 and 4. The settings were α 0.35, β 1.0, unknown-word offset −5 and beam width 50, and they were committed before test or blind was decoded. They are in `configs/decode_iteration5.yaml`.
+
+**Results.**
+
+| Measure | Iteration 4 | Iteration 5 | Change |
+|---|---|---|---|
+| Val WER, script-folded (KenLM) | 16.36 | 17.81 | +1.45 |
+| Val WER, script-folded (greedy) | 19.40 | 20.59 | +1.19 |
+| Test WER (KenLM) | 29.98 | 33.04 | +3.06 |
+| Test T-WER, approx. (KenLM) | 27.06 | 30.06 | +3.00 |
+| Blind WER (KenLM) | 20.44 | 19.56 | −0.88 |
+| Blind T-WER (KenLM) | 19.20 | 18.15 | −1.05 |
+| Blind WER (greedy) | 23.34 | 22.34 | −1.00 |
+
+**Choice.** On the measure that decides, iteration 5 is 1.45 points worse than iteration 4, so iteration 4 stays the best iteration. Blind played no part in the choice, and would have pointed the other way, as it did for iteration 3.
+
+**Why val and blind disagree.** The splits treat speech at a cut differently. Each word error below is counted by where it falls in its utterance, and a cut can only cause errors at the edges. Greedy decoding has no settings, so it isolates the model. Iteration 5's change from iteration 4, in WER points:
+
+| Greedy errors | Val | Test | Blind |
+|---|---|---|---|
+| Before the first correct word | +0.78 | +0.96 | −0.20 |
+| Between the first and last correct words | −0.75 | −1.10 | +0.36 |
+| After the last correct word | +0.82 | +1.48 | −1.04 |
+| No word correct | +0.18 | +0.83 | −0.13 |
+| **Total** | **+1.02** | **+2.19** | **−1.00** |
+
+- **Inside utterances,** where cuts make no difference, iteration 5 makes fewer errors on val and test.
+- **At the edges of val and test,** iteration 5 drops words their references hold. After the last correct word, val deletions rise from 402 to 677. Val and test references are written like the released training data's: they often hold whole words that the cut has partly removed. Iteration 4 learned to complete those words, and iteration 5, trained on cuts that hold exactly their transcript, did not.
+- **On blind, the habit turns into insertions.** Blind's references appear to stop where the audio does: one ends on देख, a word cut short. Iteration 4 completes such words, or adds fragments such as a trailing ें. Before the first or after the last correct word, it inserts 908 words, against iteration 5's 274.
+
+**Val re-cut, as a check.** This realigns val the way training was realigned, with iteration 4's model, and classes each released cut. A cut counts as clean when all three of these hold:
+
+- its own transcript's speech lies no more than 0.2 s outside it;
+- other transcripts' speech lies no more than 0.2 s inside it;
+- it holds under two characters of speech no transcript accounts for.
+
+The re-cut is placed using the val references, so its WER is not a result. It only shows what the released cuts cost each model. Greedy val WER:
+
+| Val segments | Segments | Iteration 4 | Iteration 5 |
+|---|---|---|---|
+| Released cut is clean | 1,578 | 16.19 | 16.17 |
+| Released cut goes through speech | 738 | 31.63 | 34.76 |
+| All, at the released cuts | 2,316 | 21.28 | 22.30 |
+| All, re-cut where their transcripts are | 2,316 | 16.41 | **15.39** |
+
+On clean cuts, the two models tie. On re-cut val, iteration 5 is 1.02 points better, even though the cuts were placed with iteration 4's model. Re-cutting lowers both models' WER by about 5 points. That is a rough measure of what the released cuts cost, and an optimistic one, since the re-cut uses the references.
+
+The counts are in `results/iteration5/cut_effects.json`, from `python -m src.analysis.cut_effects`. The full error breakdowns are in `results/iteration5/error_analysis/`.
+
+## Where the iterations ended
+
+The iterations stop at iteration 5. Iteration 4 (git tag `iteration4`) is the final model, chosen on val only. With KenLM:
+
+| Measure | Iteration 1 | Iteration 4 | Change |
+|---|---|---|---|
+| Val WER, script-folded | 17.75 | 16.36 | −1.39 |
+| Test WER | 31.29 | 29.98 | −1.31 |
+| Blind WER | 21.54 | 20.44 | −1.10 |
+| Blind T-WER | 20.22 | 19.20 | −1.02 |
+
+**What helped:** more training (iteration 2), and dropping the training utterances whose transcript does not match their audio (iteration 4). Both improved every split.
+
+**What did not help on val:**
+- **Script normalisation (iteration 3):** level with iteration 2 on val. It is better on blind only because blind writes English in Latin script.
+- **Realignment (iteration 5):** a better recogniser of correctly cut speech, but worse at the released cuts that val and test keep.
+- **Checkpoint averaging:** no gain.
+
+**Against published results.** On blind, iteration 4's WER of 20.44 and T-WER of 19.20 are below the 21.77 and 20.75 that Chadha et al. (2022) report for Approach C2. They are above the best leaderboard entry's 16.43 and 15.51. The published figures come from the papers and the leaderboard, not from runs here, and this project's encoder may not be the paper's exact checkpoint.
+
+**Left open:**
+- **Blind's conventions.** Iterations 3 and 5 both beat iteration 4 on blind, apparently by matching how blind's references are written: English in Latin script, and words split by a cut written only as far as they are heard. Only blind shows either effect, so neither was adopted.
+- **Seeds.** Every result is one run with seed 42, and differences under about 1 WER may be noise. Iteration 4's lead over iteration 2 on val (0.18) is well inside that, though it held on every split.
+- **Not tried:** transliteration-aware decoding, and other encoders. Both are recommended in the [Stage 1B report's handoff](stage_1b_report.md#f-stage-2-handoff).
