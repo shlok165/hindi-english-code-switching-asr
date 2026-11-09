@@ -51,6 +51,16 @@ Iteration 5 is better at correctly cut speech, but val and test keep the release
 
 Details are in [docs/iterations.md](docs/iterations.md).
 
+## Using the final model
+
+The final model is iteration 4. Model weights are never committed here, so `data/checkpoints/iteration4/best` comes from training it (step 10 below), and the language model from step 7. To transcribe a recording with KenLM and the decoder settings tuned for iteration 4 on val:
+
+```powershell
+.venv\Scripts\python -m src.inference --checkpoint data/checkpoints/iteration4/best --audio path\to\audio.wav --kenlm data/language_model/train_5gram.klm --decode-config configs/decode_iteration4.yaml
+```
+
+Leave out `--kenlm` and `--decode-config` to decode greedily. `src.evaluate` takes the same `--checkpoint` and `--decode-config` to score a whole split.
+
 ## Reproducing the results
 
 Tested on Windows 11 with Python 3.14 and an RTX 3050 6 GB. The Colab notebook, `notebooks/colab_stage1b_baseline.ipynb`, has not yet been run on Colab. Commands are for PowerShell from the repository root.
