@@ -4,6 +4,8 @@ A baseline for recognising Hindi–English code-switched speech: wav2vec 2.0 wit
 
 **Status: Stage 1B is complete (iteration 1, git tag `iteration1`).** On the MUCS blind test, with KenLM beam search: **WER 21.54, T-WER 20.22**, confirmed with the organisers' own scoring script.
 
+The best improvement iteration so far, chosen on validation data only, is iteration 4 (git tag `iteration4`): **blind WER 20.44, T-WER 19.20**, also confirmed with the organisers' script. See [Improvement iterations](#improvement-iterations).
+
 - [Stage 1A report](docs/stage_1a_report.md): dataset statistics, model, tokenizer and GPU requirements
 - [Stage 1B report](docs/stage_1b_report.md): training, evaluation, error analysis and the Stage 2 handoff
 - [Improvement iterations](docs/iterations.md): changes made after the baseline, one at a time, with results as they finish
@@ -40,8 +42,9 @@ Each iteration after the baseline changes one thing, and iterations are compared
 | 1 | Stage 1B baseline | 17.75 | 21.54 | 20.22 |
 | 2 | More training, from iteration 1's weights | 16.54 | 21.01 | 19.74 |
 | 3 | As 2, with English words in the training transcripts written in Latin script | 16.75 | 19.36 | 18.82 |
+| 4 | As 2, without the training utterances whose transcript does not match their audio | **16.36** | 20.44 | 19.20 |
 
-Iteration 3's blind gain comes mostly from matching the blind references, which write English in Latin script. On the val measure used to choose, it ties with iteration 2, which stays the base for the next iteration.
+Iteration 3's blind gain comes mostly from matching the blind references, which write English in Latin script. On the val measure used to choose, it ties with iteration 2, so iteration 4 builds on iteration 2. Iteration 4 is the best so far on val and improves on iteration 2 on every split.
 
 Details, and the iterations still running, are in [docs/iterations.md](docs/iterations.md).
 

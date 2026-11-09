@@ -87,6 +87,7 @@ Every result uses KenLM beam search with that iteration's own val-tuned settings
 | 1 | 20.08 | 17.75 | 31.29 | 28.25 | 21.54 | 20.22 | 13.65 |
 | 2 | 18.65 | 16.54 | 30.19 | 27.22 | 21.01 | 19.74 | 13.43 |
 | 3 | 16.75 | 16.75 | 30.73 | 27.55 | 19.36 | 18.82 | 11.71 |
+| 4 | 18.43 | 16.36 | 29.98 | 27.06 | 20.44 | 19.20 | 13.17 |
 
 Blind WER and T-WER are confirmed with the organisers' `compute_wer.py` for every iteration. Iteration 3's plain val WER is measured against its own script-normalised references, so only its script-folded val WER is comparable with the other rows.
 
@@ -174,3 +175,42 @@ Blind's references hardly ever use the Devanagari forms in the map. Iteration 3 
 Test is written like the training data, and moves the other way. The script-folded val measure deliberately ignores script, and on it the two iterations are level.
 
 The full breakdowns are in `results/iteration3/error_analysis/`.
+
+### Iteration 4: misalignment filter
+
+**Training.** Iteration 4 used iteration 2's recipe exactly, without the 3,550 misaligned training utterances. The number of updates stayed at 44,000, which took 7 h 2 min. With 6.6 % less audio, an epoch is 5,171 updates rather than 5,535, so the run covered about 8.5 epochs.
+
+The val references are the same as iteration 2's, so the checks during training compare directly. Greedy val WER was lower than iteration 2's at 21 of the 22 checks, by 0.62 points on average. Iteration 4's best checkpoint, at update 40,000, scored **20.89**; iteration 2's best, at update 42,000, scored 21.34.
+
+Val loss ended higher, at 0.91 against 0.86. Val was not filtered, so it still holds misaligned utterances, and a model that no longer trains on them probably pays more for them.
+
+**Decoder.** Tuned on val with the same language model as iteration 2. The settings were α 0.5, β 0, unknown-word offset −10 and beam width 200, and they were committed before test or blind was decoded. They are in `configs/decode_iteration4.yaml`.
+
+**Results.** Every split improves with both decoders:
+
+| Measure | Iteration 2 | Iteration 4 | Change |
+|---|---|---|---|
+| Val WER, script-folded (KenLM) | 16.54 | 16.36 | −0.18 |
+| Val WER, script-folded (greedy) | 19.89 | 19.40 | −0.49 |
+| Test WER (KenLM) | 30.19 | 29.98 | −0.21 |
+| Test T-WER, approx. (KenLM) | 27.22 | 27.06 | −0.16 |
+| Blind WER (KenLM) | 21.01 | 20.44 | −0.57 |
+| Blind T-WER (KenLM) | 19.74 | 19.20 | −0.54 |
+| Blind WER (greedy) | 23.80 | 23.34 | −0.46 |
+
+Each gain is within single-seed noise, but they all point the same way. Iteration 4 has the lowest script-folded val WER so far, so it is the base for the next iteration.
+
+**Where the gain comes from.** Greedy decoding has no settings to tune, so it isolates the model. With it, the gain is mostly fewer substitutions, on both Hindi and English words:
+
+| Greedy word error rate | Iteration 2 | Iteration 4 |
+|---|---|---|
+| Val, Hindi words | 15.40 % | 15.00 % |
+| Val, English words | 28.32 % | 27.71 % |
+| Blind, Hindi words | 13.10 % | 12.78 % |
+| Blind, English words | 35.32 % | 34.24 % |
+
+With KenLM, blind insertions fall from 1,099 to 955. That fall comes mostly from the lower word-insertion score (β 0 against 1.0), not from the filter.
+
+**Checkpoint averaging, checked and not pursued.** Averaging iteration 4's last four checkpoints (updates 40,000 to 44,000) gives 20.92 greedy val WER, against 20.89 for the best single checkpoint. The learning rate had decayed almost to zero over those updates, so the checkpoints barely differ.
+
+The full breakdowns are in `results/iteration4/error_analysis/`.
