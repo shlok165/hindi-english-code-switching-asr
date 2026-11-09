@@ -11,8 +11,10 @@ them. This finds the cut points again instead, in two steps, on the training spl
 only:
 
 1. ``log-probs`` scores every training recording, from its first segment's start to
-   its last segment's end, with one model, in overlapping 30 s windows so that
+   its last segment's end, with one model, in overlapping 12 s windows so that
    every frame has context on both sides. The frames are stored once per recording.
+   Longer windows are worse: over 30 s the model sometimes stops transcribing
+   partway through, which would leave the alignment nothing to follow.
 2. ``align`` force-aligns each recording's transcripts, in order, to those frames
    with CTC, allowing each transcript only within MARGIN_SECONDS of its original
    segment. Each cut point then moves to the middle of the pause between the last
@@ -48,8 +50,12 @@ from src.models.tokenizer import BLANK, DELIMITER, encode
 from src.utils.config import data_path, read_manifest
 
 FRAME_SECONDS = SAMPLES_PER_FRAME / TARGET_SAMPLE_RATE  # 20 ms
-WINDOW_SAMPLES = 30 * TARGET_SAMPLE_RATE
-HOP_SAMPLES = 25 * TARGET_SAMPLE_RATE  # a multiple of SAMPLES_PER_FRAME, so windows share one frame grid
+# Measured on 24 two-minute stretches of training audio with iteration 4's model, as
+# characters emitted per transcript character: 0.971 for 12 s windows every 8 s, 0.965
+# for 16 s every 12 s, 0.928 for 30 s every 25 s (one stretch at 0.61), and 0.933 when
+# each segment is decoded alone, which splits the words that cross a cut.
+WINDOW_SAMPLES = 12 * TARGET_SAMPLE_RATE
+HOP_SAMPLES = 8 * TARGET_SAMPLE_RATE  # a multiple of SAMPLES_PER_FRAME, so windows share one frame grid
 LOWEST_LOG_PROB = -30.0  # as in src.logit_cache
 MARGIN_SECONDS = 15.0
 MOVE_BANDS = (0.1, 0.5, 1.0, 2.0, 5.0)
