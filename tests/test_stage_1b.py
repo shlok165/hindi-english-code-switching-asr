@@ -323,6 +323,13 @@ def test_realignment_moves_the_cut_into_the_pause():
     new = realign_recording(rows, frames, vocab, margin=1.0)
     cut = (5 + 1 + 22) / 2 * FRAME_SECONDS    # middle of the pause between "b" and "c"
     assert new == [(0.0, round(cut, 3)), (round(cut, 3), round(len(best) * FRAME_SECONDS, 3))]
+    # A silent pause is split at its middle, however little padding is allowed.
+    assert realign_recording(rows, frames, vocab, margin=1.0, pad=0.1) == new
+    # A pause holding speech no transcript accounts for (an "a" at frame 9) belongs to
+    # neither segment: each cut stays within the padding of its transcript's speech.
+    spoken = frames.copy()
+    spoken[9], spoken[9, 5] = -8.0, -0.01
+    assert realign_recording(rows, spoken, vocab, margin=1.0, pad=0.1) == [(0.0, 0.22), (0.34, 0.56)]
     # With no margin, four letters cannot fit in a segment three frames long.
     short = [{"start": 0.0, "end": 2 * FRAME_SECONDS, "text": "abab"},
              {"start": 2 * FRAME_SECONDS, "end": len(best) * FRAME_SECONDS, "text": "cd"}]

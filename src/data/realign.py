@@ -18,8 +18,10 @@ only:
 2. ``align`` force-aligns each recording's transcripts, in order, to those frames
    with CTC, allowing each transcript only within MARGIN_SECONDS of its original
    segment. Each cut point then moves to the middle of the pause between the last
-   character of one transcript and the first character of the next. The segments
-   still tile the recording, so no audio is removed or truncated. The misalignment
+   character of one transcript and the first character of the next, but never more
+   than PAD_SECONDS from either. Audio farther than that from any transcribed
+   speech, such as a long silence or code read out that the transcribers skipped,
+   is left out of every segment; no transcribed speech is cut. The misalignment
    filter of iteration 4 then runs on the new segments, scored greedily from the
    same frames, and drops those that still do not match.
 
@@ -58,6 +60,7 @@ WINDOW_SAMPLES = 12 * TARGET_SAMPLE_RATE
 HOP_SAMPLES = 8 * TARGET_SAMPLE_RATE  # a multiple of SAMPLES_PER_FRAME, so windows share one frame grid
 LOWEST_LOG_PROB = -30.0  # as in src.logit_cache
 MARGIN_SECONDS = 15.0
+PAD_SECONDS = 0.3
 MOVE_BANDS = (0.1, 0.5, 1.0, 2.0, 5.0)
 EXAMPLES = 12
 
@@ -230,14 +233,40 @@ def transcript_spans(path: np.ndarray, owners: np.ndarray, count: int) -> tuple[
     return first, last
 
 
-def cut_points(first: np.ndarray, last: np.ndarray) -> np.ndarray:
-    """Frame of each cut between neighbours: the middle of the pause between them."""
-    return (last[:-1] + 1 + first[1:]) / 2
+def untranscribed_speech(frames: np.ndarray, first: np.ndarray, last: np.ndarray, blank: int, delimiter: int) -> np.ndarray:
+    """Whether the model hears characters before, between and after the transcripts' speech.
+
+    Entry 0 is the audio before the first transcript, entry i the gap between
+    transcripts i - 1 and i, and the last entry the audio after the last transcript.
+    """
+    best = frames.argmax(axis=1)
+    heard = np.concatenate(([0], np.cumsum((best != blank) & (best != delimiter))))
+    starts = np.concatenate(([0], last + 1))
+    ends = np.concatenate((first, [len(frames)]))
+    return heard[np.maximum(ends, starts)] - heard[starts] > 0
 
 
-def realign_recording(rows: list[dict], frames: np.ndarray, vocab: dict[str, int],
-                      margin: float = MARGIN_SECONDS) -> list[tuple[float, float]] | None:
-    """New (start, end) for each segment of one recording, or None if no alignment fits."""
+def segment_bounds(first: np.ndarray, last: np.ndarray, origin: float, start: float, end: float,
+                   pad: float, speech: np.ndarray | None = None) -> tuple[np.ndarray, np.ndarray]:
+    """Start and end of each new segment, in seconds, from its first and last emitting frame.
+
+    A cut sits in the middle of the pause between two transcripts. Where that pause
+    holds speech no transcript accounts for (`speech`, from untranscribed_speech),
+    the cut stays within `pad` of each transcript's own speech instead, so the
+    untranscribed speech is left out of both segments. Plain pauses are kept whole.
+    """
+    speech = np.ones(len(first) + 1, dtype=bool) if speech is None else speech
+    speech_start = origin + first * FRAME_SECONDS
+    speech_end = origin + (last + 1) * FRAME_SECONDS
+    middle = np.concatenate(([start], (speech_end[:-1] + speech_start[1:]) / 2, [end]))
+    starts = np.where(speech[:-1], np.maximum(middle[:-1], speech_start - pad), middle[:-1])
+    ends = np.where(speech[1:], np.minimum(middle[1:], speech_end + pad), middle[1:])
+    return starts, ends
+
+
+def align_spans(rows: list[dict], frames: np.ndarray, vocab: dict[str, int],
+                margin: float = MARGIN_SECONDS) -> tuple[np.ndarray, np.ndarray] | None:
+    """First and last emitting frame of each transcript of one recording, or None if no alignment fits."""
     origin = rows[0]["start"]
     total = len(frames)
     # The tolerance keeps times that land on a frame edge, such as 0.08 / 0.02, on that edge.
@@ -246,13 +275,18 @@ def realign_recording(rows: list[dict], frames: np.ndarray, vocab: dict[str, int
     states, owners = ctc_states([encode(row["text"], vocab) for row in rows], vocab[BLANK], vocab[DELIMITER])
     lower, upper = state_bounds(owners, first, last, total)
     path = banded_viterbi(frames.astype(np.float32), states, lower, upper)
-    if path is None:
+    return None if path is None else transcript_spans(path, owners, len(rows))
+
+
+def realign_recording(rows: list[dict], frames: np.ndarray, vocab: dict[str, int],
+                      margin: float = MARGIN_SECONDS, pad: float = PAD_SECONDS) -> list[tuple[float, float]] | None:
+    """New (start, end) for each segment of one recording, or None if no alignment fits."""
+    spans = align_spans(rows, frames, vocab, margin)
+    if spans is None:
         return None
-    spans = transcript_spans(path, owners, len(rows))
-    cuts = origin + cut_points(*spans) * FRAME_SECONDS
-    starts = [rows[0]["start"], *cuts.tolist()]
-    ends = [*cuts.tolist(), rows[-1]["end"]]
-    return [(round(s, 3), round(e, 3)) for s, e in zip(starts, ends)]
+    speech = untranscribed_speech(frames, *spans, vocab[BLANK], vocab[DELIMITER])
+    starts, ends = segment_bounds(*spans, rows[0]["start"], rows[0]["start"], rows[-1]["end"], pad, speech)
+    return [(round(float(s), 3), round(float(e), 3)) for s, e in zip(starts, ends)]
 
 
 def frame_range(start: float, end: float, origin: float, total: int) -> slice:
@@ -260,7 +294,7 @@ def frame_range(start: float, end: float, origin: float, total: int) -> slice:
 
 
 def align(checkpoint: Path, manifest_dir: Path, output_dir: Path, report_path: Path,
-          margin: float, max_cer: float, cmudict: Path, names: dict[str, str]) -> None:
+          margin: float, pad: float, max_cer: float, cmudict: Path, names: dict[str, str]) -> None:
     source = frames_directory(checkpoint)
     vocab = json.loads((checkpoint / "vocab.json").read_text(encoding="utf-8"))
     train = read_manifest(manifest_dir / "train.jsonl")
@@ -274,7 +308,7 @@ def align(checkpoint: Path, manifest_dir: Path, output_dir: Path, report_path: P
         frames = np.load(source / f"{name}.npy")
         if abs(index["start"] - rows[0]["start"]) > 1e-6 or abs(index["end"] - rows[-1]["end"]) > 1e-6:
             raise ValueError(f"{name}: frames were written for other segments")
-        new = realign_recording(rows, frames, vocab, margin)
+        new = realign_recording(rows, frames, vocab, margin, pad)
         if new is None:
             failed.append(name)
             new = [(row["start"], row["end"]) for row in rows]
@@ -308,14 +342,14 @@ def align(checkpoint: Path, manifest_dir: Path, output_dir: Path, report_path: P
     for split in ("val", "test", "blind"):
         shutil.copy2(manifest_dir / f"{split}.jsonl", output_dir / f"{split}.jsonl")
 
-    report = summarise(train, scored, dropped, failed, kept_rows, names, margin, max_cer)
+    report = summarise(train, scored, dropped, failed, kept_rows, names, margin, pad, max_cer)
     report_path.parent.mkdir(parents=True, exist_ok=True)
     report_path.write_text(json.dumps(report, ensure_ascii=False, indent=1), encoding="utf-8")
-    print(json.dumps({key: report[key] for key in ("recordings_failed", "cut_points_moved", "filter_before",
-                                                    "filter_after", "kept_hours")}, ensure_ascii=False))
+    print(json.dumps({key: report[key] for key in ("recordings_failed", "starts_moved", "left_out_hours",
+                                                    "filter_before", "filter_after", "kept_hours")}, ensure_ascii=False))
 
 
-def summarise(train, scored, dropped, failed, kept_rows, names, margin, max_cer) -> dict:
+def summarise(train, scored, dropped, failed, kept_rows, names, margin, pad, max_cer) -> dict:
     ordered = [scored[row["id"]] for row in train]
     moves = []
     for name, rows in recordings(train).items():
@@ -324,6 +358,7 @@ def summarise(train, scored, dropped, failed, kept_rows, names, margin, max_cer)
             moves.append(abs(item["new"][0] - item["old"][0]))
     moves = np.array(moves)
     hours = sum(row["duration"] for row in train) / 3600
+    new_hours = sum(item["new"][1] - item["new"][0] for item in ordered) / 3600
     before = [item for item in ordered if min(item["cer_before"]) > max_cer]
     previously = {item["id"] for item in before}
     rescued = [item for item in before if item["id"] not in dropped]
@@ -335,13 +370,15 @@ def summarise(train, scored, dropped, failed, kept_rows, names, margin, max_cer)
     return {
         "rule": "force-align each training recording's transcripts in order with CTC, within "
                 f"{margin} s of their original segments; cut in the middle of the pause between "
-                f"transcripts; drop a segment whose CER is still above {max_cer} as written and in one script",
-        **names, "margin_seconds": margin, "max_cer": max_cer,
+                f"transcripts but at most {pad} s from either one's speech; drop a segment whose CER "
+                f"is still above {max_cer} as written and in one script",
+        **names, "margin_seconds": margin, "pad_seconds": pad, "max_cer": max_cer,
         "recordings": len(recordings(train)), "recordings_failed": failed,
         "segments": len(train), "train_hours": round(hours, 2),
-        "cut_points": len(moves),
-        "cut_points_moved": {f"over {band} s": int((moves > band).sum()) for band in MOVE_BANDS},
-        "median_move_seconds": round(float(np.median(moves)), 3) if len(moves) else 0.0,
+        "left_out_hours": round(hours - new_hours, 2),
+        "starts_compared": len(moves),
+        "starts_moved": {f"over {band} s": int((moves > band).sum()) for band in MOVE_BANDS},
+        "median_start_move_seconds": round(float(np.median(moves)), 3) if len(moves) else 0.0,
         "filter_before": {"dropped": len(before),
                           "hours": round(sum(i["old"][1] - i["old"][0] for i in before) / 3600, 2)},
         "filter_after": {"dropped": len(dropped),
@@ -367,6 +404,7 @@ def main() -> None:
     parser.add_argument("--output-dir", default="data/processed/manifests_realigned")
     parser.add_argument("--report", default="results/train_realign_report.json")
     parser.add_argument("--margin", type=float, default=MARGIN_SECONDS)
+    parser.add_argument("--pad", type=float, default=PAD_SECONDS)
     parser.add_argument("--max-cer", type=float, default=MAX_CER)
     parser.add_argument("--cmudict", default="data/external/cmudict/cmudict.dict")
     args = parser.parse_args()
@@ -376,7 +414,7 @@ def main() -> None:
     else:
         names = {"checkpoint": args.checkpoint, "manifests": args.manifest_dir, "output": args.output_dir}
         align(checkpoint, manifests, data_path(args.output_dir), ROOT / args.report,
-              args.margin, args.max_cer, data_path(args.cmudict), names)
+              args.margin, args.pad, args.max_cer, data_path(args.cmudict), names)
 
 
 if __name__ == "__main__":
