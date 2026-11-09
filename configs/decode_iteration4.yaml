@@ -1,0 +1,10 @@
+# Tuned on validation data by src.tune_lm, with test and blind untouched.
+# WER on the tuning utterances of val: 17.991. Every grid result is in results/iteration4/lm_tuning.csv.
+decoder:
+  kenlm_model: data/language_model/train_5gram.klm
+  beam_width: 200
+  alpha: 0.5               # LM weight
+  beta: 0.0                # Word insertion score
+  unk_score_offset: -10.0  # Penalty for words outside the LM vocabulary
+  beam_prune_logp: -10.0   # pyctcdecode default
+  token_min_logp: -5.0     # pyctcdecode default
