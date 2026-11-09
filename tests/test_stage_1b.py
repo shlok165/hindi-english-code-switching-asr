@@ -335,3 +335,32 @@ def test_realignment_moves_the_cut_into_the_pause():
              {"start": 2 * FRAME_SECONDS, "end": len(best) * FRAME_SECONDS, "text": "cd"}]
     assert realign_recording(short, frames, vocab, margin=0.0) is None
     assert realign_recording(short, frames, vocab, margin=1.0) is not None
+
+
+def test_cut_effects_counts_errors_by_position_and_classes_released_cuts():
+    from src.analysis.cut_effects import PLACES, classify, error_positions
+    from src.data.realign import FRAME_SECONDS
+
+    positions = error_positions([("a b c d", "x b c"), ("e", "f"), ("", "g")])
+    assert positions["reference_words"] == 5 and positions["wer"] == 60.0
+    assert positions[PLACES[0]]["substitutions"] == 1   # a -> x, before the first correct word
+    assert positions[PLACES[2]]["deletions"] == 1       # d, after the last correct word
+    assert positions[PLACES[3]]["substitutions"] == 1   # e -> f, with no word right
+    assert positions[PLACES[1]]["wer_points"] == 0.0
+
+    vocab = {"<pad>": 0, "<s>": 1, "</s>": 2, "<unk>": 3, "|": 4, "a": 5, "b": 6, "c": 7, "d": 8}
+    best = [0, 0, 0, 5, 0, 6] + [0] * 6 + [4] + [0] * 9 + [7, 7, 0, 8, 0, 0]
+    frames = np.full((len(best), len(vocab)), -8.0)
+    frames[np.arange(len(best)), best] = -0.01
+
+    def clean(cut, scores=frames):
+        rows = [{"id": "x", "start": 0.0, "end": cut * FRAME_SECONDS, "text": "ab"},
+                {"id": "y", "start": cut * FRAME_SECONDS, "end": len(best) * FRAME_SECONDS, "text": "cd"}]
+        found = classify(rows, scores, vocab, tolerance=0.01, stray_limit=1)
+        return [found["x"]["clean"], found["y"]["clean"]]
+
+    assert clean(4) == [False, False]   # cut between "a" and "b"
+    assert clean(12) == [True, True]    # cut in the silent pause
+    spoken = frames.copy()
+    spoken[9], spoken[9, 5] = -8.0, -0.01
+    assert clean(12, spoken) == [False, True]   # untranscribed "a" inside the first segment

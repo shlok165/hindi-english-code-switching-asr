@@ -1,0 +1,392 @@
+{
+ "positions": {
+  "val": {
+   "greedy": {
+    "iteration4": {
+     "reference_words": 28471,
+     "wer": 21.28,
+     "before the first correct word": {
+      "substitutions": 797,
+      "deletions": 266,
+      "insertions": 168,
+      "wer_points": 4.32
+     },
+     "between the first and last correct words": {
+      "substitutions": 2602,
+      "deletions": 425,
+      "insertions": 376,
+      "wer_points": 11.95
+     },
+     "after the last correct word": {
+      "substitutions": 560,
+      "deletions": 402,
+      "insertions": 329,
+      "wer_points": 4.53
+     },
+     "no correct word": {
+      "substitutions": 95,
+      "deletions": 25,
+      "insertions": 13,
+      "wer_points": 0.47
+     }
+    },
+    "iteration5": {
+     "reference_words": 28471,
+     "wer": 22.3,
+     "before the first correct word": {
+      "substitutions": 773,
+      "deletions": 413,
+      "insertions": 267,
+      "wer_points": 5.1
+     },
+     "between the first and last correct words": {
+      "substitutions": 2440,
+      "deletions": 395,
+      "insertions": 353,
+      "wer_points": 11.2
+     },
+     "after the last correct word": {
+      "substitutions": 439,
+      "deletions": 677,
+      "insertions": 408,
+      "wer_points": 5.35
+     },
+     "no correct word": {
+      "substitutions": 119,
+      "deletions": 45,
+      "insertions": 21,
+      "wer_points": 0.65
+     }
+    }
+   },
+   "beam": {
+    "iteration4": {
+     "reference_words": 28471,
+     "wer": 18.43,
+     "before the first correct word": {
+      "substitutions": 573,
+      "deletions": 308,
+      "insertions": 127,
+      "wer_points": 3.54
+     },
+     "between the first and last correct words": {
+      "substitutions": 2163,
+      "deletions": 541,
+      "insertions": 334,
+      "wer_points": 10.67
+     },
+     "after the last correct word": {
+      "substitutions": 420,
+      "deletions": 374,
+      "insertions": 310,
+      "wer_points": 3.88
+     },
+     "no correct word": {
+      "substitutions": 70,
+      "deletions": 18,
+      "insertions": 9,
+      "wer_points": 0.34
+     }
+    },
+    "iteration5": {
+     "reference_words": 28471,
+     "wer": 19.77,
+     "before the first correct word": {
+      "substitutions": 558,
+      "deletions": 435,
+      "insertions": 264,
+      "wer_points": 4.42
+     },
+     "between the first and last correct words": {
+      "substitutions": 2073,
+      "deletions": 398,
+      "insertions": 333,
+      "wer_points": 9.85
+     },
+     "after the last correct word": {
+      "substitutions": 369,
+      "deletions": 610,
+      "insertions": 429,
+      "wer_points": 4.95
+     },
+     "no correct word": {
+      "substitutions": 104,
+      "deletions": 36,
+      "insertions": 19,
+      "wer_points": 0.56
+     }
+    }
+   }
+  },
+  "test": {
+   "greedy": {
+    "iteration4": {
+     "reference_words": 37611,
+     "wer": 33.64,
+     "before the first correct word": {
+      "substitutions": 2307,
+      "deletions": 1672,
+      "insertions": 238,
+      "wer_points": 11.21
+     },
+     "between the first and last correct words": {
+      "substitutions": 3917,
+      "deletions": 666,
+      "insertions": 380,
+      "wer_points": 13.2
+     },
+     "after the last correct word": {
+      "substitutions": 1070,
+      "deletions": 647,
+      "insertions": 536,
+      "wer_points": 5.99
+     },
+     "no correct word": {
+      "substitutions": 760,
+      "deletions": 342,
+      "insertions": 119,
+      "wer_points": 3.25
+     }
+    },
+    "iteration5": {
+     "reference_words": 37611,
+     "wer": 35.83,
+     "before the first correct word": {
+      "substitutions": 1869,
+      "deletions": 2401,
+      "insertions": 309,
+      "wer_points": 12.17
+     },
+     "between the first and last correct words": {
+      "substitutions": 3621,
+      "deletions": 515,
+      "insertions": 416,
+      "wer_points": 12.1
+     },
+     "after the last correct word": {
+      "substitutions": 916,
+      "deletions": 1269,
+      "insertions": 626,
+      "wer_points": 7.47
+     },
+     "no correct word": {
+      "substitutions": 868,
+      "deletions": 585,
+      "insertions": 82,
+      "wer_points": 4.08
+     }
+    }
+   },
+   "beam": {
+    "iteration4": {
+     "reference_words": 37611,
+     "wer": 29.98,
+     "before the first correct word": {
+      "substitutions": 1570,
+      "deletions": 1931,
+      "insertions": 197,
+      "wer_points": 9.83
+     },
+     "between the first and last correct words": {
+      "substitutions": 3384,
+      "deletions": 972,
+      "insertions": 399,
+      "wer_points": 12.64
+     },
+     "after the last correct word": {
+      "substitutions": 717,
+      "deletions": 554,
+      "insertions": 506,
+      "wer_points": 4.72
+     },
+     "no correct word": {
+      "substitutions": 666,
+      "deletions": 283,
+      "insertions": 96,
+      "wer_points": 2.78
+     }
+    },
+    "iteration5": {
+     "reference_words": 37611,
+     "wer": 33.04,
+     "before the first correct word": {
+      "substitutions": 1415,
+      "deletions": 2530,
+      "insertions": 319,
+      "wer_points": 11.34
+     },
+     "between the first and last correct words": {
+      "substitutions": 3121,
+      "deletions": 522,
+      "insertions": 395,
+      "wer_points": 10.74
+     },
+     "after the last correct word": {
+      "substitutions": 857,
+      "deletions": 1181,
+      "insertions": 686,
+      "wer_points": 7.24
+     },
+     "no correct word": {
+      "substitutions": 799,
+      "deletions": 510,
+      "insertions": 92,
+      "wer_points": 3.72
+     }
+    }
+   }
+  },
+  "blind": {
+   "greedy": {
+    "iteration4": {
+     "reference_words": 47764,
+     "wer": 23.34,
+     "before the first correct word": {
+      "substitutions": 1148,
+      "deletions": 1150,
+      "insertions": 472,
+      "wer_points": 5.8
+     },
+     "between the first and last correct words": {
+      "substitutions": 4076,
+      "deletions": 845,
+      "insertions": 248,
+      "wer_points": 10.82
+     },
+     "after the last correct word": {
+      "substitutions": 967,
+      "deletions": 1547,
+      "insertions": 436,
+      "wer_points": 6.18
+     },
+     "no correct word": {
+      "substitutions": 164,
+      "deletions": 91,
+      "insertions": 4,
+      "wer_points": 0.54
+     }
+    },
+    "iteration5": {
+     "reference_words": 47764,
+     "wer": 22.34,
+     "before the first correct word": {
+      "substitutions": 1165,
+      "deletions": 1302,
+      "insertions": 209,
+      "wer_points": 5.6
+     },
+     "between the first and last correct words": {
+      "substitutions": 4190,
+      "deletions": 943,
+      "insertions": 209,
+      "wer_points": 11.18
+     },
+     "after the last correct word": {
+      "substitutions": 802,
+      "deletions": 1586,
+      "insertions": 65,
+      "wer_points": 5.14
+     },
+     "no correct word": {
+      "substitutions": 72,
+      "deletions": 126,
+      "insertions": 0,
+      "wer_points": 0.41
+     }
+    }
+   },
+   "beam": {
+    "iteration4": {
+     "reference_words": 47764,
+     "wer": 20.44,
+     "before the first correct word": {
+      "substitutions": 825,
+      "deletions": 1210,
+      "insertions": 343,
+      "wer_points": 4.98
+     },
+     "between the first and last correct words": {
+      "substitutions": 3353,
+      "deletions": 1009,
+      "insertions": 261,
+      "wer_points": 9.68
+     },
+     "after the last correct word": {
+      "substitutions": 732,
+      "deletions": 1549,
+      "insertions": 350,
+      "wer_points": 5.51
+     },
+     "no correct word": {
+      "substitutions": 79,
+      "deletions": 49,
+      "insertions": 1,
+      "wer_points": 0.27
+     }
+    },
+    "iteration5": {
+     "reference_words": 47764,
+     "wer": 19.56,
+     "before the first correct word": {
+      "substitutions": 765,
+      "deletions": 1330,
+      "insertions": 143,
+      "wer_points": 4.69
+     },
+     "between the first and last correct words": {
+      "substitutions": 3520,
+      "deletions": 961,
+      "insertions": 259,
+      "wer_points": 9.92
+     },
+     "after the last correct word": {
+      "substitutions": 657,
+      "deletions": 1524,
+      "insertions": 102,
+      "wer_points": 4.78
+     },
+     "no correct word": {
+      "substitutions": 29,
+      "deletions": 50,
+      "insertions": 2,
+      "wer_points": 0.17
+     }
+    }
+   }
+  }
+ },
+ "cuts": {
+  "aligned_with": "data/checkpoints/iteration4/best",
+  "recordings": 22,
+  "recordings_failed": [],
+  "tolerance_seconds": 0.2,
+  "stray_characters": 2,
+  "all": {
+   "segments": 2316,
+   "hours": 4.01,
+   "reference_words": 28471,
+   "iteration4, released cuts, greedy WER": 21.28,
+   "iteration4, realigned cuts, greedy WER": 16.41,
+   "iteration5, released cuts, greedy WER": 22.3,
+   "iteration5, realigned cuts, greedy WER": 15.39
+  },
+  "released cut holds only its own speech": {
+   "segments": 1578,
+   "hours": 2.74,
+   "reference_words": 19078,
+   "iteration4, released cuts, greedy WER": 16.19,
+   "iteration4, realigned cuts, greedy WER": 15.68,
+   "iteration5, released cuts, greedy WER": 16.17,
+   "iteration5, realigned cuts, greedy WER": 15.2
+  },
+  "released cut goes through speech": {
+   "segments": 738,
+   "hours": 1.26,
+   "reference_words": 9393,
+   "iteration4, released cuts, greedy WER": 31.63,
+   "iteration4, realigned cuts, greedy WER": 17.9,
+   "iteration5, released cuts, greedy WER": 34.76,
+   "iteration5, realigned cuts, greedy WER": 15.79
+  }
+ }
+}
