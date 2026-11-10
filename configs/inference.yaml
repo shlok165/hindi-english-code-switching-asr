@@ -1,0 +1,12 @@
+# Defaults for `python -m src.inference` and `src.inference.Transcriber.from_config`.
+# Paths are relative to the repository root; paths under data/ follow MUCS_DATA_ROOT when it is set.
+# Command-line options override every value here.
+inference:
+  checkpoint: data/checkpoints/iteration4/best   # the final model, iteration 4 (see docs/iterations.md)
+  decode_config: configs/decode_iteration4.yaml  # beam settings tuned on val for iteration 4; it names the KenLM model
+  decoder: greedy          # greedy | beam
+  lm_backend: auto         # auto | kenlm | arpa. auto: kenlm when installed, else the pure-Python ARPA reader
+  device: auto             # auto | cpu | cuda
+  min_seconds: 0.1         # shorter audio gives the model fewer than 5 output frames
+  max_seconds: 60.0        # the longest training utterance is 57 s; cut longer audio with --start/--end
+  silence_peak: 0.0001     # peak amplitude below this counts as silence, which is reported, not decoded
