@@ -390,7 +390,7 @@ Tuning comes before any test or blind decoding. The edge-error counts come from 
 | kenlm | 0.3.0, built by `scripts/build_kenlm.sh` |
 | rapidfuzz, SciPy, Matplotlib, soundfile | 3.14.6, 1.18.1, 3.11.2, 0.14.0 |
 
-`env/requirements.lock` is the full `pip freeze` of this environment. The Colab notebook, `notebooks/colab_stage1b_baseline.ipynb`, runs the same commands but **has not been executed**.
+`env/requirements.lock` is the full `pip freeze` of this environment.
 
 ---
 
@@ -435,6 +435,5 @@ These are recommendations. None was implemented for this baseline.
 | 3 seeds | 1 seed | Each run takes about 9 hours on this GPU |
 | T-WER on test | Approximate | Test references are not annotated for T-WER |
 | CNN frozen (common default) | Fine-tuned | The prompt forbids freezing unless full fine-tuning is infeasible, and it was feasible |
-| Colab run | Not executed | The notebook is provided but untested |
 
 After this report, the project owner asked for further improvement iterations. They build on this baseline and are reported separately. Nothing in them changes the numbers above.

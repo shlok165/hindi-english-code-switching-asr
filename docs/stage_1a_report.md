@@ -77,7 +77,7 @@ Blind labels are never used for training or tuning. `src/training/train.py` rais
 | Shared | `src/utils/config.py`, `src/metrics/wer.py` |
 | Config | `configs/data.yaml`, `model_him4200.yaml`, `model_indicwav2vec.yaml`, `train_baseline.yaml`, `train_smoke.yaml` |
 | Environment | `env/requirements.txt`, `env/requirements.lock`, `scripts/build_kenlm.sh` |
-| Tests and Colab | `tests/test_pipeline.py` (35 tests), `notebooks/colab_stage1a.ipynb` |
+| Tests | `tests/test_pipeline.py` (35 tests) |
 | Modified | `.gitignore`, `README.md`, `implementation_brief.md` (correction notice) |
 
 ## 4. Model and tokenizer
@@ -155,7 +155,6 @@ Measured on the longest real utterances with the encoder unfrozen, mixed precisi
 
 - **The proposed encoder is unverified,** and its `source_blank` value is an assumption until `verify_encoder` runs on it.
 - **Almost all training hyperparameters are guesses.** Chadha et al. publish none, and each is marked `# GUESSED` in the configs. 20,000 updates is untested.
-- **Colab is unexecuted.** The notebook is written and the code path is unit-tested, but it has not been run on Colab. It also needs the repository pushed.
 - **Only Windows and Python 3.14 are tested.** A fresh install from `env/requirements.txt` has not been run.
 - **Training segments are not realigned.** The ReA step is not implemented; the known misalignment affects train and test, and the organisers report blind was hand-corrected.
 - **Attention mask:** this group-norm checkpoint normally runs without one, but it is passed so CTC gets true lengths. Padding can slightly shift normalisation. Length-grouped batches limit this, but the effect is not measured.

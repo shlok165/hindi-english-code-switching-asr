@@ -45,51 +45,12 @@ is claimed.
 - `git diff --check` — passed.
 - `--help` CLI checks passed for inference, LM building, evaluation, and error
   analysis.
-- `notebooks/colab_stage1b_baseline.ipynb` parses as valid notebook JSON; all
-  10 Python cells pass Python syntax parsing. The notebook has not been run on
-  Google Colab.
 - Pylance import analysis resolves the installed project imports; `pyctcdecode`
   is unresolved in the selected local interpreter, as expected for the optional
   beam decoder. KenLM's Python module and command-line tools are also absent
   locally.
 
 These checks do not execute model inference or produce experimental results.
-
-## Colab preparation
-
-- Added `notebooks/colab_stage1b_baseline.ipynb` with GPU/CUDA and memory checks,
-  exact-branch clone guard, Colab dependency installation that checks PyTorch
-  was retained, Drive artifact paths, local ephemeral dataset handling,
-  archive/download/manifest/tokenizer steps, split and audio integrity checks,
-  encoder verification, tests, smoke test, checkpoint-resume preparation,
-  opt-in full training, and optional KenLM/decoding instructions.
-- Large training audio remains on `/content` for I/O performance. The notebook
-  directs training checkpoints, Hugging Face model cache, configs, and reports
-  to Google Drive. Evaluation artifacts are written directly to Drive.
-- Dataset validation checks split counts, duplicate and cross-split utterance
-  IDs, train/validation recording disjointness, official test/blind recording
-  separation, audio existence, sample rate, segment bounds, transcript
-  normalization, and full-recording audit results. Train/test and train/blind
-  sentence repetition is reported rather than silently removed.
-- Added `env/requirements-colab.txt`; it uses the standard project
-  requirements without pinning a Windows CUDA wheel. `pyctcdecode` and the
-  compiled KenLM tools remain optional and are installed/built only for LM
-  decoding.
-- Exact full-training command (with Drive persistence):
-
-  ```bash
-  python -m src.training.train --config configs/train_baseline.yaml --resume auto \
-    --set training.output_dir=/content/drive/MyDrive/hindi-english-asr-stage1b/checkpoints
-  ```
-
-### External blocker
-
-The GitHub remote currently advertises `stage-1a-pipeline` but does **not**
-advertise `stage-1b-baseline`. The notebook intentionally stops instead of
-cloning a different branch. Push the work branch before starting a fresh Colab
-runtime. This workspace has no CUDA device, MUCS data, cached checkpoint,
-KenLM, or `pyctcdecode`; consequently there is no Colab GPU output, dataset
-validation result, model-download result, or smoke-test result to report here.
 
 ## Remaining work and blockers
 
@@ -138,8 +99,6 @@ are frozen. Label all resulting figures with split, decoder, alignment condition
 - `src/analysis/__init__.py`
 - `src/analysis/error_analysis.py`
 - `configs/decode.yaml`
-- `env/requirements-colab.txt`
-- `notebooks/colab_stage1b_baseline.ipynb`
 - `tests/test_pipeline.py`
 - `README.md`
 - `docs/stage_1b_code_report.md`

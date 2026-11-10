@@ -1,7 +1,0 @@
-# Install into a fresh Colab runtime after its preinstalled PyTorch is present:
-#   python -m pip install -r env/requirements-colab.txt
-# Do not install env/requirements.lock in Colab: it pins a Windows CUDA build.
--r requirements.txt
-matplotlib>=3.7
-pygtrie>=2.5
-hypothesis>=6.0

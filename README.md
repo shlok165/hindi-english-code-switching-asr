@@ -133,7 +133,7 @@ It writes `summary.json` (WER, CER, T-WER where the organisers' maps apply, the 
 
 ## Reproducing the results
 
-Tested on Windows 11 with Python 3.14 and an RTX 3050 6 GB. The Colab notebook, `notebooks/colab_stage1b_baseline.ipynb`, has not yet been run on Colab. Commands are for PowerShell from the repository root.
+Tested on Windows 11 with Python 3.14 and an RTX 3050 6 GB. Commands are for PowerShell from the repository root.
 
 ### 1. Environment
 

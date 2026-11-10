@@ -38,7 +38,7 @@ def resolve(path: str | Path) -> Path:
 
 
 def data_path(path: str | Path) -> Path:
-    """Resolve a data path, honouring MUCS_DATA_ROOT (e.g. Drive on Colab)."""
+    """Resolve a data path, honouring MUCS_DATA_ROOT (e.g. an external data drive)."""
     path = Path(path)
     root = os.environ.get("MUCS_DATA_ROOT")
     if path.is_absolute():
