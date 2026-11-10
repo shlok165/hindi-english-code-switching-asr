@@ -154,8 +154,8 @@ def read_predictions(path: Path) -> tuple[list[Utterance], dict[str, Any]]:
                 row = json.loads(line)
             except json.JSONDecodeError as error:
                 raise ScoringError(f"{path}:{number}: not JSON ({error})") from None
-            if "error" in row and "hypothesis" not in row:
-                info["failed_rows"] += 1  # a transcription that failed; nothing to score
+            if "error" in row and row.get("hypothesis") is None and row.get("hypothesis_raw") is None:
+                info["failed_rows"] += 1  # a transcription that failed (src.inference --manifest); nothing to score
                 continue
             if row.get("reference") is None:
                 raise ScoringError(f"{path}:{number}: no 'reference' field; the manifest given to "
