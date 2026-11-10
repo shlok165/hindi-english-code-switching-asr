@@ -19,7 +19,7 @@ Agreement with real KenLM is measured, not assumed: `python -m src.arpa_lm`
 writes per-word scores for a sample of sentences, `scripts/kenlm_reference.py`
 writes KenLM's scores for the same sentences from the `.klm`, and
 `scripts/compare_lm_scores.py` compares them (see docs/backend.md).
-Loading the 5-gram ARPA takes tens of seconds and a few hundred MB of memory.
+Parsing the 68 MB 5-gram ARPA takes a few seconds and about 250 MB of memory.
 """
 
 from __future__ import annotations

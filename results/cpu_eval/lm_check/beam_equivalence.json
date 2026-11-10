@@ -1,0 +1,706 @@
+{
+  "logprobs": "results/cpu_eval/lm_check/beam_inputs/tts_en_logprobs.npy",
+  "decode_config": "configs/decode_iteration4.yaml",
+  "settings": {
+    "alpha": 0.5,
+    "beta": 0.0,
+    "unk_score_offset": -10.0,
+    "beam_width": 200,
+    "beam_prune_logp": -10.0,
+    "token_min_logp": -5.0
+  },
+  "language_model": "/mnt/c/Users/nehal/OneDrive/Desktop/Projects/hindi-english-code-switching-asr/data/language_model/train_5gram.klm",
+  "cases": 61,
+  "disagreements": 0,
+  "mean_seconds": {
+    "kenlm": 0.253,
+    "arpa": 0.263
+  },
+  "kenlm_load_seconds": 0.51,
+  "arpa_load_seconds": 8.58,
+  "original": {
+    "variant": "original",
+    "frames": 334,
+    "kenlm": "welcome this spoken h",
+    "arpa": "welcome this spoken h",
+    "agree": true,
+    "seconds": {
+      "kenlm": 0.209,
+      "arpa": 0.179
+    }
+  },
+  "disagreeing_cases": [],
+  "all_cases": [
+    {
+      "variant": "original",
+      "frames": 334,
+      "kenlm": "welcome this spoken h",
+      "arpa": "welcome this spoken h",
+      "agree": true,
+      "seconds": {
+        "kenlm": 0.209,
+        "arpa": 0.179
+      }
+    },
+    {
+      "variant": "noise_0",
+      "frames": 334,
+      "kenlm": "welchmcalthis spoken count h",
+      "arpa": "welchmcalthis spoken count h",
+      "agree": true,
+      "seconds": {
+        "kenlm": 0.161,
+        "arpa": 0.179
+      }
+    },
+    {
+      "variant": "dropped_0",
+      "frames": 222,
+      "kenlm": "lhmcathissekno up h",
+      "arpa": "lhmcathissekno up h",
+      "agree": true,
+      "seconds": {
+        "kenlm": 0.176,
+        "arpa": 0.131
+      }
+    },
+    {
+      "variant": "repeated_0",
+      "frames": 505,
+      "kenlm": "welchmcalthis spoken couinheuype hno",
+      "arpa": "welchmcalthis spoken couinheuype hno",
+      "agree": true,
+      "seconds": {
+        "kenlm": 0.337,
+        "arpa": 0.227
+      }
+    },
+    {
+      "variant": "noise_1",
+      "frames": 334,
+      "kenlm": "waowchmjhilthi spoken die",
+      "arpa": "waowchmjhilthi spoken die",
+      "agree": true,
+      "seconds": {
+        "kenlm": 0.252,
+        "arpa": 0.177
+      }
+    },
+    {
+      "variant": "dropped_1",
+      "frames": 222,
+      "kenlm": "aowcmjhilthispok to",
+      "arpa": "aowcmjhilthispok to",
+      "agree": true,
+      "seconds": {
+        "kenlm": 0.222,
+        "arpa": 0.162
+      }
+    },
+    {
+      "variant": "repeated_1",
+      "frames": 509,
+      "kenlm": "waowchumjhilthis spoken cut meet the",
+      "arpa": "waowchumjhilthis spoken cut meet the",
+      "agree": true,
+      "seconds": {
+        "kenlm": 0.344,
+        "arpa": 0.368
+      }
+    },
+    {
+      "variant": "noise_2",
+      "frames": 334,
+      "kenlm": "welchmcedths spoken or meet",
+      "arpa": "welchmcedths spoken or meet",
+      "agree": true,
+      "seconds": {
+        "kenlm": 0.209,
+        "arpa": 0.181
+      }
+    },
+    {
+      "variant": "dropped_2",
+      "frames": 222,
+      "kenlm": "welchmedthsspk or meet",
+      "arpa": "welchmedthsspk or meet",
+      "agree": true,
+      "seconds": {
+        "kenlm": 0.127,
+        "arpa": 0.178
+      }
+    },
+    {
+      "variant": "repeated_2",
+      "frames": 518,
+      "kenlm": "welchmcedths spoken or ui meet p",
+      "arpa": "welchmcedths spoken or ui meet p",
+      "agree": true,
+      "seconds": {
+        "kenlm": 0.271,
+        "arpa": 0.412
+      }
+    },
+    {
+      "variant": "noise_3",
+      "frames": 334,
+      "kenlm": "welcome this spoken gueodouohiemp the",
+      "arpa": "welcome this spoken gueodouohiemp the",
+      "agree": true,
+      "seconds": {
+        "kenlm": 0.2,
+        "arpa": 0.209
+      }
+    },
+    {
+      "variant": "dropped_3",
+      "frames": 222,
+      "kenlm": "each cthseeudouo p",
+      "arpa": "each cthseeudouo p",
+      "agree": true,
+      "seconds": {
+        "kenlm": 0.162,
+        "arpa": 0.15
+      }
+    },
+    {
+      "variant": "repeated_3",
+      "frames": 503,
+      "kenlm": "welcome this spoken odouiohemnunp the",
+      "arpa": "welcome this spoken odouiohemnunp the",
+      "agree": true,
+      "seconds": {
+        "kenlm": 0.314,
+        "arpa": 0.431
+      }
+    },
+    {
+      "variant": "noise_4",
+      "frames": 334,
+      "kenlm": "weolemचutis spoke source",
+      "arpa": "weolemचutis spoke source",
+      "agree": true,
+      "seconds": {
+        "kenlm": 0.374,
+        "arpa": 0.358
+      }
+    },
+    {
+      "variant": "dropped_4",
+      "frames": 222,
+      "kenlm": "eoleचtisspkeu count",
+      "arpa": "eoleचtisspkeu count",
+      "agree": true,
+      "seconds": {
+        "kenlm": 0.153,
+        "arpa": 0.253
+      }
+    },
+    {
+      "variant": "repeated_4",
+      "frames": 508,
+      "kenlm": "weolemचudtis spoke source menu the",
+      "arpa": "weolemचudtis spoke source menu the",
+      "agree": true,
+      "seconds": {
+        "kenlm": 0.418,
+        "arpa": 0.408
+      }
+    },
+    {
+      "variant": "noise_5",
+      "frames": 334,
+      "kenlm": "velchemidtis spoken u home",
+      "arpa": "velchemidtis spoken u home",
+      "agree": true,
+      "seconds": {
+        "kenlm": 0.234,
+        "arpa": 0.222
+      }
+    },
+    {
+      "variant": "dropped_5",
+      "frames": 222,
+      "kenlm": "aheisspkeou hno",
+      "arpa": "aheisspkeou hno",
+      "agree": true,
+      "seconds": {
+        "kenlm": 0.176,
+        "arpa": 0.246
+      }
+    },
+    {
+      "variant": "repeated_5",
+      "frames": 500,
+      "kenlm": "velchemciltis spoken u home to",
+      "arpa": "velchemciltis spoken u home to",
+      "agree": true,
+      "seconds": {
+        "kenlm": 0.355,
+        "arpa": 0.358
+      }
+    },
+    {
+      "variant": "noise_6",
+      "frames": 334,
+      "kenlm": "wealchmedtis spoken mesh he",
+      "arpa": "wealchmedtis spoken mesh he",
+      "agree": true,
+      "seconds": {
+        "kenlm": 0.329,
+        "arpa": 0.244
+      }
+    },
+    {
+      "variant": "dropped_6",
+      "frames": 222,
+      "kenlm": "uehedispein़ meshes",
+      "arpa": "uehedispein़ meshes",
+      "agree": true,
+      "seconds": {
+        "kenlm": 0.167,
+        "arpa": 0.151
+      }
+    },
+    {
+      "variant": "repeated_6",
+      "frames": 502,
+      "kenlm": "weaolchmedthis spoken c ui mesh he",
+      "arpa": "weaolchmedthis spoken c ui mesh he",
+      "agree": true,
+      "seconds": {
+        "kenlm": 0.46,
+        "arpa": 0.409
+      }
+    },
+    {
+      "variant": "noise_7",
+      "frames": 334,
+      "kenlm": "welchumclths sco infiofmeph",
+      "arpa": "welchumclths sco infiofmeph",
+      "agree": true,
+      "seconds": {
+        "kenlm": 0.223,
+        "arpa": 0.218
+      }
+    },
+    {
+      "variant": "dropped_7",
+      "frames": 222,
+      "kenlm": "eolhumctsggोo ifiomennh",
+      "arpa": "eolhumctsggोo ifiomennh",
+      "agree": true,
+      "seconds": {
+        "kenlm": 0.165,
+        "arpa": 0.237
+      }
+    },
+    {
+      "variant": "repeated_7",
+      "frames": 488,
+      "kenlm": "welchumclths sponsored ice fienypenth",
+      "arpa": "welchumclths sponsored ice fienypenth",
+      "agree": true,
+      "seconds": {
+        "kenlm": 0.316,
+        "arpa": 0.322
+      }
+    },
+    {
+      "variant": "noise_8",
+      "frames": 334,
+      "kenlm": "walchemcthis spoken in font nh",
+      "arpa": "walchemcthis spoken in font nh",
+      "agree": true,
+      "seconds": {
+        "kenlm": 0.366,
+        "arpa": 0.299
+      }
+    },
+    {
+      "variant": "dropped_8",
+      "frames": 222,
+      "kenlm": "wlcthispgkeडi mt nh",
+      "arpa": "wlcthispgkeडi mt nh",
+      "agree": true,
+      "seconds": {
+        "kenlm": 0.15,
+        "arpa": 0.151
+      }
+    },
+    {
+      "variant": "repeated_8",
+      "frames": 497,
+      "kenlm": "wealchem citisspgkein e ouinhomnhyth nh",
+      "arpa": "wealchem citisspgkein e ouinhomnhyth nh",
+      "agree": true,
+      "seconds": {
+        "kenlm": 0.432,
+        "arpa": 0.386
+      }
+    },
+    {
+      "variant": "noise_9",
+      "frames": 334,
+      "kenlm": "weohemजilthis spoken cin in type w",
+      "arpa": "weohemजilthis spoken cin in type w",
+      "agree": true,
+      "seconds": {
+        "kenlm": 0.307,
+        "arpa": 0.226
+      }
+    },
+    {
+      "variant": "dropped_9",
+      "frames": 222,
+      "kenlm": "weohemजhisoet cin types",
+      "arpa": "weohemजhisoet cin types",
+      "agree": true,
+      "seconds": {
+        "kenlm": 0.164,
+        "arpa": 0.185
+      }
+    },
+    {
+      "variant": "repeated_9",
+      "frames": 500,
+      "kenlm": "weohemजilthis spoken coa in in type we",
+      "arpa": "weohemजilthis spoken coa in in type we",
+      "agree": true,
+      "seconds": {
+        "kenlm": 0.328,
+        "arpa": 0.377
+      }
+    },
+    {
+      "variant": "noise_10",
+      "frames": 334,
+      "kenlm": "wealhrmidtis spoke if hno",
+      "arpa": "wealhrmidtis spoke if hno",
+      "agree": true,
+      "seconds": {
+        "kenlm": 0.262,
+        "arpa": 0.282
+      }
+    },
+    {
+      "variant": "dropped_10",
+      "frames": 222,
+      "kenlm": "weahrmidti spoke ohm",
+      "arpa": "weahrmidti spoke ohm",
+      "agree": true,
+      "seconds": {
+        "kenlm": 0.124,
+        "arpa": 0.191
+      }
+    },
+    {
+      "variant": "repeated_10",
+      "frames": 494,
+      "kenlm": "wealhrmjidthis soueo़iuiohfuy hno",
+      "arpa": "wealhrmjidthis soueo़iuiohfuy hno",
+      "agree": true,
+      "seconds": {
+        "kenlm": 0.325,
+        "arpa": 0.509
+      }
+    },
+    {
+      "variant": "noise_11",
+      "frames": 334,
+      "kenlm": "welcome this spoken guediouithe show",
+      "arpa": "welcome this spoken guediouithe show",
+      "agree": true,
+      "seconds": {
+        "kenlm": 0.215,
+        "arpa": 0.239
+      }
+    },
+    {
+      "variant": "dropped_11",
+      "frames": 222,
+      "kenlm": "wechejethisek gudiouithe echo",
+      "arpa": "wechejethisek gudiouithe echo",
+      "agree": true,
+      "seconds": {
+        "kenlm": 0.189,
+        "arpa": 0.155
+      }
+    },
+    {
+      "variant": "repeated_11",
+      "frames": 506,
+      "kenlm": "wealchemjethis spoken shoueछd़iouithe each how",
+      "arpa": "wealchemjethis spoken shoueछd़iouithe each how",
+      "agree": true,
+      "seconds": {
+        "kenlm": 0.445,
+        "arpa": 0.299
+      }
+    },
+    {
+      "variant": "noise_12",
+      "frames": 334,
+      "kenlm": "wealcmjelthis spoken du the so",
+      "arpa": "wealcmjelthis spoken du the so",
+      "agree": true,
+      "seconds": {
+        "kenlm": 0.197,
+        "arpa": 0.198
+      }
+    },
+    {
+      "variant": "dropped_12",
+      "frames": 222,
+      "kenlm": "cms gui to",
+      "arpa": "cms gui to",
+      "agree": true,
+      "seconds": {
+        "kenlm": 0.135,
+        "arpa": 0.229
+      }
+    },
+    {
+      "variant": "repeated_12",
+      "frames": 510,
+      "kenlm": "wealcemejelths spoken du tf set or",
+      "arpa": "wealcemejelths spoken du tf set or",
+      "agree": true,
+      "seconds": {
+        "kenlm": 0.271,
+        "arpa": 0.281
+      }
+    },
+    {
+      "variant": "noise_13",
+      "frames": 334,
+      "kenlm": "welcome this point ooicthfousypehe to",
+      "arpa": "welcome this point ooicthfousypehe to",
+      "agree": true,
+      "seconds": {
+        "kenlm": 0.179,
+        "arpa": 0.21
+      }
+    },
+    {
+      "variant": "dropped_13",
+      "frames": 222,
+      "kenlm": "ohm is noicthsypeho",
+      "arpa": "ohm is noicthsypeho",
+      "agree": true,
+      "seconds": {
+        "kenlm": 0.116,
+        "arpa": 0.127
+      }
+    },
+    {
+      "variant": "repeated_13",
+      "frames": 501,
+      "kenlm": "welcome this point ooiouicthfou hyphen o",
+      "arpa": "welcome this point ooiouicthfou hyphen o",
+      "agree": true,
+      "seconds": {
+        "kenlm": 0.323,
+        "arpa": 0.286
+      }
+    },
+    {
+      "variant": "noise_14",
+      "frames": 334,
+      "kenlm": "weaochemjiths spoken suite no",
+      "arpa": "weaochemjiths spoken suite no",
+      "agree": true,
+      "seconds": {
+        "kenlm": 0.199,
+        "arpa": 0.266
+      }
+    },
+    {
+      "variant": "dropped_14",
+      "frames": 222,
+      "kenlm": "chemisspolke out to",
+      "arpa": "chemisspolke out to",
+      "agree": true,
+      "seconds": {
+        "kenlm": 0.141,
+        "arpa": 0.169
+      }
+    },
+    {
+      "variant": "repeated_14",
+      "frames": 507,
+      "kenlm": "weaochemjidthis spoken youre in type no",
+      "arpa": "weaochemjidthis spoken youre in type no",
+      "agree": true,
+      "seconds": {
+        "kenlm": 0.357,
+        "arpa": 0.474
+      }
+    },
+    {
+      "variant": "noise_15",
+      "frames": 334,
+      "kenlm": "wealcmejdthis spoken oोdiuiceie he",
+      "arpa": "wealcmejdthis spoken oोdiuiceie he",
+      "agree": true,
+      "seconds": {
+        "kenlm": 0.202,
+        "arpa": 0.206
+      }
+    },
+    {
+      "variant": "dropped_15",
+      "frames": 222,
+      "kenlm": "wcmjhssoeno ice",
+      "arpa": "wcmjhssoeno ice",
+      "agree": true,
+      "seconds": {
+        "kenlm": 0.147,
+        "arpa": 0.148
+      }
+    },
+    {
+      "variant": "repeated_15",
+      "frames": 507,
+      "kenlm": "wealcumejdthis spoken coeोiuiceie n the",
+      "arpa": "wealcumejdthis spoken coeोiuiceie n the",
+      "agree": true,
+      "seconds": {
+        "kenlm": 0.423,
+        "arpa": 0.353
+      }
+    },
+    {
+      "variant": "noise_16",
+      "frames": 334,
+      "kenlm": "ualchemjithis stud in the how",
+      "arpa": "ualchemjithis stud in the how",
+      "agree": true,
+      "seconds": {
+        "kenlm": 0.221,
+        "arpa": 0.224
+      }
+    },
+    {
+      "variant": "dropped_16",
+      "frames": 222,
+      "kenlm": "ulhmjihis so ui the h",
+      "arpa": "ulhmjihis so ui the h",
+      "agree": true,
+      "seconds": {
+        "kenlm": 0.161,
+        "arpa": 0.242
+      }
+    },
+    {
+      "variant": "repeated_16",
+      "frames": 498,
+      "kenlm": "ualchemjithis spoken u cod int the how",
+      "arpa": "ualchemjithis spoken u cod int the how",
+      "agree": true,
+      "seconds": {
+        "kenlm": 0.44,
+        "arpa": 0.371
+      }
+    },
+    {
+      "variant": "noise_17",
+      "frames": 334,
+      "kenlm": "uelcemgeltis spoke to",
+      "arpa": "uelcemgeltis spoke to",
+      "agree": true,
+      "seconds": {
+        "kenlm": 0.228,
+        "arpa": 0.252
+      }
+    },
+    {
+      "variant": "dropped_17",
+      "frames": 222,
+      "kenlm": "elcetskcueछि to",
+      "arpa": "elcetskcueछि to",
+      "agree": true,
+      "seconds": {
+        "kenlm": 0.173,
+        "arpa": 0.164
+      }
+    },
+    {
+      "variant": "repeated_17",
+      "frames": 504,
+      "kenlm": "uerlchemgeltis spoken chueछिihpet no",
+      "arpa": "uerlchemgeltis spoken chueछिihpet no",
+      "agree": true,
+      "seconds": {
+        "kenlm": 0.42,
+        "arpa": 0.397
+      }
+    },
+    {
+      "variant": "noise_18",
+      "frames": 334,
+      "kenlm": "wawlhoumjethis spoken छोड़ inp no",
+      "arpa": "wawlhoumjethis spoken छोड़ inp no",
+      "agree": true,
+      "seconds": {
+        "kenlm": 0.207,
+        "arpa": 0.335
+      }
+    },
+    {
+      "variant": "dropped_18",
+      "frames": 222,
+      "kenlm": "wwlhojthispk ़uintinpe os",
+      "arpa": "wwlhojthispk ़uintinpe os",
+      "agree": true,
+      "seconds": {
+        "kenlm": 0.141,
+        "arpa": 0.155
+      }
+    },
+    {
+      "variant": "repeated_18",
+      "frames": 486,
+      "kenlm": "wawlghoumjethis spoken sole छोड़ inp the no",
+      "arpa": "wawlghoumjethis spoken sole छोड़ inp the no",
+      "agree": true,
+      "seconds": {
+        "kenlm": 0.359,
+        "arpa": 0.383
+      }
+    },
+    {
+      "variant": "noise_19",
+      "frames": 334,
+      "kenlm": "weowcmjuthis sent cout so",
+      "arpa": "weowcmjuthis sent cout so",
+      "agree": true,
+      "seconds": {
+        "kenlm": 0.203,
+        "arpa": 0.226
+      }
+    },
+    {
+      "variant": "dropped_19",
+      "frames": 222,
+      "kenlm": "eowcmjtisoc type",
+      "arpa": "eowcmjtisoc type",
+      "agree": true,
+      "seconds": {
+        "kenlm": 0.143,
+        "arpa": 0.133
+      }
+    },
+    {
+      "variant": "repeated_19",
+      "frames": 495,
+      "kenlm": "eowcmjhuthis spoken outfun so",
+      "arpa": "eowcmjhuthis spoken outfun so",
+      "agree": true,
+      "seconds": {
+        "kenlm": 0.363,
+        "arpa": 0.51
+      }
+    }
+  ]
+}

@@ -9,6 +9,26 @@ The improvement iterations are finished. The final model, chosen on validation d
 - [Stage 1A report](docs/stage_1a_report.md): dataset statistics, model, tokenizer and GPU requirements
 - [Stage 1B report](docs/stage_1b_report.md): training, evaluation, error analysis and the Stage 2 handoff
 - [Improvement iterations](docs/iterations.md): changes made after the baseline, one at a time, with results as they finish
+- [Inference and evaluation backend](docs/backend.md): how transcription, validation, scoring and the language-model backends work, and what was verified
+- [CPU-only setup](docs/cpu_setup.md): transcribing and scoring on a machine without a GPU
+
+## Overview
+
+**Task.** Transcribe Hindi-English code-switched speech (Hindi sentences with English words, often technical terms, in either script) into text, scored by word error rate. The data is MUCS 2021 Subtask-2 (OpenSLR SLR104, CC BY-SA 4.0): spoken-tutorial recordings.
+
+| | train | val (held out from train) | test | blind |
+|---|---|---|---|---|
+| Recordings / utterances | 499 / 50,509 | 22 / 2,316 | 30 / 3,136 | 35 / 4,034 |
+| Hours | 85.6 | 4.0 | 5.2 | 6.2 |
+| Latin-script words | 25.1 % | 23.8 % | 24.3 % | 32.3 % |
+
+Val is held out from train by whole recordings and is the only split used for choices. Test and blind are scored once per model. Blind writes English words in Latin script more often, so its official T-WER (which forgives listed transliterations) is lower than its WER.
+
+**Model.** wav2vec 2.0 base (12 transformer layers, 768 hidden units, about 50 frames per second), initialised from the Vakyansh Hindi checkpoint `Harveenchadha/vakyansh-wav2vec2-hindi-him-4200`, with a new linear CTC head over 120 character tokens: Devanagari, lower-case Latin, digits, 16 spoken symbols, `|` as the word delimiter and `<pad>` as the CTC blank. Text is kept in the script it was transcribed in; there is no transliteration in the model.
+
+**Decoding.** Greedy (best token per frame), or beam search (pyctcdecode) with a 5-gram KenLM model trained on the training transcripts, with the weights tuned on val. On a machine without the `kenlm` package the same model is read from its ARPA file by a pure-Python backend that was checked against KenLM (see [docs/backend.md](docs/backend.md)).
+
+**Iterations.** Five training iterations after the data pipeline, each changing one thing and compared on val only; iteration 4 is the final model. The table under [Improvement iterations](#improvement-iterations) summarises them.
 
 ## Results
 
@@ -53,13 +73,53 @@ Details are in [docs/iterations.md](docs/iterations.md).
 
 ## Using the final model
 
-The final model is iteration 4. Model weights are never committed here, so `data/checkpoints/iteration4/best` comes from training it (step 10 below), and the language model from step 7. To transcribe a recording with KenLM and the decoder settings tuned for iteration 4 on val:
+The final model is iteration 4. Model weights are never committed here: `data/checkpoints/iteration4/best` comes from training it (step 10 below) or from unpacking `checkpoints.zip`, which also holds the language model (step 7) and the organisers' scoring files. No GPU is needed for anything below; [docs/cpu_setup.md](docs/cpu_setup.md) has the CPU-only installation.
+
+`configs/inference.yaml` names the final model and its decoder settings, so transcribing needs no flags:
 
 ```powershell
-.venv\Scripts\python -m src.inference --checkpoint data/checkpoints/iteration4/best --audio path\to\audio.wav --kenlm data/language_model/train_5gram.klm --decode-config configs/decode_iteration4.yaml
+.venv\Scripts\python -m src.inference --audio path\to\audio.wav                  # greedy, no language model needed
+.venv\Scripts\python -m src.inference --audio path\to\audio.wav --decoder beam   # KenLM beam search, settings tuned on val
+.venv\Scripts\python -m src.inference --audio path\to\audio.wav --json           # one JSON object per file
+.venv\Scripts\python -m src.inference --manifest list.csv --output predictions.jsonl --decoder beam
 ```
 
-Leave out `--kenlm` and `--decode-config` to decode greedily. `src.evaluate` takes the same `--checkpoint` and `--decode-config` to score a whole split.
+The audio can be any common format at any sample rate; `--start` and `--end` select a segment, `--device cpu|cuda|auto` picks the device, `--lm-backend kenlm|arpa|auto` the language-model reader, and `--checkpoint`, `--decode-config` and `--kenlm` override the config (the form from earlier versions, `--checkpoint data/checkpoints/iteration4/best --kenlm data/language_model/train_5gram.klm --decode-config configs/decode_iteration4.yaml`, still works). A manifest is a CSV or JSONL with an `audio` column and optional `id`, `start`, `end` and `reference`.
+
+Files are validated before the model runs: missing, empty, corrupted, silent, too short (under 0.1 s), too long (over 60 s) or non-finite audio is reported per file instead of crashing, and the command exits 1 if any file failed, 2 if an artifact is missing. With `--json`:
+
+```json
+{"audio": "a.wav", "text": "libreoffice base पर spoken tutorial में आपका स्वागत है", "decoder": "beam", "start": 0.0, "end": 4.0, "duration": 4.0, "sample_rate": 16000, "lm_backend": "kenlm", "processing_seconds": 1.9, "warnings": []}
+{"audio": "b.wav", "error": "b.wav: audio is too short to transcribe (0.006 s; minimum 0.1 s)"}
+```
+
+(The text shown is a val reference, for the shape of the output; no MUCS audio was transcribed while writing this.) From Python:
+
+```python
+from src.inference import Transcriber
+transcriber = Transcriber.from_config(decoder="beam")   # loads the model and LM once
+result = transcriber.transcribe("a.wav", start=0.0, end=4.0)
+result.text, result.warnings
+```
+
+### Scoring transcripts
+
+`src.score_files` scores reference and hypothesis text without a model, audio or the dataset: Kaldi-style `id text` files, a CSV with `reference` and `hypothesis` columns, or the JSONL written by `src.inference --manifest` (with a `reference` column) or `src.evaluate`:
+
+```powershell
+.venv\Scripts\python -m src.score_files --ref ref.txt --hyp hyp.txt --output-dir results\cpu_eval\scoring\my_run
+.venv\Scripts\python -m src.score_files --predictions predictions.jsonl --split blind --output-dir results\cpu_eval\scoring\my_run
+```
+
+It writes `summary.json` (WER, CER, T-WER where the organisers' maps apply, the training-cleaned and script-folded variants where available, and substitution/deletion/insertion counts, each labelled with the normalisation used), `utterances.csv`, `word_errors.csv` and `confusions.csv`, and never overwrites existing output. Rescoring the committed iteration 4 evaluations with it reproduces their `*_metrics.json` exactly. `src.analysis.error_analysis --predictions ... --output ... --csv-dir ...` categorises the errors (by operation, script, derived language, switch point and duration). `src.evaluate` still scores a whole split from cached log-probabilities and needs the dataset.
+
+### Limitations
+
+- Accuracy is what the [Results](#results) tables report; it has not been re-measured on a CPU, because the dataset is not part of the repository. CPU inference was checked end to end on synthetic audio only.
+- The model expects tutorial-style Hindi-English speech at conversational pace; it produces text for any audio, including noise, and reports silence rather than guessing. There is no confidence score.
+- Utterances over 60 s are refused rather than split automatically; use `--start`/`--end`. Decoding one utterance at a time on a CPU costs a few seconds per clip after a one-off load of 5–40 s.
+- Without the `kenlm` package, beam decoding parses the ARPA model in Python (3.5 s, 250 MB) each time a `Transcriber` is created.
+- T-WER is official only on blind; on test it is an approximation, and the script-folded WER needs the train-only script map, which is built from the dataset and not shipped.
 
 ## Reproducing the results
 
@@ -73,15 +133,14 @@ python -m venv .venv
 .venv\Scripts\python -m pip install -r env\requirements.txt
 ```
 
-KenLM decoding needs three more steps. PyPI has no Windows wheel for KenLM, and `pyctcdecode` pins an old numpy that is broken on Python 3.14. The build needs MinGW-w64 and Git Bash.
+KenLM decoding needs pyctcdecode, which pins an old numpy that is broken on Python 3.14, so it is installed without dependencies:
 
 ```powershell
 .venv\Scripts\python -m pip install --no-deps pyctcdecode
 .venv\Scripts\python -m pip install pygtrie hypothesis
-bash scripts/build_kenlm.sh
 ```
 
-`env/requirements.lock` records the exact versions used.
+The `kenlm` package itself is optional: PyPI has no Windows wheel, and without it beam search reads the same model from its ARPA file (`--lm-backend auto`). To build it anyway, `bash scripts/build_kenlm.sh` compiles it with MinGW-w64 from Git Bash, or `pip install kenlm` works on Linux, macOS and WSL. For a machine without a GPU, install torch from the CPU index instead; see [docs/cpu_setup.md](docs/cpu_setup.md). `env/requirements.lock` records the exact versions used for the reported results.
 
 ### 2. Dataset
 
