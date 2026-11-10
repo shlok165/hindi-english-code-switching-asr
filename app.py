@@ -86,6 +86,82 @@ def transcribe_upload(upload, decoder: str) -> Transcription:
         path.unlink(missing_ok=True)
 
 
+# --------------------------------------------------------------------------- results visuals
+
+# Dark-surface categorical hues, validated colorblind-safe against Streamlit's
+# chart surface (#0e1117). "Blind WER" keeps aqua in every chart it appears in, so
+# the same series is always the same colour.
+RESULTS_COLORS = {
+    "Validation WER": "#3987e5",  # blue
+    "Test WER": "#d95926",        # orange
+    "Blind WER": "#199e70",       # aqua
+    "Blind T-WER": "#c98500",     # yellow
+    "Blind CER": "#199e70",       # aqua (single series)
+}
+
+
+def render_grouped_chart(
+    table: pd.DataFrame,
+    series: dict[str, str],
+    y_title: str,
+    y_max: float,
+    key: str,
+    alt: str,
+) -> None:
+    """Render iteration metrics as grouped bars on a zero-based scale."""
+    rows = [
+        {"Iteration": iteration.removeprefix("iteration"), "Metric": label, "Value": table.loc[iteration, column]}
+        for iteration in table.index
+        for label, column in series.items()
+    ]
+    labels = list(series)
+    chart = {
+        "mark": {"type": "bar", "cornerRadiusTopLeft": 3, "cornerRadiusTopRight": 3},
+        "encoding": {
+            "x": {
+                "field": "Iteration",
+                "type": "ordinal",
+                "sort": ["1", "2", "3", "4", "5"],
+                "axis": {"title": "Iteration", "labelAngle": 0, "labelPadding": 8},
+            },
+            "xOffset": {"field": "Metric", "type": "nominal"},
+            "y": {
+                "field": "Value",
+                "type": "quantitative",
+                "scale": {"domain": [0, y_max], "zero": True, "nice": False},
+                "axis": {"title": y_title, "grid": True, "format": ".0f"},
+            },
+            "color": {
+                "field": "Metric",
+                "type": "nominal",
+                "scale": {"domain": labels, "range": [RESULTS_COLORS[label] for label in labels]},
+                "legend": {
+                    "orient": "top",
+                    "direction": "horizontal",
+                    "title": None,
+                    "labelLimit": 220,
+                    "symbolType": "square",
+                    "symbolSize": 110,
+                } if len(labels) > 1 else None,
+            },
+            "tooltip": [
+                {"field": "Iteration", "type": "ordinal", "title": "Iteration"},
+                {"field": "Metric", "type": "nominal", "title": "Measure"},
+                {"field": "Value", "type": "quantitative", "title": y_title, "format": ".2f"},
+            ],
+        },
+        "height": 300,
+        "config": {
+            "view": {"stroke": None},
+            "axis": {"labelFontSize": 12, "titleFontSize": 12, "titleFontWeight": 600},
+            "legend": {"labelFontSize": 12, "padding": 4},
+        },
+    }
+    st.vega_lite_chart(
+        pd.DataFrame(rows), chart, width="stretch", theme="streamlit", key=key, alt=alt
+    )
+
+
 # --------------------------------------------------------------------------- sections
 
 def render_overview() -> None:
@@ -160,19 +236,128 @@ def render_transcription() -> None:
 
 
 def render_results() -> None:
+    st.markdown(
+        """
+<style>
+[data-testid="stAppViewContainer"] .block-container {
+    max-width: 1480px;
+    padding-top: 2rem;
+    padding-bottom: 3.5rem;
+}
+[data-testid="stMarkdownContainer"] h1,
+[data-testid="stMarkdownContainer"] h2,
+[data-testid="stMarkdownContainer"] h3 {
+    font-family: "Bahnschrift", "Segoe UI", sans-serif;
+    letter-spacing: 0;
+}
+.results-kicker {
+    color: #72c9bd;
+    font-size: 0.76rem;
+    font-weight: 700;
+    line-height: 1.4;
+    text-transform: uppercase;
+}
+.results-intro {
+    max-width: 900px;
+    line-height: 1.6;
+}
+</style>
+<div class="results-kicker">Model evaluation · Iterations 1–5</div>
+""",
+        unsafe_allow_html=True,
+    )
     st.title("Experiment results")
     st.markdown(
-        "Five training iterations, each changing one thing, compared on the **validation** split only; test and "
-        "blind were decoded once per iteration. All values are percentages read from `results/iterations.json` "
-        "(KenLM beam search unless the column says greedy)."
+        "<div class='results-intro'>Five controlled training iterations, evaluated with KenLM beam search. "
+        "Validation alone determined model selection; test and blind results are reported for comparison.</div>",
+        unsafe_allow_html=True,
     )
     table = load_iteration_table()
-    st.dataframe(table.style.format("{:.2f}").highlight_min(color="#d9efd9"), width="stretch")
-    st.caption("Lowest value per column highlighted. Script-folded val WER maps English words written in Devanagari "
-               "to Latin on both sides and was the measure used to choose; test T-WER is approximate because test "
-               "references were not annotated for it; blind figures follow the official scoring.")
-    st.subheader("WER by iteration")
-    st.bar_chart(table[["val WER", "test WER", "blind WER"]], height=320)
+
+    with st.container(border=True, key="iteration4-selection"):
+        st.markdown("#### Selected model · Iteration 4")
+        selection_metrics = st.columns(3, gap="medium")
+        selection_metrics[0].metric("Validation WER · script-folded", f"{table.loc[FINAL_ITERATION, 'val WER (script-folded)']:.2f}%")
+        selection_metrics[1].metric("Validation WER · raw", f"{table.loc[FINAL_ITERATION, 'val WER']:.2f}%")
+        selection_metrics[2].metric("Test WER", f"{table.loc[FINAL_ITERATION, 'test WER']:.2f}%")
+        selection_metrics = st.columns(3, gap="medium")
+        selection_metrics[0].metric("Blind WER", f"{table.loc[FINAL_ITERATION, 'blind WER']:.2f}%")
+        selection_metrics[1].metric("Blind T-WER", f"{table.loc[FINAL_ITERATION, 'blind T-WER']:.2f}%")
+        selection_metrics[2].metric("Blind CER", f"{table.loc[FINAL_ITERATION, 'blind CER']:.2f}%")
+        best_folded = table["val WER (script-folded)"].min()
+        st.markdown(
+            f"Chosen on validation only: iteration 4 has the lowest script-folded validation WER "
+            f"({best_folded:.2f}%), narrowly ahead of iteration 2 ({table.loc['iteration2', 'val WER (script-folded)']:.2f}%). "
+            "Test and blind metrics did not determine the selection."
+        )
+
+    st.subheader("WER across splits")
+    render_grouped_chart(
+        table,
+        {"Validation WER": "val WER", "Test WER": "test WER", "Blind WER": "blind WER"},
+        "WER (%)",
+        40,
+        "iteration-wer-chart",
+        "Grouped validation, test, and blind WER by iteration; vertical scale starts at zero.",
+    )
+    st.caption(
+        "Validation WER for iteration 3 uses its script-normalized references; the script-folded validation "
+        "measure below is the consistent cross-iteration comparison."
+    )
+
+    left, right = st.columns([1.3, 1], gap="large")
+    with left:
+        st.subheader("Blind WER and T-WER")
+        render_grouped_chart(
+            table,
+            {"Blind WER": "blind WER", "Blind T-WER": "blind T-WER"},
+            "Error rate (%)",
+            25,
+            "blind-wer-twer-chart",
+            "Grouped blind WER and T-WER by iteration; vertical scale starts at zero.",
+        )
+        st.caption("Blind T-WER follows the official transliteration-aware scoring.")
+    with right:
+        st.subheader("Blind CER")
+        render_grouped_chart(
+            table,
+            {"Blind CER": "blind CER"},
+            "CER (%)",
+            16,
+            "blind-cer-chart",
+            "Blind CER by iteration; vertical scale starts at zero.",
+        )
+
+    st.subheader("All reported metrics")
+    st.dataframe(
+        table.style.format("{:.2f}").highlight_min(props="background-color:#d9efd9; color:#0b0b0b;"),
+        width="stretch",
+        height=300,
+        row_height=42,
+        column_config={
+            "_index": st.column_config.TextColumn("Iteration", width="small"),
+            "val WER": st.column_config.NumberColumn("Validation WER", format="%.2f", width="small"),
+            "val WER (script-folded)": st.column_config.NumberColumn("Validation WER · folded", format="%.2f", width="medium"),
+            "test WER": st.column_config.NumberColumn("Test WER", format="%.2f", width="small"),
+            "test T-WER (approx.)": st.column_config.NumberColumn("Test T-WER · approx.", format="%.2f", width="medium"),
+            "blind WER": st.column_config.NumberColumn("Blind WER", format="%.2f", width="small"),
+            "blind T-WER": st.column_config.NumberColumn("Blind T-WER", format="%.2f", width="small"),
+            "blind CER": st.column_config.NumberColumn("Blind CER", format="%.2f", width="small"),
+            "blind WER, greedy": st.column_config.NumberColumn("Blind WER · greedy", format="%.2f", width="medium"),
+        },
+        hide_index=False,
+        alt="All committed evaluation metrics for iterations 1 through 5, in percent.",
+    )
+    st.caption("All values are percentages. Lowest values per table column are highlighted.")
+
+    with st.expander("Why raw and script-folded WER differ"):
+        st.markdown(
+            "Raw WER compares the written words exactly, so an English word written in Devanagari on one side "
+            "and Latin on the other counts as an error. Script-folded WER first maps known English-in-Devanagari "
+            "forms to Latin on both references and hypotheses using a map built from training data only. It reduces "
+            "script-only mismatches; it does not change the underlying audio or correct other word errors."
+        )
+
     with st.expander("What changed in each iteration"):
         st.markdown(
             """
