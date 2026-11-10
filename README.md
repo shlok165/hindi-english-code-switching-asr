@@ -102,6 +102,16 @@ result = transcriber.transcribe("a.wav", start=0.0, end=4.0)
 result.text, result.warnings
 ```
 
+### Dashboard
+
+`app.py` is a Streamlit app with three sections: an overview, a page that transcribes an uploaded WAV file on the CPU with the final model (greedy or KenLM beam search), and the iteration results table read from `results/iterations.json`. It needs the checkpoint unpacked as above and `streamlit` installed (`env/requirements.txt` lists it).
+
+```powershell
+.venv\Scripts\python -m streamlit run app.py
+```
+
+Streamlit prints the local URL (normally http://localhost:8501). The model loads on the first transcription and stays loaded while the server runs. `tests/test_app.py` renders every section headlessly.
+
 ### Scoring transcripts
 
 `src.score_files` scores reference and hypothesis text without a model, audio or the dataset: Kaldi-style `id text` files, a CSV with `reference` and `hypothesis` columns, or the JSONL written by `src.inference --manifest` (with a `reference` column) or `src.evaluate`:

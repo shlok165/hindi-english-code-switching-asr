@@ -20,3 +20,4 @@ jiwer
 rapidfuzz
 matplotlib
 pytest
+streamlit   # the dashboard, app.py
