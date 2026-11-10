@@ -21,6 +21,7 @@ __pycache__/
 *.pyc
 .pytest_cache/
 checkpoints/
+checkpoints.zip
 *.safetensors
 *.arpa
 *.klm
