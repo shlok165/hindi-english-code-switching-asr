@@ -1,0 +1,308 @@
+{
+  "source": {
+    "predictions": "results\\iteration4\\evaluations\\blind_greedy.jsonl",
+    "split": "blind",
+    "hypothesis_field": "hypothesis_raw",
+    "failed_rows": 0
+  },
+  "split": "blind",
+  "twer_mode": "official",
+  "maps_dir": "C:\\Users\\nehal\\OneDrive\\Desktop\\Projects\\hindi-english-code-switching-asr\\data\\interim\\extracted\\blind\\subtask2_blindtest_wReadme\\inference",
+  "utterances": 4034,
+  "scored_utterances": 4026,
+  "empty_references": 8,
+  "empty_hypotheses": 2,
+  "wer": 23.33975378946487,
+  "cer": 13.519368367033605,
+  "wer_cleaned": 23.146839874311986,
+  "cer_cleaned": 13.617954775565305,
+  "reference_words": 47764,
+  "counts": {
+    "official": {
+      "reference_words": 47764,
+      "errors": 11148,
+      "substitutions": 6355,
+      "deletions": 3633,
+      "insertions": 1160
+    },
+    "official_characters": {
+      "reference_words": 237733,
+      "errors": 32140,
+      "substitutions": 10663,
+      "deletions": 16640,
+      "insertions": 4837
+    },
+    "cleaned": {
+      "reference_words": 47419,
+      "errors": 10976,
+      "substitutions": 6386,
+      "deletions": 3359,
+      "insertions": 1231
+    },
+    "cleaned_characters": {
+      "reference_words": 237040,
+      "errors": 32280,
+      "substitutions": 10686,
+      "deletions": 16086,
+      "insertions": 5508
+    },
+    "twer": {
+      "reference_words": 47764,
+      "errors": 10641,
+      "substitutions": 5842,
+      "deletions": 3636,
+      "insertions": 1163
+    }
+  },
+  "normalisation": {
+    "official": "lower-case both sides; punct.mapping.txt on the hypothesis; empty references skipped (the organisers' compute_wer.py rules, src.metrics.official)",
+    "twer": "official normalisation, then hin2engwords.txt on the hypothesis (blind) or on both sides (test, approximate)",
+    "cleaned": "src.data.preprocessing.clean_transcript on both sides (training cleaning)",
+    "script_folded": "official normalisation, then both sides mapped through the train-only script map data/processed/script_map/hi2en_train.json"
+  },
+  "twer": 22.27828490076208,
+  "wer_folded": null,
+  "wer_folded_reason": "data/processed/script_map/hi2en_train.json not found; build it with python -m src.data.script_normalisation",
+  "top_confusions": [
+    {
+      "operation": "deletion",
+      "reference_word": ".",
+      "hypothesis_word": null,
+      "count": 182
+    },
+    {
+      "operation": "deletion",
+      "reference_word": "है",
+      "hypothesis_word": null,
+      "count": 145
+    },
+    {
+      "operation": "substitution",
+      "reference_word": "page",
+      "hypothesis_word": "पेज",
+      "count": 95
+    },
+    {
+      "operation": "deletion",
+      "reference_word": "हैं",
+      "hypothesis_word": null,
+      "count": 90
+    },
+    {
+      "operation": "deletion",
+      "reference_word": "यह",
+      "hypothesis_word": null,
+      "count": 63
+    },
+    {
+      "operation": "substitution",
+      "reference_word": "save",
+      "hypothesis_word": "सेव",
+      "count": 61
+    },
+    {
+      "operation": "deletion",
+      "reference_word": "tutorial",
+      "hypothesis_word": null,
+      "count": 57
+    },
+    {
+      "operation": "deletion",
+      "reference_word": "इस",
+      "hypothesis_word": null,
+      "count": 52
+    },
+    {
+      "operation": "deletion",
+      "reference_word": "करें",
+      "hypothesis_word": null,
+      "count": 52
+    },
+    {
+      "operation": "substitution",
+      "reference_word": "click",
+      "hypothesis_word": "क्लिक",
+      "count": 49
+    },
+    {
+      "operation": "substitution",
+      "reference_word": "है",
+      "hypothesis_word": "हैं",
+      "count": 49
+    },
+    {
+      "operation": "deletion",
+      "reference_word": "के",
+      "hypothesis_word": null,
+      "count": 46
+    },
+    {
+      "operation": "deletion",
+      "reference_word": "पर",
+      "hypothesis_word": null,
+      "count": 46
+    },
+    {
+      "operation": "deletion",
+      "reference_word": "अब",
+      "hypothesis_word": null,
+      "count": 45
+    },
+    {
+      "operation": "insertion",
+      "reference_word": null,
+      "hypothesis_word": "यह",
+      "count": 45
+    },
+    {
+      "operation": "insertion",
+      "reference_word": null,
+      "hypothesis_word": "अब",
+      "count": 43
+    },
+    {
+      "operation": "deletion",
+      "reference_word": "और",
+      "hypothesis_word": null,
+      "count": 39
+    },
+    {
+      "operation": "deletion",
+      "reference_word": "हम",
+      "hypothesis_word": null,
+      "count": 39
+    },
+    {
+      "operation": "deletion",
+      "reference_word": "spoken",
+      "hypothesis_word": null,
+      "count": 39
+    },
+    {
+      "operation": "insertion",
+      "reference_word": null,
+      "hypothesis_word": "है",
+      "count": 37
+    },
+    {
+      "operation": "insertion",
+      "reference_word": null,
+      "hypothesis_word": "इस",
+      "count": 36
+    },
+    {
+      "operation": "deletion",
+      "reference_word": "को",
+      "hypothesis_word": null,
+      "count": 36
+    },
+    {
+      "operation": "substitution",
+      "reference_word": "tab",
+      "hypothesis_word": "टैब",
+      "count": 36
+    },
+    {
+      "operation": "deletion",
+      "reference_word": "में",
+      "hypothesis_word": null,
+      "count": 34
+    },
+    {
+      "operation": "substitution",
+      "reference_word": "नाम",
+      "hypothesis_word": "name",
+      "count": 33
+    },
+    {
+      "operation": "deletion",
+      "reference_word": "my",
+      "hypothesis_word": null,
+      "count": 33
+    },
+    {
+      "operation": "deletion",
+      "reference_word": "-",
+      "hypothesis_word": null,
+      "count": 32
+    },
+    {
+      "operation": "deletion",
+      "reference_word": "click",
+      "hypothesis_word": null,
+      "count": 31
+    },
+    {
+      "operation": "substitution",
+      "reference_word": "i",
+      "hypothesis_word": "आई",
+      "count": 31
+    },
+    {
+      "operation": "substitution",
+      "reference_word": "करे",
+      "hypothesis_word": "करें",
+      "count": 30
+    },
+    {
+      "operation": "deletion",
+      "reference_word": "to",
+      "hypothesis_word": null,
+      "count": 29
+    },
+    {
+      "operation": "deletion",
+      "reference_word": "mark",
+      "hypothesis_word": null,
+      "count": 28
+    },
+    {
+      "operation": "substitution",
+      "reference_word": "user",
+      "hypothesis_word": "यूजर",
+      "count": 27
+    },
+    {
+      "operation": "deletion",
+      "reference_word": "/",
+      "hypothesis_word": null,
+      "count": 26
+    },
+    {
+      "operation": "insertion",
+      "reference_word": null,
+      "hypothesis_word": "अ",
+      "count": 25
+    },
+    {
+      "operation": "deletion",
+      "reference_word": "की",
+      "hypothesis_word": null,
+      "count": 25
+    },
+    {
+      "operation": "deletion",
+      "reference_word": "कर",
+      "hypothesis_word": null,
+      "count": 25
+    },
+    {
+      "operation": "deletion",
+      "reference_word": "सकते",
+      "hypothesis_word": null,
+      "count": 24
+    },
+    {
+      "operation": "deletion",
+      "reference_word": "1",
+      "hypothesis_word": null,
+      "count": 23
+    },
+    {
+      "operation": "deletion",
+      "reference_word": "आप",
+      "hypothesis_word": null,
+      "count": 23
+    }
+  ]
+}

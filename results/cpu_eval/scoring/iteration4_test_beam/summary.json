@@ -1,0 +1,308 @@
+{
+  "source": {
+    "predictions": "results\\iteration4\\evaluations\\test_beam.jsonl",
+    "split": "test",
+    "hypothesis_field": "hypothesis_raw",
+    "failed_rows": 0
+  },
+  "split": "test",
+  "twer_mode": "approximate",
+  "maps_dir": "C:\\Users\\nehal\\OneDrive\\Desktop\\Projects\\hindi-english-code-switching-asr\\data\\interim\\extracted\\blind\\subtask2_blindtest_wReadme\\inference",
+  "utterances": 3136,
+  "scored_utterances": 3136,
+  "empty_references": 0,
+  "empty_hypotheses": 0,
+  "wer": 29.977931987982238,
+  "cer": 24.921220945348654,
+  "wer_cleaned": 29.570421598616836,
+  "cer_cleaned": 24.85912451675677,
+  "reference_words": 37611,
+  "counts": {
+    "official": {
+      "reference_words": 37611,
+      "errors": 11275,
+      "substitutions": 6337,
+      "deletions": 3740,
+      "insertions": 1198
+    },
+    "official_characters": {
+      "reference_words": 192310,
+      "errors": 47926,
+      "substitutions": 19825,
+      "deletions": 22101,
+      "insertions": 6000
+    },
+    "cleaned": {
+      "reference_words": 37595,
+      "errors": 11117,
+      "substitutions": 6191,
+      "deletions": 3726,
+      "insertions": 1200
+    },
+    "cleaned_characters": {
+      "reference_words": 192191,
+      "errors": 47777,
+      "substitutions": 19864,
+      "deletions": 21623,
+      "insertions": 6290
+    },
+    "twer_approximate": {
+      "reference_words": 37611,
+      "errors": 10176,
+      "substitutions": 5158,
+      "deletions": 3780,
+      "insertions": 1238
+    }
+  },
+  "normalisation": {
+    "official": "lower-case both sides; punct.mapping.txt on the hypothesis; empty references skipped (the organisers' compute_wer.py rules, src.metrics.official)",
+    "twer": "official normalisation, then hin2engwords.txt on the hypothesis (blind) or on both sides (test, approximate)",
+    "cleaned": "src.data.preprocessing.clean_transcript on both sides (training cleaning)",
+    "script_folded": "official normalisation, then both sides mapped through the train-only script map data/processed/script_map/hi2en_train.json"
+  },
+  "twer_approximate": 27.055914493100424,
+  "wer_folded": null,
+  "wer_folded_reason": "data/processed/script_map/hi2en_train.json not found; build it with python -m src.data.script_normalisation",
+  "top_confusions": [
+    {
+      "operation": "substitution",
+      "reference_word": "क्लिक",
+      "hypothesis_word": "click",
+      "count": 164
+    },
+    {
+      "operation": "deletion",
+      "reference_word": "के",
+      "hypothesis_word": null,
+      "count": 93
+    },
+    {
+      "operation": "deletion",
+      "reference_word": "में",
+      "hypothesis_word": null,
+      "count": 92
+    },
+    {
+      "operation": "substitution",
+      "reference_word": "है",
+      "hypothesis_word": "हैं",
+      "count": 90
+    },
+    {
+      "operation": "deletion",
+      "reference_word": "*",
+      "hypothesis_word": null,
+      "count": 88
+    },
+    {
+      "operation": "deletion",
+      "reference_word": "पर",
+      "hypothesis_word": null,
+      "count": 87
+    },
+    {
+      "operation": "deletion",
+      "reference_word": "को",
+      "hypothesis_word": null,
+      "count": 75
+    },
+    {
+      "operation": "substitution",
+      "reference_word": "बॉक्स",
+      "hypothesis_word": "box",
+      "count": 74
+    },
+    {
+      "operation": "deletion",
+      "reference_word": "है",
+      "hypothesis_word": null,
+      "count": 64
+    },
+    {
+      "operation": "deletion",
+      "reference_word": "इस",
+      "hypothesis_word": null,
+      "count": 57
+    },
+    {
+      "operation": "substitution",
+      "reference_word": "हैं",
+      "hypothesis_word": "है",
+      "count": 56
+    },
+    {
+      "operation": "deletion",
+      "reference_word": "से",
+      "hypothesis_word": null,
+      "count": 53
+    },
+    {
+      "operation": "substitution",
+      "reference_word": "डायलॉग",
+      "hypothesis_word": "dialog",
+      "count": 51
+    },
+    {
+      "operation": "deletion",
+      "reference_word": "यह",
+      "hypothesis_word": null,
+      "count": 49
+    },
+    {
+      "operation": "substitution",
+      "reference_word": "पैनल",
+      "hypothesis_word": "panel",
+      "count": 48
+    },
+    {
+      "operation": "deletion",
+      "reference_word": "हम",
+      "hypothesis_word": null,
+      "count": 47
+    },
+    {
+      "operation": "deletion",
+      "reference_word": "आप",
+      "hypothesis_word": null,
+      "count": 45
+    },
+    {
+      "operation": "substitution",
+      "reference_word": "click",
+      "hypothesis_word": "क्लिक",
+      "count": 44
+    },
+    {
+      "operation": "deletion",
+      "reference_word": "अब",
+      "hypothesis_word": null,
+      "count": 42
+    },
+    {
+      "operation": "deletion",
+      "reference_word": "tutorial",
+      "hypothesis_word": null,
+      "count": 39
+    },
+    {
+      "operation": "deletion",
+      "reference_word": "एक",
+      "hypothesis_word": null,
+      "count": 39
+    },
+    {
+      "operation": "insertion",
+      "reference_word": null,
+      "hypothesis_word": "हैं",
+      "count": 38
+    },
+    {
+      "operation": "substitution",
+      "reference_word": "jchempaint",
+      "hypothesis_word": "gchempaint",
+      "count": 38
+    },
+    {
+      "operation": "deletion",
+      "reference_word": "क्लिक",
+      "hypothesis_word": null,
+      "count": 34
+    },
+    {
+      "operation": "substitution",
+      "reference_word": "फील्ड",
+      "hypothesis_word": "field",
+      "count": 33
+    },
+    {
+      "operation": "insertion",
+      "reference_word": null,
+      "hypothesis_word": "है",
+      "count": 32
+    },
+    {
+      "operation": "deletion",
+      "reference_word": "लिए",
+      "hypothesis_word": null,
+      "count": 31
+    },
+    {
+      "operation": "substitution",
+      "reference_word": "एड्रेस",
+      "hypothesis_word": "address",
+      "count": 31
+    },
+    {
+      "operation": "substitution",
+      "reference_word": "फाइल",
+      "hypothesis_word": "file",
+      "count": 30
+    },
+    {
+      "operation": "deletion",
+      "reference_word": "की",
+      "hypothesis_word": null,
+      "count": 29
+    },
+    {
+      "operation": "substitution",
+      "reference_word": "टेक्स्ट",
+      "hypothesis_word": "text",
+      "count": 29
+    },
+    {
+      "operation": "substitution",
+      "reference_word": "ट्यूटोरियल",
+      "hypothesis_word": "tutorial",
+      "count": 29
+    },
+    {
+      "operation": "deletion",
+      "reference_word": "ध्यान",
+      "hypothesis_word": null,
+      "count": 29
+    },
+    {
+      "operation": "substitution",
+      "reference_word": "मैसेज",
+      "hypothesis_word": "message",
+      "count": 29
+    },
+    {
+      "operation": "deletion",
+      "reference_word": "और",
+      "hypothesis_word": null,
+      "count": 28
+    },
+    {
+      "operation": "deletion",
+      "reference_word": "करते",
+      "hypothesis_word": null,
+      "count": 27
+    },
+    {
+      "operation": "insertion",
+      "reference_word": null,
+      "hypothesis_word": "के",
+      "count": 27
+    },
+    {
+      "operation": "substitution",
+      "reference_word": "बुक",
+      "hypothesis_word": "book",
+      "count": 27
+    },
+    {
+      "operation": "substitution",
+      "reference_word": "मैसेजेस",
+      "hypothesis_word": "messages",
+      "count": 26
+    },
+    {
+      "operation": "deletion",
+      "reference_word": "भी",
+      "hypothesis_word": null,
+      "count": 25
+    }
+  ]
+}

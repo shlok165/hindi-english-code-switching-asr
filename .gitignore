@@ -25,3 +25,7 @@ checkpoints.zip
 *.safetensors
 *.arpa
 *.klm
+
+# CPU rescoring outputs: the per-utterance and per-word CSVs are large and regenerable with src.score_files
+results/cpu_eval/scoring/*/utterances.csv
+results/cpu_eval/scoring/*/word_errors.csv
