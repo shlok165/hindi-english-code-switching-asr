@@ -152,6 +152,9 @@ def analyse(path: Path, word_map: Mapping[str, str] | None = None, examples_per_
     confusions: Counter[tuple[str, str]] = Counter()
     deleted: Counter[str] = Counter()
     inserted: Counter[str] = Counter()
+    script_substitutions: Counter[str] = Counter()  # "reference script -> hypothesis script"
+    script_deletions: Counter[str] = Counter()
+    script_insertions: Counter[str] = Counter()
     examples: dict[str, list[dict[str, Any]]] = defaultdict(list)
     utterances = 0
 
@@ -187,6 +190,7 @@ def analyse(path: Path, word_map: Mapping[str, str] | None = None, examples_per_
                 errors_by_duration[bucket] += 1
                 if operation == INS:
                     inserted[hyp_word] += 1
+                    script_insertions[script_of(hyp_word)] += 1
                     remember("insertion", row, ref_word, hyp_word)
                     continue
                 language = language_of(ref_word, word_map)
@@ -198,11 +202,13 @@ def analyse(path: Path, word_map: Mapping[str, str] | None = None, examples_per_
                 remember(f"{language}_word", row, ref_word, hyp_word)
                 if operation == DEL:
                     deleted[ref_word] += 1
+                    script_deletions[script_of(ref_word)] += 1
                     remember("deletion", row, ref_word, hyp_word)
                     continue
                 kind = substitution_type(ref_word, hyp_word, word_map)
                 categories[kind] += 1
                 confusions[(ref_word, hyp_word)] += 1
+                script_substitutions[f"{script_of(ref_word)} -> {script_of(hyp_word)}"] += 1
                 remember(kind, row, ref_word, hyp_word)
 
     total_errors = categories[OP_NAMES[SUB]] + categories[OP_NAMES[DEL]] + categories[OP_NAMES[INS]]
@@ -229,12 +235,22 @@ def analyse(path: Path, word_map: Mapping[str, str] | None = None, examples_per_
                    "wer": rate(errors_by_duration[name], words_by_duration[name])}
             for _, _, name in DURATION_BUCKETS
         },
+        "by_script": {
+            # Scripts are observable in the text, unlike languages, so these need no word map.
+            "substitutions": dict(script_substitutions.most_common()),
+            "deletions": dict(script_deletions.most_common()),
+            "insertions": dict(script_insertions.most_common()),
+        },
         "top_confusions": [[r, h, n] for (r, h), n in confusions.most_common(40)],
         "top_deletions": deleted.most_common(25),
         "top_insertions": inserted.most_common(25),
         "examples": dict(sorted(examples.items())),
+        "all_confusions": [[r, h, n, substitution_type(r, h, word_map)] for (r, h), n in confusions.most_common()],
+        "all_deletions": deleted.most_common(),
+        "all_insertions": inserted.most_common(),
         "limitations": [
             "Language labels are derived from script and the word map, not gold annotations.",
+            "Script labels (hindi_script, english_script, mixed, other) come from the characters of each word.",
             "Switch rates count reference words next to a Hindi-English script boundary.",
             "Rates exclude insertions unless stated, because an insertion has no reference word.",
             "Transliteration and homophone labels are phonetic heuristics; sample them before relying on them.",
@@ -242,27 +258,73 @@ def analyse(path: Path, word_map: Mapping[str, str] | None = None, examples_per_
     }
 
 
-def main() -> None:
+CSV_FILES = ("breakdown.csv", "confusions.csv", "deletions.csv", "insertions.csv", "examples.csv")
+
+
+def write_csv_reports(report: dict[str, Any], directory: Path) -> list[Path]:
+    """The report's tables as CSV files, for spreadsheets: every confusion, deletion and
+    insertion (the JSON keeps only the top ones), the breakdowns and the examples."""
+    import csv
+
+    directory.mkdir(parents=True, exist_ok=True)
+
+    def write(name: str, columns: list[str], rows: list[list[Any]]) -> None:
+        with (directory / name).open("w", encoding="utf-8", newline="") as handle:
+            writer = csv.writer(handle)
+            writer.writerow(columns)
+            writer.writerows(rows)
+
+    breakdown = [["error_type", kind, "", count, ""] for kind, count in report["error_types"].items()]
+    for section in ("by_language", "by_switch", "by_duration"):
+        for key, values in report[section].items():
+            breakdown.append([section, key, values["words"], values["errors"],
+                              values.get("error_rate", values.get("wer"))])
+    for kind, values in report["by_script"].items():
+        breakdown.extend([f"by_script_{kind}", key, "", count, ""] for key, count in values.items())
+    write("breakdown.csv", ["section", "key", "reference_words", "errors", "rate"], breakdown)
+    write("confusions.csv", ["reference_word", "hypothesis_word", "count", "substitution_type"],
+          report["all_confusions"])
+    write("deletions.csv", ["reference_word", "count"], [list(row) for row in report["all_deletions"]])
+    write("insertions.csv", ["hypothesis_word", "count"], [list(row) for row in report["all_insertions"]])
+    write("examples.csv", ["category", "id", "duration", "reference_word", "hypothesis_word", "reference", "hypothesis"],
+          [[category, e["id"], e["duration"], e["reference_word"], e["hypothesis_word"], e["reference"], e["hypothesis"]]
+           for category, items in report["examples"].items() for e in items])
+    return [directory / name for name in CSV_FILES]
+
+
+def main(argv: list[str] | None = None) -> None:
     from src.metrics.official import load_maps
 
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--predictions", required=True, type=Path)
     parser.add_argument("--output", required=True, type=Path)
+    parser.add_argument("--csv-dir", type=Path, help="also write the tables as CSV files into this directory")
     parser.add_argument("--examples-per-category", type=int, default=10)
-    args = parser.parse_args()
+    parser.add_argument("--word-map", choices=("auto", "none"), default="auto",
+                        help="auto: the organisers' word map for test and blind only, as before")
+    parser.add_argument("--force", action="store_true", help="overwrite an existing --output or CSV files")
+    args = parser.parse_args(argv)
     if args.examples_per_category < 0:
         parser.error("example count must be non-negative")
+    if not args.predictions.is_file():
+        parser.error(f"predictions file not found: {args.predictions}")
+    existing = [p for p in [args.output, *((args.csv_dir / n) for n in CSV_FILES if args.csv_dir)] if p.exists()]
+    if existing and not args.force:
+        parser.error(f"refusing to overwrite {existing[0]}; choose another path or pass --force")
     with args.predictions.open(encoding="utf-8") as handle:
         split = json.loads(handle.readline()).get("split")
     # The official word map was built from blind references, so it only labels
     # splits that are scored with it. A val analysis must not carry blind vocabulary.
-    word_map = load_maps().words if split in ("test", "blind") else {}
+    word_map = load_maps().words if args.word_map == "auto" and split in ("test", "blind") else {}
     report = analyse(args.predictions, word_map, args.examples_per_category)
     report["word_map_used"] = bool(word_map)
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
+    if args.csv_dir:
+        write_csv_reports(report, args.csv_dir)
     print(json.dumps({key: report[key] for key in ("utterances", "wer", "error_types", "by_language",
-                                                   "by_switch", "by_duration")}, ensure_ascii=False, indent=2))
+                                                   "by_switch", "by_duration", "by_script")},
+                     ensure_ascii=False, indent=2))
 
 
 if __name__ == "__main__":

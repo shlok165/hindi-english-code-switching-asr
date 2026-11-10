@@ -1,0 +1,37 @@
+section,key,reference_words,errors,rate
+error_type,substitution,,3226,
+error_type,other_substitution,,2839,
+error_type,deletion,,1241,
+error_type,insertion,,780,
+error_type,homophone_confusion,,259,
+error_type,incorrect_transliteration,,128,
+by_language,hi,21499,2860,13.3
+by_language,en,6762,1544,22.83
+by_language,other,210,63,30.0
+by_switch,hi_to_en,5815,938,16.13
+by_switch,en_to_hi,5659,791,13.98
+by_duration,under 5 s,5013,1074,21.42
+by_duration,5-10 s,17853,3028,16.96
+by_duration,10-20 s,5457,1130,20.71
+by_duration,over 20 s,148,15,10.14
+by_script_substitutions,hindi_script -> hindi_script,,1039,
+by_script_substitutions,hindi_script -> english_script,,944,
+by_script_substitutions,english_script -> english_script,,665,
+by_script_substitutions,english_script -> hindi_script,,254,
+by_script_substitutions,english_script -> other,,102,
+by_script_substitutions,mixed -> english_script,,55,
+by_script_substitutions,hindi_script -> other,,45,
+by_script_substitutions,mixed -> hindi_script,,45,
+by_script_substitutions,hindi_script -> mixed,,20,
+by_script_substitutions,english_script -> mixed,,18,
+by_script_substitutions,other -> other,,16,
+by_script_substitutions,other -> hindi_script,,11,
+by_script_substitutions,other -> english_script,,11,
+by_script_substitutions,mixed -> mixed,,1,
+by_script_deletions,hindi_script,,812,
+by_script_deletions,english_script,,404,
+by_script_deletions,other,,25,
+by_script_insertions,hindi_script,,395,
+by_script_insertions,english_script,,344,
+by_script_insertions,other,,37,
+by_script_insertions,mixed,,4,

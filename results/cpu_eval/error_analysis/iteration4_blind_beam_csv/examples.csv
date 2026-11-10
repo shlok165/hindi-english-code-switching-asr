@@ -1,0 +1,111 @@
+category,id,duration,reference_word,hypothesis_word,reference,hypothesis
+deletion,135893_9lNAZMRfDfuCN6XC_0000,1.0,par,,par parsing,in
+deletion,135893_9lNAZMRfDfuCN6XC_0001,4.0,इस,,data पर इस tutorial में आपका स्वागत है इस,data पर इस tutorial में आपका स्वागत है
+deletion,135893_9lNAZMRfDfuCN6XC_0002,8.0,और,,tutorial में हम सीखेंगे ncbi database website से fasta और genbank files download करना और,इस tutorial में हम सीखेंगे ncbi database website से master और genvinc files download करना
+deletion,135893_9lNAZMRfDfuCN6XC_0003,5.0,/,,sequence input / output module में functions उपयोग करके data files parse करना,sequence input output module में functions उपयोग करके data files pass करता है
+deletion,135893_9lNAZMRfDfuCN6XC_0006,4.0,इस,,link पर python tutorials देखें इस,ने link पर python tutorials देखें
+deletion,135893_9lNAZMRfDfuCN6XC_0007,6.0,14,,tutorial को record करने के लिए मैं उपयोग कर रही हूँ ubuntu os version 14 . 10,इस tutorial को record करने के लिए मैं उपयोग कर रही हूँ ubuntu os version 1410
+deletion,135893_9lNAZMRfDfuCN6XC_0007,6.0,.,,tutorial को record करने के लिए मैं उपयोग कर रही हूँ ubuntu os version 14 . 10,इस tutorial को record करने के लिए मैं उपयोग कर रही हूँ ubuntu os version 1410
+deletion,135893_9lNAZMRfDfuCN6XC_0008,4.0,2,,python version 2 . 7 . 8,python version 278
+deletion,135893_9lNAZMRfDfuCN6XC_0008,4.0,.,,python version 2 . 7 . 8,python version 278
+deletion,135893_9lNAZMRfDfuCN6XC_0008,4.0,7,,python version 2 . 7 . 8,python version 278
+en_to_hi,135893_9lNAZMRfDfuCN6XC_0003,5.0,parse,करता,sequence input / output module में functions उपयोग करके data files parse करना,sequence input output module में functions उपयोग करके data files pass करता है
+en_to_hi,135893_9lNAZMRfDfuCN6XC_0003,5.0,करना,है,sequence input / output module में functions उपयोग करके data files parse करना,sequence input output module में functions उपयोग करके data files pass करता है
+en_to_hi,135893_9lNAZMRfDfuCN6XC_0011,11.0,files,file,biology में वैज्ञानिक data सामान्यतः text files जैसे fasta genbank embl swiss port आदि में संचित किया जाता है da,biology में वैज्ञानिक data सामान्यतः text file जैसे firstaginbank embl switch port आदि में संचित किया जाता है
+en_to_hi,135893_9lNAZMRfDfuCN6XC_0012,5.0,websites,website,files database websites से download की जा सकती हैं किसी,files database website से downloaded की जा सकती हैं
+en_to_hi,135893_9lNAZMRfDfuCN6XC_0014,2.0,page,पेज,एक web page खुलता है हम अब,web पेज खुलता है
+en_to_hi,135893_9lNAZMRfDfuCN6XC_0015,6.0,gene,gam,अब मनुष्य के insulin gene के लिए fasta और genbank files download करते हैं search,अब insulin gam के लिए fast और geneving files download करते हैं
+en_to_hi,135893_9lNAZMRfDfuCN6XC_0017,4.0,page,पेज,page मनुष्य के insulin gene की अनेक files दिखाता है,पेज मनुष्य के insulentejme की अनेक files दिखाता है
+en_to_hi,135893_9lNAZMRfDfuCN6XC_0017,4.0,gene,insulentejme,page मनुष्य के insulin gene की अनेक files दिखाता है,पेज मनुष्य के insulentejme की अनेक files दिखाता है
+en_to_hi,135893_9lNAZMRfDfuCN6XC_0018,8.0,mrna,mrma,प्रदर्शन के लिए मैं homo sapiens insulin mrna नाम के साथ 4 files चुनूँगी मैं,प्रदर्शन के लिए मैं homoserine insulin mrma name के साथ 4 files चुनूँगी
+en_to_hi,135893_9lNAZMRfDfuCN6XC_0018,8.0,नाम,name,प्रदर्शन के लिए मैं homo sapiens insulin mrna नाम के साथ 4 files चुनूँगी मैं,प्रदर्शन के लिए मैं homoserine insulin mrma name के साथ 4 files चुनूँगी
+en_word,135893_9lNAZMRfDfuCN6XC_0000,1.0,par,,par parsing,in
+en_word,135893_9lNAZMRfDfuCN6XC_0000,1.0,parsing,in,par parsing,in
+en_word,135893_9lNAZMRfDfuCN6XC_0002,8.0,fasta,master,tutorial में हम सीखेंगे ncbi database website से fasta और genbank files download करना और,इस tutorial में हम सीखेंगे ncbi database website से master और genvinc files download करना
+en_word,135893_9lNAZMRfDfuCN6XC_0002,8.0,genbank,genvinc,tutorial में हम सीखेंगे ncbi database website से fasta और genbank files download करना और,इस tutorial में हम सीखेंगे ncbi database website से master और genvinc files download करना
+en_word,135893_9lNAZMRfDfuCN6XC_0003,5.0,parse,करता,sequence input / output module में functions उपयोग करके data files parse करना,sequence input output module में functions उपयोग करके data files pass करता है
+en_word,135893_9lNAZMRfDfuCN6XC_0004,7.0,bioinformatics,informatics,इस tutorial के अनुसरण के लिए आपको स्नातक स्तर की biochemistry या bioinformatics और कोई,इस tutorial के अनुसरण के लिए आपको स्नातक स्तर की biochemistry या by informatics और है
+en_word,135893_9lNAZMRfDfuCN6XC_0009,4.0,interpretor,interpreter,python interpretor version 2 . 3 . 0 py,python interpreter version 230
+en_word,135893_9lNAZMRfDfuCN6XC_0009,4.0,py,230,python interpretor version 2 . 3 . 0 py,python interpreter version 230
+en_word,135893_9lNAZMRfDfuCN6XC_0010,8.0,mozilla,mozina,python version 1 . 64 और mozilla firefox browser 35 . 0,python version 164 और mozina firefox browser 350
+en_word,135893_9lNAZMRfDfuCN6XC_0011,11.0,files,file,biology में वैज्ञानिक data सामान्यतः text files जैसे fasta genbank embl swiss port आदि में संचित किया जाता है da,biology में वैज्ञानिक data सामान्यतः text file जैसे firstaginbank embl switch port आदि में संचित किया जाता है
+hi_to_en,135893_9lNAZMRfDfuCN6XC_0002,8.0,fasta,master,tutorial में हम सीखेंगे ncbi database website से fasta और genbank files download करना और,इस tutorial में हम सीखेंगे ncbi database website से master और genvinc files download करना
+hi_to_en,135893_9lNAZMRfDfuCN6XC_0002,8.0,genbank,genvinc,tutorial में हम सीखेंगे ncbi database website से fasta और genbank files download करना और,इस tutorial में हम सीखेंगे ncbi database website से master और genvinc files download करना
+hi_to_en,135893_9lNAZMRfDfuCN6XC_0004,7.0,bioinformatics,informatics,इस tutorial के अनुसरण के लिए आपको स्नातक स्तर की biochemistry या bioinformatics और कोई,इस tutorial के अनुसरण के लिए आपको स्नातक स्तर की biochemistry या by informatics और है
+hi_to_en,135893_9lNAZMRfDfuCN6XC_0005,4.0,बुनियादी,याद,और बुनियादी python programming से परिचित होना चाहिए,अब याद python programming से परिचित होना चाहिए
+hi_to_en,135893_9lNAZMRfDfuCN6XC_0010,8.0,mozilla,mozina,python version 1 . 64 और mozilla firefox browser 35 . 0,python version 164 और mozina firefox browser 350
+hi_to_en,135893_9lNAZMRfDfuCN6XC_0011,11.0,fasta,,biology में वैज्ञानिक data सामान्यतः text files जैसे fasta genbank embl swiss port आदि में संचित किया जाता है da,biology में वैज्ञानिक data सामान्यतः text file जैसे firstaginbank embl switch port आदि में संचित किया जाता है
+hi_to_en,135893_9lNAZMRfDfuCN6XC_0011,11.0,da,,biology में वैज्ञानिक data सामान्यतः text files जैसे fasta genbank embl swiss port आदि में संचित किया जाता है da,biology में वैज्ञानिक data सामान्यतः text file जैसे firstaginbank embl switch port आदि में संचित किया जाता है
+hi_to_en,135893_9lNAZMRfDfuCN6XC_0012,5.0,download,downloaded,files database websites से download की जा सकती हैं किसी,files database website से downloaded की जा सकती हैं
+hi_to_en,135893_9lNAZMRfDfuCN6XC_0014,2.0,एक,,एक web page खुलता है हम अब,web पेज खुलता है
+hi_to_en,135893_9lNAZMRfDfuCN6XC_0015,6.0,के,,अब मनुष्य के insulin gene के लिए fasta और genbank files download करते हैं search,अब insulin gam के लिए fast और geneving files download करते हैं
+hi_word,135893_9lNAZMRfDfuCN6XC_0001,4.0,इस,,data पर इस tutorial में आपका स्वागत है इस,data पर इस tutorial में आपका स्वागत है
+hi_word,135893_9lNAZMRfDfuCN6XC_0002,8.0,और,,tutorial में हम सीखेंगे ncbi database website से fasta और genbank files download करना और,इस tutorial में हम सीखेंगे ncbi database website से master और genvinc files download करना
+hi_word,135893_9lNAZMRfDfuCN6XC_0003,5.0,करना,है,sequence input / output module में functions उपयोग करके data files parse करना,sequence input output module में functions उपयोग करके data files pass करता है
+hi_word,135893_9lNAZMRfDfuCN6XC_0004,7.0,कोई,है,इस tutorial के अनुसरण के लिए आपको स्नातक स्तर की biochemistry या bioinformatics और कोई,इस tutorial के अनुसरण के लिए आपको स्नातक स्तर की biochemistry या by informatics और है
+hi_word,135893_9lNAZMRfDfuCN6XC_0005,4.0,और,अब,और बुनियादी python programming से परिचित होना चाहिए,अब याद python programming से परिचित होना चाहिए
+hi_word,135893_9lNAZMRfDfuCN6XC_0005,4.0,बुनियादी,याद,और बुनियादी python programming से परिचित होना चाहिए,अब याद python programming से परिचित होना चाहिए
+hi_word,135893_9lNAZMRfDfuCN6XC_0006,4.0,इस,,link पर python tutorials देखें इस,ने link पर python tutorials देखें
+hi_word,135893_9lNAZMRfDfuCN6XC_0012,5.0,किसी,,files database websites से download की जा सकती हैं किसी,files database website से downloaded की जा सकती हैं
+hi_word,135893_9lNAZMRfDfuCN6XC_0014,2.0,एक,,एक web page खुलता है हम अब,web पेज खुलता है
+hi_word,135893_9lNAZMRfDfuCN6XC_0014,2.0,हम,,एक web page खुलता है हम अब,web पेज खुलता है
+homophone_confusion,135893_9lNAZMRfDfuCN6XC_0045,4.0,गयी,गई,home folder में file save करने के लिए पहले दिखाई गयी समान steps का अनुसरण करें,home folder में file सेव करने के लिए पहले दिखाई गई समान steps का अणु है
+homophone_confusion,135893_9lNAZMRfDfuCN6XC_0088,7.0,दबाएं,दबाएँ,इस record के लिए पहचानकर्ताओं को देखने के लिए type करें record . identer दबाएं,इस record के लिए पहचानकर्ताओं को देखने के लिए type करें record id enter दबाएँ
+homophone_confusion,135893_9lNAZMRfDfuCN6XC_0098,6.0,लिये,लिए,file से nucleotide sequences को load करने के लिये parse function उपयोग करें,auto file से निपलोटाide sequences को inloat करने के लिए parse function उपयोग करें
+homophone_confusion,141425_wYQaKVNl7bh28u3u_0001,5.0,करायेंगे,कराएँगे,इस tutorial में हम आपको web application से परिचित करायेंगे,इस ट्यूटोरियल में हम आपको web application से परिचित कराएँगे
+homophone_confusion,141425_wYQaKVNl7bh28u3u_0029,7.0,यानी,यानि,अतः अब हम एक member की तरह login करते हैं यानी एक user की तरह जो पहले से ही registered हो चुका है,अतः अब हम एक member की तरह login करते हैं यानि एक यूज़र की तरह जो पहले से ही register हो चुका है
+homophone_confusion,141425_wYQaKVNl7bh28u3u_0030,7.0,करुँगा,करूँगा,मैं mdhusein से login करुँगा और password दें और enter करें,मैं mdhusen से login करूँगा और password दें और enter करें
+homophone_confusion,141425_wYQaKVNl7bh28u3u_0032,5.0,गयी,गई,हमारे पास user द्वारा इस समय उधार ली गयी किताबों की भी सूची है,हमारे पास यूज़र द्वारा इस समय उदार दी गई किताबों की भी सूची है
+homophone_confusion,141425_wYQaKVNl7bh28u3u_0034,5.0,यानी,यानि,ये हम एक librarian की तरह login करेंगे यानी admin की तरह,आगे हम एक librarian की तरह login करेंगे यानि admin की तरह
+homophone_confusion,141425_wYQaKVNl7bh28u3u_0041,4.0,गयी,गई,यहाँ हमें भिन्न members को जारी की गयी किताबों की सूची मिलती,यहाँ हमें भिन्न members को जारी की गई किताबों की सूची मिलता है
+homophone_confusion,141425_wYQaKVNl7bh28u3u_0051,4.0,यूज़र,यूजर,नए यूज़र को register करने के लिए यह एक registration form है,नए यूजर को register करने के लिए यह एक registration form है
+incorrect_transliteration,135893_9lNAZMRfDfuCN6XC_0065,5.0,key,की,output के लिए enter key दो बार दबाएं,output के लिए enter की दो बार दबाएं
+incorrect_transliteration,135893_9lNAZMRfDfuCN6XC_0075,5.0,key,की,output प्राप्त करने के लिए दो बार enter key दबाएं यह,output प्राप्त करने के लिए दो बार enter की दबाएं
+incorrect_transliteration,135893_9lNAZMRfDfuCN6XC_0095,7.0,nucleotide,नुप्लोटाइड,bi database से अपनी पसंद के nucleotide sequence के लिए fasta files download करें seq,i database से अपनी पसंद के नुप्लोटाइड sequence के लिए master files download करें
+incorrect_transliteration,141425_wYQaKVNl7bh28u3u_0001,5.0,tutorial,ट्यूटोरियल,इस tutorial में हम आपको web application से परिचित करायेंगे,इस ट्यूटोरियल में हम आपको web application से परिचित कराएँगे
+incorrect_transliteration,141425_wYQaKVNl7bh28u3u_0021,6.0,run,रन,अब मैं my first project नामक project को run करता हूँ,अब मैं my first project named project को रन करता हूँ
+incorrect_transliteration,141425_wYQaKVNl7bh28u3u_0058,6.0,application,एप्लिकेशन,आप कोई web application बनाने में भी सक्षम होंगे जो mvc pattern का अनुसरण करता है,कोई वेब एप्लिकेशन बनाने में भी सक्षम होंगे जो mvc pattern का अनुसरण करता है
+incorrect_transliteration,141425_wYQaKVNl7bh28u3u_0068,7.0,mhrd,एमएचआरडी,यह भारत सरकार के mhrd के ict के माध्यम से राष्ट्रीय साक्षरता mission द्वारा समर्थित है,यह भारत सरकार के एमएचआरडी के आईसीटी के माध्यम से राष्ट्रीय साक्षरता mission द्वारा समर्थित है
+incorrect_transliteration,145704_5CY9t6duxwVCK5NI_0000,4.0,libre,लिबर,libre office math के spoken tutorial में आपका स्वाग,लिबर office math के spoken tutorial में आपका स्वागत है
+incorrect_transliteration,145704_5CY9t6duxwVCK5NI_0015,6.0,key,की,अच्छे से नज़र आने के लिए enter key एक बार press करते हैं,अच्छे से नज़र आने के लिए enter की एक बार press करते हैं
+incorrect_transliteration,145704_5CY9t6duxwVCK5NI_0042,11.0,set,स्टाइल,इन्हें अलग font set कर सकते है font set को बदलने के लिए modify button पर click करें और variables को चुनें,font स्टाइल को बदलने के लिए modify button पर click करें और variables को चुनें
+insertion,135893_9lNAZMRfDfuCN6XC_0002,8.0,,इस,tutorial में हम सीखेंगे ncbi database website से fasta और genbank files download करना और,इस tutorial में हम सीखेंगे ncbi database website से master और genvinc files download करना
+insertion,135893_9lNAZMRfDfuCN6XC_0003,5.0,,pass,sequence input / output module में functions उपयोग करके data files parse करना,sequence input output module में functions उपयोग करके data files pass करता है
+insertion,135893_9lNAZMRfDfuCN6XC_0004,7.0,,by,इस tutorial के अनुसरण के लिए आपको स्नातक स्तर की biochemistry या bioinformatics और कोई,इस tutorial के अनुसरण के लिए आपको स्नातक स्तर की biochemistry या by informatics और है
+insertion,135893_9lNAZMRfDfuCN6XC_0006,4.0,,ने,link पर python tutorials देखें इस,ने link पर python tutorials देखें
+insertion,135893_9lNAZMRfDfuCN6XC_0007,6.0,,इस,tutorial को record करने के लिए मैं उपयोग कर रही हूँ ubuntu os version 14 . 10,इस tutorial को record करने के लिए मैं उपयोग कर रही हूँ ubuntu os version 1410
+insertion,135893_9lNAZMRfDfuCN6XC_0013,5.0,,सभी,web browser में नीचे दिया गया website link खोलें,सभी web browser में नीचे दिया गया website link खोलें
+insertion,135893_9lNAZMRfDfuCN6XC_0016,6.0,,search,box में type करें human insulin search button पर click करें,search box में type करें human insulin search button पर click करें
+insertion,135893_9lNAZMRfDfuCN6XC_0019,5.0,,मैं,500 से कम base pairs यानी युग्म रखने वाली files चुनूँगी,मैं 500 से कम base पेयर्स यानी युग्म रखने वाली files चुनूँगी
+insertion,135893_9lNAZMRfDfuCN6XC_0024,8.0,,इस,file को किसी भी file format में save कर सकते हैं जो format dropdown सूची box में सूचीबद्ध है,इस file को किसी भी file format में सेव कर सकते हैं जो format dropdown सूची box में सूचीबद्ध है
+insertion,135893_9lNAZMRfDfuCN6XC_0030,7.0,,अब,4 records दिखाती है चूँकि हमने download के लिए चार files चुनी थी,अब चार records दिखाती है चूँकि हमने download के लिए 4 files चुनी थी
+other_substitution,135893_9lNAZMRfDfuCN6XC_0000,1.0,parsing,in,par parsing,in
+other_substitution,135893_9lNAZMRfDfuCN6XC_0002,8.0,fasta,master,tutorial में हम सीखेंगे ncbi database website से fasta और genbank files download करना और,इस tutorial में हम सीखेंगे ncbi database website से master और genvinc files download करना
+other_substitution,135893_9lNAZMRfDfuCN6XC_0002,8.0,genbank,genvinc,tutorial में हम सीखेंगे ncbi database website से fasta और genbank files download करना और,इस tutorial में हम सीखेंगे ncbi database website से master और genvinc files download करना
+other_substitution,135893_9lNAZMRfDfuCN6XC_0003,5.0,parse,करता,sequence input / output module में functions उपयोग करके data files parse करना,sequence input output module में functions उपयोग करके data files pass करता है
+other_substitution,135893_9lNAZMRfDfuCN6XC_0003,5.0,करना,है,sequence input / output module में functions उपयोग करके data files parse करना,sequence input output module में functions उपयोग करके data files pass करता है
+other_substitution,135893_9lNAZMRfDfuCN6XC_0004,7.0,bioinformatics,informatics,इस tutorial के अनुसरण के लिए आपको स्नातक स्तर की biochemistry या bioinformatics और कोई,इस tutorial के अनुसरण के लिए आपको स्नातक स्तर की biochemistry या by informatics और है
+other_substitution,135893_9lNAZMRfDfuCN6XC_0004,7.0,कोई,है,इस tutorial के अनुसरण के लिए आपको स्नातक स्तर की biochemistry या bioinformatics और कोई,इस tutorial के अनुसरण के लिए आपको स्नातक स्तर की biochemistry या by informatics और है
+other_substitution,135893_9lNAZMRfDfuCN6XC_0005,4.0,और,अब,और बुनियादी python programming से परिचित होना चाहिए,अब याद python programming से परिचित होना चाहिए
+other_substitution,135893_9lNAZMRfDfuCN6XC_0005,4.0,बुनियादी,याद,और बुनियादी python programming से परिचित होना चाहिए,अब याद python programming से परिचित होना चाहिए
+other_substitution,135893_9lNAZMRfDfuCN6XC_0007,6.0,10,1410,tutorial को record करने के लिए मैं उपयोग कर रही हूँ ubuntu os version 14 . 10,इस tutorial को record करने के लिए मैं उपयोग कर रही हूँ ubuntu os version 1410
+other_word,135893_9lNAZMRfDfuCN6XC_0003,5.0,/,,sequence input / output module में functions उपयोग करके data files parse करना,sequence input output module में functions उपयोग करके data files pass करता है
+other_word,135893_9lNAZMRfDfuCN6XC_0007,6.0,14,,tutorial को record करने के लिए मैं उपयोग कर रही हूँ ubuntu os version 14 . 10,इस tutorial को record करने के लिए मैं उपयोग कर रही हूँ ubuntu os version 1410
+other_word,135893_9lNAZMRfDfuCN6XC_0007,6.0,.,,tutorial को record करने के लिए मैं उपयोग कर रही हूँ ubuntu os version 14 . 10,इस tutorial को record करने के लिए मैं उपयोग कर रही हूँ ubuntu os version 1410
+other_word,135893_9lNAZMRfDfuCN6XC_0007,6.0,10,1410,tutorial को record करने के लिए मैं उपयोग कर रही हूँ ubuntu os version 14 . 10,इस tutorial को record करने के लिए मैं उपयोग कर रही हूँ ubuntu os version 1410
+other_word,135893_9lNAZMRfDfuCN6XC_0008,4.0,2,,python version 2 . 7 . 8,python version 278
+other_word,135893_9lNAZMRfDfuCN6XC_0008,4.0,.,,python version 2 . 7 . 8,python version 278
+other_word,135893_9lNAZMRfDfuCN6XC_0008,4.0,7,,python version 2 . 7 . 8,python version 278
+other_word,135893_9lNAZMRfDfuCN6XC_0008,4.0,.,,python version 2 . 7 . 8,python version 278
+other_word,135893_9lNAZMRfDfuCN6XC_0008,4.0,8,278,python version 2 . 7 . 8,python version 278
+other_word,135893_9lNAZMRfDfuCN6XC_0009,4.0,2,,python interpretor version 2 . 3 . 0 py,python interpreter version 230
+script_only,135893_9lNAZMRfDfuCN6XC_0019,5.0,pairs,पेयर्स,500 से कम base pairs यानी युग्म रखने वाली files चुनूँगी,मैं 500 से कम base पेयर्स यानी युग्म रखने वाली files चुनूँगी
+script_only,135893_9lNAZMRfDfuCN6XC_0024,8.0,save,सेव,file को किसी भी file format में save कर सकते हैं जो format dropdown सूची box में सूचीबद्ध है,इस file को किसी भी file format में सेव कर सकते हैं जो format dropdown सूची box में सूचीबद्ध है
+script_only,135893_9lNAZMRfDfuCN6XC_0034,5.0,save,सेव,file को अपने home folder में sequence . fasta की तरह save करें text,file को अपने home folder में sequence fast की तरह सेव करें
+script_only,135893_9lNAZMRfDfuCN6XC_0039,6.0,features,फीचर्स,ध्यान दें कि genbank format में sequence file fasta file से ज़्यादा features रखती है,ध्यान दें कि janbank format में sequence file fast file से ज़्यादा फीचर्स रखती है
+script_only,135893_9lNAZMRfDfuCN6XC_0040,7.0,save,सेव,अपने home folder में sequence . gb की तरह save करें text editor बंद करें प्रद,अब अपने home folder में sequence gb की तरह सेव करें text editor बंद करें
+script_only,135893_9lNAZMRfDfuCN6XC_0042,9.0,click,क्लिक,के लिए check boxes पर दोबारा click करके पिछले चयन को clear करें अब,इसके लिए checkboxes पर दोबारा क्लिक करके पिछले चयन को clear करें
+script_only,135893_9lNAZMRfDfuCN6XC_0045,4.0,save,सेव,home folder में file save करने के लिए पहले दिखाई गयी समान steps का अनुसरण करें,home folder में file सेव करने के लिए पहले दिखाई गई समान steps का अणु है
+script_only,135893_9lNAZMRfDfuCN6XC_0046,7.0,save,सेव,सरल करें file को insulin . fasta की तरह save करें,file को insulin fasta की तरह सेव करें
+script_only,135893_9lNAZMRfDfuCN6XC_0053,7.0,type,टाइप,पर ipython type करके ipython शुरू करें enter दबाएं आगे,file पर ipython टाइप करके ipython शुरू करें एंटर दबाएं
+script_only,135893_9lNAZMRfDfuCN6XC_0053,7.0,enter,एंटर,पर ipython type करके ipython शुरू करें enter दबाएं आगे,file पर ipython टाइप करके ipython शुरू करें एंटर दबाएं
