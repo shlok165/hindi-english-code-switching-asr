@@ -55,16 +55,65 @@ def read_unigrams(kenlm_path: str | Path) -> list[str]:
     return path.read_text(encoding="utf-8").split()
 
 
-def build_beam_decoder(vocab: dict[str, int], kenlm_path: str | Path, settings: BeamSettings) -> Any:
+LM_BACKENDS = ("auto", "kenlm", "arpa")
+
+
+def kenlm_available() -> bool:
+    try:
+        import kenlm  # noqa: F401
+    except ImportError:
+        return False
+    return True
+
+
+def resolve_lm_backend(backend: str) -> str:
+    """`auto` means real KenLM when it is installed, else the pure-Python ARPA reader."""
+    if backend not in LM_BACKENDS:
+        raise ValueError(f"unknown LM backend {backend!r}; choose one of {LM_BACKENDS}")
+    if backend == "auto":
+        return "kenlm" if kenlm_available() else "arpa"
+    if backend == "kenlm" and not kenlm_available():
+        raise RuntimeError(
+            "the kenlm package is not installed. Use --lm-backend arpa (pure Python, same model "
+            "from its .arpa file) or install kenlm; see docs/cpu_setup.md"
+        )
+    return backend
+
+
+def arpa_path_for(kenlm_path: str | Path) -> Path:
+    """The ARPA file a binary .klm was built from: same name, .arpa suffix."""
     path = Path(kenlm_path)
-    if not path.is_file():
-        raise FileNotFoundError(f"KenLM model not found: {path}")
+    return path if path.suffix == ".arpa" else path.with_suffix(".arpa")
+
+
+def build_beam_decoder(
+    vocab: dict[str, int], kenlm_path: str | Path, settings: BeamSettings, backend: str = "auto"
+) -> Any:
+    """A pyctcdecode decoder over the n-gram model at kenlm_path.
+
+    With the `kenlm` backend, kenlm_path is the .klm (or .arpa) that KenLM loads.
+    With `arpa`, the .arpa beside it is read by src.arpa_lm instead.
+    """
     try:
         from pyctcdecode import build_ctcdecoder
     except ImportError as error:
         raise RuntimeError(
-            "KenLM beam decoding requires pyctcdecode and kenlm; see the README"
+            "KenLM beam decoding requires pyctcdecode: pip install --no-deps pyctcdecode, "
+            "then pip install pygtrie hypothesis; see docs/cpu_setup.md"
         ) from error
+    backend = resolve_lm_backend(backend)
+    path = Path(kenlm_path)
+    if backend == "arpa":
+        from src.arpa_lm import build_arpa_decoder
+
+        arpa = arpa_path_for(path)
+        if not arpa.is_file():
+            raise FileNotFoundError(f"ARPA language model not found: {arpa} (the ARPA backend reads it "
+                                    f"instead of {path.name})")
+        return build_arpa_decoder(decoder_labels(vocab), arpa, read_unigrams(path), settings.alpha,
+                                  settings.beta, settings.unk_score_offset)
+    if not path.is_file():
+        raise FileNotFoundError(f"KenLM model not found: {path}")
     return build_ctcdecoder(
         decoder_labels(vocab),
         kenlm_model_path=str(path),

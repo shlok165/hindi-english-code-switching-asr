@@ -1,0 +1,10 @@
+{
+  "sentences": 2003,
+  "words_scored": 26145,
+  "tolerance": 0.0001,
+  "max_word_difference": 6.312255864671101e-07,
+  "mean_word_difference": 5.4561904946195106e-08,
+  "max_sentence_difference": 2.612500000509499e-05,
+  "words_over_tolerance": 0,
+  "mismatches": []
+}
