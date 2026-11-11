@@ -22,6 +22,9 @@ __pycache__/
 .pytest_cache/
 checkpoints/
 checkpoints.zip
+research_paper/scripts/node_modules/
+research_paper/scripts/package.json
+research_paper/scripts/package-lock.json
 *.safetensors
 *.arpa
 *.klm

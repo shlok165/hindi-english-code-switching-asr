@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="244.08pt" height="209.260005pt" viewBox="0 0 244.08 209.260005" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-11-11T19:12:46.502912</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.11.2, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 209.260005 
+L 244.08 209.260005 
+L 244.08 0 
+L 0 0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="line2d_1">
+    <path d="M 41.238 194.328 
+L 41.238 13.752 
+" clip-path="url(#p991934eb8b)" style="fill: none; stroke: #e4e3df; stroke-width: 1.6; stroke-linecap: square"/>
+   </g>
+   <g id="text_1">
+    <text style="font-size: 7px; font-family: 'Times New Roman', 'DejaVu Serif', serif; text-anchor: end; fill: #52514e" x="32.796" y="15.423387" transform="rotate(-0 32.796 15.423387)">4 Nov</text>
+   </g>
+   <g id="PathCollection_1">
+    <defs>
+     <path id="m7e8904120e" d="M 0 2.54951 
+C 0.676138 2.54951 1.324674 2.280877 1.802776 1.802776 
+C 2.280877 1.324674 2.54951 0.676138 2.54951 0 
+C 2.54951 -0.676138 2.280877 -1.324674 1.802776 -1.802776 
+C 1.324674 -2.280877 0.676138 -2.54951 0 -2.54951 
+C -0.676138 -2.54951 -1.324674 -2.280877 -1.802776 -1.802776 
+C -2.280877 -1.324674 -2.54951 -0.676138 -2.54951 0 
+C -2.54951 0.676138 -2.280877 1.324674 -1.802776 1.802776 
+C -1.324674 2.280877 -0.676138 2.54951 0 2.54951 
+z
+" style="stroke: #ffffff; stroke-width: 0.8"/>
+    </defs>
+    <g clip-path="url(#p991934eb8b)">
+     <use xlink:href="#m7e8904120e" x="41.238" y="13.752" style="fill: #8a8984; stroke: #ffffff; stroke-width: 0.8"/>
+    </g>
+   </g>
+   <g id="text_2">
+    <text style="font-size: 6.7px; font-family: 'Times New Roman', 'DejaVu Serif', serif; text-anchor: start; fill: #0b0b0b" x="49.68" y="15.355158" transform="rotate(-0 49.68 15.355158)">Literature review: 29 papers, MUCS leaderboard, implementation brief</text>
+   </g>
+   <g id="text_3">
+    <text style="font-size: 7px; font-family: 'Times New Roman', 'DejaVu Serif', serif; text-anchor: end; fill: #52514e" x="32.796" y="41.219958" transform="rotate(-0 32.796 41.219958)">7 Nov</text>
+   </g>
+   <g id="PathCollection_2">
+    <defs>
+     <path id="m67afb36f54" d="M 0 2.54951 
+C 0.676138 2.54951 1.324674 2.280877 1.802776 1.802776 
+C 2.280877 1.324674 2.54951 0.676138 2.54951 0 
+C 2.54951 -0.676138 2.280877 -1.324674 1.802776 -1.802776 
+C 1.324674 -2.280877 0.676138 -2.54951 0 -2.54951 
+C -0.676138 -2.54951 -1.324674 -2.280877 -1.802776 -1.802776 
+C -2.280877 -1.324674 -2.54951 -0.676138 -2.54951 0 
+C -2.54951 0.676138 -2.280877 1.324674 -1.802776 1.802776 
+C -1.324674 2.280877 -0.676138 2.54951 0 2.54951 
+z
+" style="stroke: #ffffff; stroke-width: 0.8"/>
+    </defs>
+    <g clip-path="url(#p991934eb8b)">
+     <use xlink:href="#m67afb36f54" x="41.238" y="39.548571" style="fill: #2a78d6; stroke: #ffffff; stroke-width: 0.8"/>
+    </g>
+   </g>
+   <g id="text_4">
+    <text style="font-size: 6.7px; font-family: 'Times New Roman', 'DejaVu Serif', serif; text-anchor: start; fill: #0b0b0b" x="49.68" y="41.15173" transform="rotate(-0 49.68 41.15173)">Stage 1A: data pipeline, tokenizer, smoke test, GPU profiling</text>
+   </g>
+   <g id="text_5">
+    <text style="font-size: 7px; font-family: 'Times New Roman', 'DejaVu Serif', serif; text-anchor: end; fill: #52514e" x="32.796" y="67.01653" transform="rotate(-0 32.796 67.01653)">8 Nov</text>
+   </g>
+   <g id="PathCollection_3">
+    <defs>
+     <path id="m7e8370bb87" d="M 0 2.54951 
+C 0.676138 2.54951 1.324674 2.280877 1.802776 1.802776 
+C 2.280877 1.324674 2.54951 0.676138 2.54951 0 
+C 2.54951 -0.676138 2.280877 -1.324674 1.802776 -1.802776 
+C 1.324674 -2.280877 0.676138 -2.54951 0 -2.54951 
+C -0.676138 -2.54951 -1.324674 -2.280877 -1.802776 -1.802776 
+C -2.280877 -1.324674 -2.54951 -0.676138 -2.54951 0 
+C -2.54951 0.676138 -2.280877 1.324674 -1.802776 1.802776 
+C -1.324674 2.280877 -0.676138 2.54951 0 2.54951 
+z
+" style="stroke: #ffffff; stroke-width: 0.8"/>
+    </defs>
+    <g clip-path="url(#p991934eb8b)">
+     <use xlink:href="#m7e8370bb87" x="41.238" y="65.345143" style="fill: #eb6834; stroke: #ffffff; stroke-width: 0.8"/>
+    </g>
+   </g>
+   <g id="text_6">
+    <text style="font-size: 6.7px; font-family: 'Times New Roman', 'DejaVu Serif', serif; text-anchor: start; fill: #0b0b0b" x="49.68" y="66.948301" transform="rotate(-0 49.68 66.948301)">Iteration 1: baseline fine-tuning (38,000 updates, 8 h 52 min)</text>
+   </g>
+   <g id="text_7">
+    <text style="font-size: 7px; font-family: 'Times New Roman', 'DejaVu Serif', serif; text-anchor: end; fill: #52514e" x="32.796" y="92.813101" transform="rotate(-0 32.796 92.813101)">8 Nov</text>
+   </g>
+   <g id="PathCollection_4">
+    <g clip-path="url(#p991934eb8b)">
+     <use xlink:href="#m7e8370bb87" x="41.238" y="91.141714" style="fill: #eb6834; stroke: #ffffff; stroke-width: 0.8"/>
+    </g>
+   </g>
+   <g id="text_8">
+    <text style="font-size: 6.7px; font-family: 'Times New Roman', 'DejaVu Serif', serif; text-anchor: start; fill: #0b0b0b" x="49.68" y="92.744872" transform="rotate(-0 49.68 92.744872)">Iteration 2: continued training from iteration 1 (6 h 59 min)</text>
+   </g>
+   <g id="text_9">
+    <text style="font-size: 7px; font-family: 'Times New Roman', 'DejaVu Serif', serif; text-anchor: end; fill: #52514e" x="32.796" y="118.609672" transform="rotate(-0 32.796 118.609672)">9 Nov</text>
+   </g>
+   <g id="PathCollection_5">
+    <g clip-path="url(#p991934eb8b)">
+     <use xlink:href="#m7e8370bb87" x="41.238" y="116.938286" style="fill: #eb6834; stroke: #ffffff; stroke-width: 0.8"/>
+    </g>
+   </g>
+   <g id="text_10">
+    <text style="font-size: 6.7px; font-family: 'Times New Roman', 'DejaVu Serif', serif; text-anchor: start; fill: #0b0b0b" x="49.68" y="118.541444" transform="rotate(-0 49.68 118.541444)">Iteration 3: script-normalised targets (6 h 59 min)</text>
+   </g>
+   <g id="text_11">
+    <text style="font-size: 7px; font-family: 'Times New Roman', 'DejaVu Serif', serif; text-anchor: end; fill: #52514e" x="32.796" y="144.406244" transform="rotate(-0 32.796 144.406244)">9 Nov</text>
+   </g>
+   <g id="PathCollection_6">
+    <g clip-path="url(#p991934eb8b)">
+     <use xlink:href="#m7e8370bb87" x="41.238" y="142.734857" style="fill: #eb6834; stroke: #ffffff; stroke-width: 0.8"/>
+    </g>
+   </g>
+   <g id="text_12">
+    <text style="font-size: 6.7px; font-family: 'Times New Roman', 'DejaVu Serif', serif; text-anchor: start; fill: #0b0b0b" x="49.68" y="144.338015" transform="rotate(-0 49.68 144.338015)">Iteration 4: misalignment filter (7 h 02 min)</text>
+   </g>
+   <g id="text_13">
+    <text style="font-style: italic; font-size: 6.2px; font-family: 'Times New Roman', 'DejaVu Serif', serif; text-anchor: start; fill: #eb6834" x="49.68" y="154.888777" transform="rotate(-0 49.68 154.888777)">selected model</text>
+   </g>
+   <g id="text_14">
+    <text style="font-size: 7px; font-family: 'Times New Roman', 'DejaVu Serif', serif; text-anchor: end; fill: #52514e" x="32.796" y="170.202815" transform="rotate(-0 32.796 170.202815)">9 Nov</text>
+   </g>
+   <g id="PathCollection_7">
+    <g clip-path="url(#p991934eb8b)">
+     <use xlink:href="#m7e8370bb87" x="41.238" y="168.531429" style="fill: #eb6834; stroke: #ffffff; stroke-width: 0.8"/>
+    </g>
+   </g>
+   <g id="text_15">
+    <text style="font-size: 6.7px; font-family: 'Times New Roman', 'DejaVu Serif', serif; text-anchor: start; fill: #0b0b0b" x="49.68" y="170.134587" transform="rotate(-0 49.68 170.134587)">Iteration 5: CTC realignment of training segments (6 h 52 min)</text>
+   </g>
+   <g id="text_16">
+    <text style="font-size: 7px; font-family: 'Times New Roman', 'DejaVu Serif', serif; text-anchor: end; fill: #52514e" x="32.796" y="195.999387" transform="rotate(-0 32.796 195.999387)">10 Nov</text>
+   </g>
+   <g id="PathCollection_8">
+    <defs>
+     <path id="m7b22aee394" d="M 0 2.54951 
+C 0.676138 2.54951 1.324674 2.280877 1.802776 1.802776 
+C 2.280877 1.324674 2.54951 0.676138 2.54951 0 
+C 2.54951 -0.676138 2.280877 -1.324674 1.802776 -1.802776 
+C 1.324674 -2.280877 0.676138 -2.54951 0 -2.54951 
+C -0.676138 -2.54951 -1.324674 -2.280877 -1.802776 -1.802776 
+C -2.280877 -1.324674 -2.54951 -0.676138 -2.54951 0 
+C -2.54951 0.676138 -2.280877 1.324674 -1.802776 1.802776 
+C -1.324674 2.280877 -0.676138 2.54951 0 2.54951 
+z
+" style="stroke: #ffffff; stroke-width: 0.8"/>
+    </defs>
+    <g clip-path="url(#p991934eb8b)">
+     <use xlink:href="#m7b22aee394" x="41.238" y="194.328" style="fill: #1baf7a; stroke: #ffffff; stroke-width: 0.8"/>
+    </g>
+   </g>
+   <g id="text_17">
+    <text style="font-size: 6.7px; font-family: 'Times New Roman', 'DejaVu Serif', serif; text-anchor: start; fill: #0b0b0b" x="49.68" y="195.931158" transform="rotate(-0 49.68 195.931158)">CPU inference backend, ARPA LM reader, Streamlit dashboard</text>
+   </g>
+   <g id="text_18">
+    <text style="font-style: italic; font-size: 6.2px; font-family: 'Times New Roman', 'DejaVu Serif', serif; text-anchor: start; fill: #1baf7a" x="49.68" y="206.48192" transform="rotate(-0 49.68 206.48192)">after the experiments</text>
+   </g>
+   <g id="text_19">
+    <text style="font-size: 6.5px; font-family: 'Times New Roman', 'DejaVu Serif', serif; text-anchor: start; fill: #8a8984" x="6.264" y="6.972836" transform="rotate(-0 6.264 6.972836)">2026</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p991934eb8b">
+   <rect x="1.44" y="1.44" width="241.2" height="205.2"/>
+  </clipPath>
+ </defs>
+</svg>
