@@ -53,6 +53,10 @@ Reporting conventions the paper follows:
 - Published values are labelled as such. This project's blind results were obtained after the challenge with the released references and the official `compute_wer.py`; they are not leaderboard submissions.
 - Every result is a single training run (seed 42). No significance testing was done.
 
+## AI tools
+
+The paper's text, tables, equations, figures and the three build scripts were drafted with Claude Code (Anthropic) using the Claude Opus 5.5 model, from the repository's documents and committed result files; references were checked against `literature/papers.md` and by web search. The paper ends with a "Declaration of AI Tools and Software" covering the whole project, and the repository README has the same list under "Tools and AI use".
+
 ## Rebuilding the paper
 
 From the repository root. The figures need only the project environment; the Word file needs Node.js; the PDF needs Microsoft Word on Windows.

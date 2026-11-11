@@ -510,9 +510,23 @@ P("Future work should repeat the key comparisons with several seeds; evaluate al
 H1("conclusion", "Conclusion");
 P("This paper presented a controlled study of a wav2vec 2.0 CTC recogniser with 5-gram LM decoding for Hindi–English code-switched speech on MUCS 2021. With every choice made on validation data, the selected model, trained with continued fine-tuning and a misalignment filter, reaches 20.44% WER and 19.20% T-WER on the blind test, 5.09 and 4.60 points below the official baseline, on a single 6 GB GPU. Continued training and removal of misaligned training utterances improved every split, whereas script normalisation and CTC realignment improved the blind test but not the validation set used for selection. The analysis traces these disagreements to differences in how the splits write English words and transcribe speech at segment boundaries, and shows that English technical vocabulary, script inconsistency and segment boundaries account for most remaining errors. These findings indicate that, for code-switched ASR, data quality and evaluation conventions deserve as much attention as model architecture, and that results should be reported across splits and metrics together with the decision protocol behind them.");
 
+// ---------------------------------------------------------------- Declaration of AI tools and software (unnumbered, IEEE style)
+const UNNUMBERED = (title) => body.push(new Paragraph({ alignment: AlignmentType.CENTER, spacing: { before: 200, after: 80 }, keepNext: true,
+  children: [new TextRun({ text: title, font: FONT, size: 20, smallCaps: true })] }));
+UNNUMBERED("Declaration of AI Tools and Software");
+P("The authors used generative AI tools throughout this project and disclose each use here.", { noIndent: true });
+BULLETS([
+  "**Research phase** (literature and dataset surveys, choice of the replication target, implementation brief): ChatGPT (OpenAI), Claude on claude.ai (Anthropic) and Claude Code (Anthropic).",
+  "**Training, evaluation and analysis pipeline** (Stage 1A to iteration 5, with the scripts, configurations, tests and documentation committed by the second author): written and run with Claude Code using the Claude Opus 5.5 model, which also launched the training and evaluation jobs and drafted the analyses.",
+  "**CPU inference application** (CPU backend, ARPA reader, file scoring and dashboard, committed by the first author): developed with ChatGPT and Codex (OpenAI) and Claude Code.",
+  "**This paper**: text, tables, equations, figures and the scripts that build them were drafted with Claude Code (Claude Opus 5.5) from the repository’s documents and result files; references were checked against the literature review and by web search.",
+  "**Presentation slides**: prepared by the authors with assistance from ChatGPT.",
+]);
+P("No AI tool generated a reported result: every number comes from running the code on the MUCS data and is read from the committed result files. The authors directed the work and take full responsibility for the content of this paper.");
+P("**Software.** Python 3.14, PyTorch 2.14.1 with CUDA 13.0, Hugging Face Transformers 5.22.2 and Hub, NumPy, SciPy, soundfile and PyYAML for the model and data; KenLM 0.3.0, compiled from source with MinGW-w64 and Cython, and pyctcdecode 0.5.0 for the language model and beam search; jiwer 4.0.0 for checking the metric code; the organisers’ `compute_wer.py` for official scoring; pytest for testing; Streamlit for the dashboard; Google Colab for an early baseline notebook that was later removed unused; matplotlib 3.11.2 for the figures; Node.js with the docx library, Microsoft Word and PyMuPDF for this document; PptxGenJS for the slides; and Git, GitHub and Visual Studio Code throughout.", { noIndent: true });
+
 // ---------------------------------------------------------------- References
-body.push(new Paragraph({ alignment: AlignmentType.CENTER, spacing: { before: 200, after: 80 }, keepNext: true,
-  children: [new TextRun({ text: "References", font: FONT, size: 20, smallCaps: true })] }));
+UNNUMBERED("References");
 const unused = Object.keys(REFS).filter((k) => !citeOrder.includes(k));
 if (unused.length) throw new Error(`references never cited: ${unused.join(", ")}`);
 citeOrder.forEach((key, i) => body.push(new Paragraph({

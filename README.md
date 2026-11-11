@@ -265,3 +265,32 @@ The research phase behind the project. Some of its findings were later corrected
 ## Provenance
 
 Every number in these documents was read from a fetched PDF or from the official challenge site and cross-checked against the source text; see `_work/README.md` for the retrieval log, the tools used, and the known limitations.
+
+# Tools and AI use
+
+Generative AI tools were used throughout this project:
+
+| Part of the project | AI tools used |
+|---|---|
+| Research phase (4 Nov): literature and dataset surveys, replication candidates, improvement ideas, implementation brief | ChatGPT (OpenAI), Claude on claude.ai (Anthropic), Claude Code (Anthropic) |
+| Training, evaluation and analysis, Stage 1A to iteration 5: the code, configs, tests, docs and results committed under Shlok's account from 7 Nov | Claude Code with the Claude Opus 5.5 model, which wrote the code, ran the training and evaluation jobs and drafted the reports |
+| CPU inference application: CPU backend, ARPA reader, file scoring, Streamlit dashboard, with their tests and docs (Nehal's commits) | ChatGPT and Codex (OpenAI), Claude Code |
+| Research paper: text, tables, equations, figures and the scripts that build them | Claude Code with the Claude Opus 5.5 model |
+| Presentation slides | Made by the authors with help from ChatGPT |
+
+No AI tool produced a reported result: every number comes from running the code on the MUCS data and is read from the result files committed here. The authors directed the work and take responsibility for it.
+
+Software and hardware:
+
+| Purpose | Tools |
+|---|---|
+| Model, training and data | Python 3.14, PyTorch 2.14.1 (CUDA 13.0), Hugging Face Transformers 5.22.2, huggingface_hub, safetensors, NumPy, SciPy, soundfile, PyYAML |
+| Language model and decoding | KenLM 0.3.0 compiled from source with MinGW-w64 g++ and Cython 3 (`scripts/build_kenlm.sh`), pyctcdecode 0.5.0 |
+| Scoring and tests | The organisers' `compute_wer.py`, jiwer 4.0.0 (independent check of the metric code), pytest |
+| Application | Streamlit |
+| Figures and paper | matplotlib 3.11.2, Node.js with the `docx` library 9.15.3, Microsoft Word (PDF export), PyMuPDF (page checks) |
+| Slides | PptxGenJS |
+| Other | Google Colab (an early baseline notebook, later removed unused), Git, GitHub, Visual Studio Code |
+| Hardware | NVIDIA RTX 3050 6 GB laptop GPU, AMD Ryzen 7 7840HS |
+
+Exact package versions are in `env/requirements.lock`. The research paper ends with the same declaration.
